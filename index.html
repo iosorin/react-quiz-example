@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <button id="hello">Hello</button>
+        <button id="error">Error</button>
+        <div id="output"></div>
+        <script
+            src="https://browser.sentry-cdn.com/5.24.2/bundle.tracing.min.js"
+            integrity="sha384-Epltozh7S1cJM2hcIRDJBbqiiVpZsNlFCciHxKIAfKN8mSTa+gMivtz7glp/30Mz"
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            (function () {
+                'use strict';
+                var RELEASE = '0.1.0';
+
+                Sentry.init({
+                    dsn:
+                        'https://16b541bfd846412988eccbd1b695784c@o442854.ingest.sentry.io/5453010',
+                    release: RELEASE,
+                    // integrations: [new Integrations.BrowserTracing()],
+                    // tracesSampleRate: 1.0,
+                });
+                var helloEl = document.getElementById('hello');
+                var errorEl = document.getElementById('error');
+                var outputEl = document.getElementById('output');
+
+                helloEl.addEventListener('click', handleHelloClick);
+                errorEl.addEventListener('click', handleErrorClick);
+
+                function handleHelloClick() {
+                    outputEl.innerHTML = 'Hello World';
+                    try {
+                        throw new Error('Caught');
+                    } catch (err) {
+                        Sentry.captureException(err);
+                    }
+                }
+                function handleErrorClick() {
+                    throw new Error('Uncaught');
+                }
+            })();
+        </script>
+    </body>
+</html>
