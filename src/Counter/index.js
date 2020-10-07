@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Auxiliary from '../hoc/Auxiliary';
 import Clicked from '../Clicked';
 import { connect } from 'react-redux';
+import { decrementCounter, incrementCounter } from '../redux/actions/actions';
 class Counter extends Component {
     state = {
         counter: 0
@@ -42,8 +43,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        increment: (value = 1) => dispatch({ type: 'INCREMENT_COUNTER', value }),
-        decrement: (value = 1) => dispatch({ type: 'DECREMENT_COUNTER', value })
+        /* передаем сюда из компонента value */
+        increment: (value = 1) => dispatch(incrementCounter(value)),
+        decrement: (value = 1) => dispatch(decrementCounter(value))
     };
 }
 
