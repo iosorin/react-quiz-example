@@ -1,8 +1,19 @@
 import './App.scss';
 import React, { Component } from 'react';
+import {
+    Route,
+    NavLink,
+    Link,
+    Switch,
+    Redirect
+} from 'react-router-dom';
+
 import Car from './Car';
-import ErrorBoundary from './ErrorBoundary';
+import CarDetail from './CarDetail';
+
+import About from './About';
 import Counter from './Counter';
+import ErrorBoundary from './ErrorBoundary';
 
 export const ClickedContext = React.createContext(false);
 
@@ -21,12 +32,13 @@ class App extends Component {
                 {
                     name: 'Audi',
                     year: 2014
-                }
-                // {     name: 'Mazda',     year: 2008 }
+                },
+                { name: 'Mazda', year: 2008 }
             ],
             clicked: false,
             showCars: true,
-            title: 'Title'
+            title: 'Title',
+            isLogged: false
         };
     }
 
@@ -67,11 +79,11 @@ class App extends Component {
 
     /* begin lifecycles */
     componentWillMount() {
-        console.log('componentWillMount');
+        // console.log('componentWillMount');
     }
 
     componentDidMount() {
-        console.log('componentDidMount');
+        // console.log('componentDidMount');
     }
 
     /* end lifecycles */
@@ -103,7 +115,17 @@ class App extends Component {
                                 this,
                                 car.name
                             )}
-                        />
+                        >
+                            <Link
+                                style={{
+                                    display: 'block',
+                                    margin: '10px auto 20px'
+                                }}
+                                to={'/cars/' + car.name.toLowerCase()}
+                            >
+                                see details
+                            </Link>
+                        </Car>
                     </ErrorBoundary>
                 );
             });
@@ -111,41 +133,145 @@ class App extends Component {
 
         return (
             <div className={'App'}>
+                <nav className="nav">
+                    <ul>
+                        <li>
+                            <NavLink
+                                to={{
+                                    pathname: '/',
+                                    search: '?a=1&b=22',
+                                    hash: '#section-2'
+                                }}
+                                exact
+                            >
+                                Home
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="/about"
+                                activeStyle={{
+                                    textTransform: 'uppercase'
+                                }}
+                            >
+                                About
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/cars">Cars</NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink to="/counter">Counter</NavLink>
+                        </li>
+                    </ul>
+                </nav>
+
                 <h1>{this.state.title}</h1>
 
                 <button
-                    onClick={this.toggleCars}
                     style={{
-                        display: 'block',
-                        margin: '10px auto'
+                        margin: '0 auto 20px'
                     }}
+                    onClick={() =>
+                        this.setState({
+                            isLogged: !this.state.isLogged
+                        })
+                    }
                 >
-                    toggle cars
+                    {this.state.isLogged ? 'Logout' : 'Login'}
                 </button>
 
-                <div className={'App-container'}>{cars}</div>
-
                 <hr />
 
-                <ClickedContext.Provider value={this.state.clicked}>
-                    <Counter />
+                <Switch>
+                    <Route
+                        exact
+                        path="/"
+                        render={() => <h1>Home page</h1>}
+                    />
 
-                    <button
-                        onClick={() =>
-                            this.setState({
-                                clicked: !this.state.clicked
-                            })
-                        }
-                        style={{
-                            display: 'block',
-                            margin: '10px auto'
+                    {this.state.isLogged ? (
+                        <Route
+                            exact
+                            path="/about"
+                            component={About}
+                        />
+                    ) : null}
+
+                    <Route path="/cars/:name" component={CarDetail} />
+
+                    <Route
+                        path="/cars"
+                        render={() => {
+                            return (
+                                <React.Fragment>
+                                    <button
+                                        onClick={this.toggleCars}
+                                        style={{
+                                            display: 'block',
+                                            margin: '10px auto'
+                                        }}
+                                    >
+                                        toggle cars
+                                    </button>
+                                    <div className={'App-container'}>
+                                        {cars}
+                                    </div>
+
+                                    <hr />
+                                </React.Fragment>
+                            );
                         }}
-                    >
-                        Change clicked
-                    </button>
-                </ClickedContext.Provider>
+                    />
 
-                <hr />
+                    <Route
+                        path="/counter"
+                        render={() => {
+                            return (
+                                <ClickedContext.Provider
+                                    value={this.state.clicked}
+                                >
+                                    <Counter />
+
+                                    <button
+                                        onClick={() =>
+                                            this.setState({
+                                                clicked: !this.state
+                                                    .clicked
+                                            })
+                                        }
+                                        style={{
+                                            display: 'block',
+                                            margin: '10px auto'
+                                        }}
+                                    >
+                                        Change clicked
+                                    </button>
+                                </ClickedContext.Provider>
+                            );
+                        }}
+                    />
+
+                    {/* back to home page */}
+                    <Redirect to={'/'} />
+
+                    {/* 404 */}
+                    {/* <Route
+                        render={() => {
+                            return (
+                                <h1
+                                    style={{
+                                        color: 'red',
+                                        textAlign: 'center'
+                                    }}
+                                >
+                                    Page not found
+                                </h1>
+                            );
+                        }}
+                    /> */}
+                </Switch>
             </div>
         );
     }

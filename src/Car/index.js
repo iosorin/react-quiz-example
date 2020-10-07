@@ -11,7 +11,7 @@ class Car extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log('shouldComponentUpdate', nextProps.name !== this.props.name, nextProps, nextState);
+        // console.log('shouldComponentUpdate', nextProps.name !== this.props.name, nextProps, nextState);
         return nextProps.name.trim !== this.props.name;
     }
 
@@ -28,9 +28,16 @@ class Car extends React.Component {
                 <h3>Car: {this.props.name}</h3>
                 <p>Year: {this.props.year}</p>
                 {this.props.children}
-                <input type="text" ref={this.inputRef} onChange={this.props.changeName} value={this.props.name}></input>
+                <input
+                    type="text"
+                    ref={this.inputRef}
+                    onChange={this.props.changeName}
+                    value={this.props.name}
+                ></input>
                 <button onClick={this.props.deleteCar}>delete</button>
-                <button onClick={this.props.onChangeTitle}>change title</button>
+                <button onClick={this.props.onChangeTitle}>
+                    change title
+                </button>
             </React.Fragment>
         );
     }

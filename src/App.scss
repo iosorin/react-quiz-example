@@ -16,3 +16,11 @@
         border: 2px solid #000;
     }
 }
+
+.nav {
+    a.active {
+        font-weight: bold;
+        background: blue;
+        color: #fff;
+    }
+}
