@@ -10,6 +10,7 @@ import Counter from './Counter';
 import ErrorBoundary from './ErrorBoundary';
 
 import { connect } from 'react-redux';
+import { updateClicked } from './redux/actions/actions';
 
 export const ClickedContext = React.createContext(false);
 
@@ -253,8 +254,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        /* передаем сюда из компонента value */
-        toggleClicked: () => dispatch({ type: 'UPDATE_CLICKED' })
+        toggleClicked: () => dispatch(updateClicked())
     };
 }
 
