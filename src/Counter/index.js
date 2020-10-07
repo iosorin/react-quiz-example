@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Auxiliary from '../hoc/Auxiliary';
 import Clicked from '../Clicked';
 import { connect } from 'react-redux';
-import { decrementCounter, incrementCounter } from '../redux/actions/actions';
+import {
+    asyncIncrementCounter,
+    decrementCounter,
+    incrementCounter
+} from '../redux/actions/actions';
 class Counter extends Component {
     state = {
         counter: 0
@@ -26,6 +30,14 @@ class Counter extends Component {
                 <h2>Counter {this.props.counter}</h2>
                 <button onClick={() => this.props.increment()}>+</button>
                 <button onClick={() => this.props.decrement()}>-</button>
+
+                <button
+                    style={{ display: 'block', margin: '15px auto' }}
+                    onClick={() => this.props.asyncIncrement(100)}
+                >
+                    Асинхронно прибавить 100
+                </button>
+
                 <hr />
 
                 {this.props.children}
@@ -45,7 +57,8 @@ function mapDispatchToProps(dispatch) {
     return {
         /* передаем сюда из компонента value */
         increment: (value = 1) => dispatch(incrementCounter(value)),
-        decrement: (value = 1) => dispatch(decrementCounter(value))
+        decrement: (value = 1) => dispatch(decrementCounter(value)),
+        asyncIncrement: (value = 100) => dispatch(asyncIncrementCounter(value))
     };
 }
 
