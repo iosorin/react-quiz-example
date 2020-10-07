@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './Auth.module.scss';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
+import axios from 'axios';
 
 class Auth extends Component {
     state = {
@@ -39,12 +40,46 @@ class Auth extends Component {
         console.log('submitHandler', e);
     };
 
-    loginHandler = () => {
-        console.log('loginHandler');
+    loginHandler = async () => {
+        const { email, password } = this.state.formControls;
+
+        const data = {
+            email: email.value,
+            password: password.value,
+            returnSecureToken: true
+        };
+
+        try {
+            const response = await axios.post(
+                'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw',
+                data
+            );
+
+            console.log('response', response.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    registerHandler = () => {
-        console.log('registerHandler');
+    registerHandler = async () => {
+        const { email, password } = this.state.formControls;
+
+        const data = {
+            email: email.value,
+            password: password.value,
+            returnSecureToken: true
+        };
+
+        try {
+            const response = await axios.post(
+                'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw',
+                data
+            );
+
+            console.log('response', response.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     validateControl = (value, validation) => {
