@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import classes from './Quiz.module.scss';
 import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz';
 import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz';
+import axiosQuiz from '../../axios';
+import Loader from '../../components/UI/Loader/Loader';
 
 class Quiz extends Component {
     state = {
@@ -9,60 +11,8 @@ class Quiz extends Component {
         isFinished: false,
         activeQuestion: 0,
         answerState: null, // {[id]: 'success' 'error'}
-        quiz: [
-            {
-                id: 1,
-                question: 'Какого цвета небо ?',
-                truth: 3,
-                answers: [
-                    {
-                        text: 'Красный',
-                        id: 1
-                    },
-
-                    {
-                        text: 'Серый',
-                        id: 2
-                    },
-
-                    {
-                        text: 'Голубой',
-                        id: 3
-                    },
-
-                    {
-                        text: 'Черный',
-                        id: 4
-                    }
-                ]
-            },
-            {
-                id: 2,
-                question: 'Как зовут пса ?',
-                truth: 2,
-                answers: [
-                    {
-                        text: 'Буля',
-                        id: 1
-                    },
-
-                    {
-                        text: 'Перси',
-                        id: 2
-                    },
-
-                    {
-                        text: 'Рам',
-                        id: 3
-                    },
-
-                    {
-                        text: 'Пушка',
-                        id: 4
-                    }
-                ]
-            }
-        ]
+        quiz: [],
+        loading: true
     };
 
     onAnswerClickHandler = (answerId) => {
@@ -78,7 +28,7 @@ class Quiz extends Component {
         const question = this.state.quiz[this.state.activeQuestion];
         const results = this.state.results;
 
-        if (question.truth === answerId) {
+        if (question.rightAnswerId === answerId) {
             if (!results[question.id]) {
                 results[question.id] = 'success';
             }
@@ -124,13 +74,26 @@ class Quiz extends Component {
         });
     };
 
+    async componentDidMount() {
+        try {
+            const response = await axiosQuiz.get('/quizes/' + this.props.match.params.id + '.json');
+
+            const { data: quiz } = response;
+
+            this.setState({ quiz, loading: false });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     render() {
         return (
             <div className={classes.Quiz}>
                 <div className={classes.QuizWrapper}>
-                    <h1>Квиз</h1>
-
-                    {this.state.isFinished ? (
+                    <h1>Тест</h1>
+                    {this.state.loading ? (
+                        <Loader />
+                    ) : this.state.isFinished ? (
                         <FinishedQuiz
                             results={this.state.results}
                             quiz={this.state.quiz}
