@@ -36,12 +36,9 @@
         transition: opacity 0.3s;
         cursor: pointer;
 
-        &:hover {
+        &:hover,
+        &.active {
             opacity: 0.7;
         }
     }
-}
-
-.active {
-    background: red;
 }

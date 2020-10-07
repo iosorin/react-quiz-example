@@ -112,9 +112,7 @@ class Quiz extends Component {
     };
 
     isQuizFinished() {
-        return (
-            this.state.activeQuestion + 1 === this.state.quiz.length
-        );
+        return this.state.activeQuestion + 1 === this.state.quiz.length;
     }
 
     retryHandler = () => {
@@ -140,22 +138,12 @@ class Quiz extends Component {
                         />
                     ) : (
                         <ActiveQuiz
-                            question={
-                                this.state.quiz[
-                                    this.state.activeQuestion
-                                ].question
-                            }
-                            answers={
-                                this.state.quiz[
-                                    this.state.activeQuestion
-                                ].answers
-                            }
+                            question={this.state.quiz[this.state.activeQuestion].question}
+                            answers={this.state.quiz[this.state.activeQuestion].answers}
                             state={this.state.answerState}
                             onAnswerClick={this.onAnswerClickHandler}
                             quizLength={this.state.quiz.length}
-                            answerNumber={
-                                this.state.activeQuestion + 1
-                            }
+                            answerNumber={this.state.activeQuestion + 1}
                         />
                     )}
                 </div>
