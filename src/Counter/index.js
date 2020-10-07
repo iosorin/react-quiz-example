@@ -36,7 +36,7 @@ class Counter extends Component {
 
 function mapStateToProps(state) {
     return {
-        counter: state.counter
+        counter: state.counter.counter
     };
 }
 

@@ -247,7 +247,7 @@ class App extends Component {
 function mapStateToProps(state) {
     return {
         /* теперь получаем доступ к сlicked через this.props в компоненте */
-        clicked: state.clicked // clicked можно задать любое новое имя
+        clicked: state.clicked.clicked // clicked можно задать любое новое имя
     };
 }
 
