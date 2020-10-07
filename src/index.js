@@ -9,6 +9,7 @@ import { createStore, applyMiddleware } from 'redux';
 /* redux */
 import rootReducer from './redux/rootReducer';
 import { Provider } from 'react-redux';
+import reduxThunk from 'redux-thunk';
 
 // function loggerMiddleware(store) {
 //     return function (next) {
@@ -25,12 +26,12 @@ import { Provider } from 'react-redux';
 /* ESNext SHORTHAND */
 const loggerMiddleware = (store) => (next) => (action) => {
     const result = next(action);
-    console.log('Middleware action type, store state', result.type, store.getState());
+    console.log('Middleware action type, store state', result?.type, store.getState());
 
     return result;
 };
 
-const store = createStore(rootReducer, applyMiddleware(loggerMiddleware));
+const store = createStore(rootReducer, applyMiddleware(loggerMiddleware, reduxThunk));
 
 const application = (
     <React.StrictMode>

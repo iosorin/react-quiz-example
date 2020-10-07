@@ -13,6 +13,14 @@ export function incrementCounter(value) {
     };
 }
 
+export function asyncIncrementCounter(value) {
+    return (dispatch) => {
+        setTimeout(() => {
+            dispatch(incrementCounter(value));
+        }, 3000);
+    };
+}
+
 export function decrementCounter(value) {
     return {
         type: DECREMENT_COUNTER,
