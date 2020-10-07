@@ -2,22 +2,25 @@ import {
     FETCH_QUIZES_ERROR,
     FETCH_QUIZES_START,
     FETCH_QUIZES_SUCCESS,
-    FETCH_QUIZ_SUCCESS
+    FETCH_QUIZ_SUCCESS,
+    FINISH_QUIZ,
+    QUIZE_RETRY,
+    QUIZ_NEXT_QUESTION,
+    QUIZ_SET_STATE
 } from '../actions/actionTypes';
 
 const initialState = {
     quizes: [],
     loading: false,
     error: null,
-    results: {}, // {[id]: 'success' 'error'}
+    results: {},
     isFinished: false,
     activeQuestion: 0,
-    answerState: null, // {[id]: 'success' 'error'}
+    answerState: null,
     quiz: []
 };
 
 export default function quizReducer(state = initialState, action) {
-    console.log('action', action);
     switch (action.type) {
         case FETCH_QUIZES_START:
             return {
@@ -44,6 +47,36 @@ export default function quizReducer(state = initialState, action) {
                 loading: false,
                 error: action.error
             };
+
+        case QUIZ_SET_STATE:
+            return {
+                ...state,
+                answerState: action.answerState,
+                results: action.results
+            };
+
+        case QUIZ_NEXT_QUESTION:
+            return {
+                ...state,
+                answerState: null,
+                activeQuestion: action.number
+            };
+
+        case FINISH_QUIZ:
+            return {
+                ...state,
+                isFinished: true
+            };
+
+        case QUIZE_RETRY:
+            return {
+                ...state,
+                activeQuestion: 0,
+                answerState: null,
+                isFinished: false,
+                results: {}
+            };
+
         default:
             return state;
     }
