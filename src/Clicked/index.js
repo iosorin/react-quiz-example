@@ -4,10 +4,8 @@ import { ClickedContext } from '../App';
 const index = (props) => {
     return (
         <div>
-            <h3>Counter 2</h3>
-
             <ClickedContext.Consumer>
-                {(clicked) => (clicked ? <p>Clicked</p> : '')}
+                {(clicked) => <h3>{clicked ? 'Clicked' : 'NOT Clicked'}</h3>}
             </ClickedContext.Consumer>
         </div>
     );
