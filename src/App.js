@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import './App.scss';
+import Layout from './hoc/Layout/Layout';
+import Quiz from './containers/Quiz/Quiz';
 class App extends Component {
     render() {
         return (
-            <div className="App">
-                <div className="App-container">
-                    <h1>App</h1>
-                </div>
-            </div>
+            <Layout>
+                <Quiz />
+            </Layout>
         );
     }
 }
