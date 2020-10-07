@@ -1,27 +1,9 @@
-const initialState = {
-    counter: 1,
-    clicked: false
-};
+import { combineReducers } from 'redux';
 
-export default function rootReducer(state = initialState, action) {
-    switch (action.type) {
-        case 'UPDATE_CLICKED':
-            return {
-                clicked: !state.clicked
-            };
+import clicked from './reducers/clicked';
+import counter from './reducers/counter';
 
-        case 'INCREMENT_COUNTER':
-            return {
-                counter: state.counter + action.value
-            };
-
-        case 'DECREMENT_COUNTER':
-            return {
-                counter: state.counter - action.value
-            };
-
-        default:
-            break;
-    }
-    return state;
-}
+export default combineReducers({
+    clicked,
+    counter
+});
