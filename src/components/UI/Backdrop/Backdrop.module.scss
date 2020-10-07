@@ -1,0 +1,10 @@
+.Backdrop {
+    z-index: 50;
+    background: rgba(black, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transition: 0.2s;
+}
