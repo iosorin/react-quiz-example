@@ -1,12 +1,6 @@
 import './App.scss';
 import React, { Component } from 'react';
-import {
-    Route,
-    NavLink,
-    Link,
-    Switch,
-    Redirect
-} from 'react-router-dom';
+import { Route, NavLink, Link, Switch, Redirect } from 'react-router-dom';
 
 import Car from './Car';
 import CarDetail from './CarDetail';
@@ -14,6 +8,8 @@ import CarDetail from './CarDetail';
 import About from './About';
 import Counter from './Counter';
 import ErrorBoundary from './ErrorBoundary';
+
+import { connect } from 'react-redux';
 
 export const ClickedContext = React.createContext(false);
 
@@ -35,7 +31,7 @@ class App extends Component {
                 },
                 { name: 'Mazda', year: 2008 }
             ],
-            clicked: false,
+            // clicked: false,
             showCars: true,
             title: 'Title',
             isLogged: false
@@ -101,20 +97,9 @@ class App extends Component {
                             index={index}
                             name={car.name}
                             year={car.year}
-                            deleteCar={this.deleteCar.bind(
-                                this,
-                                index
-                            )}
-                            changeName={(e) =>
-                                this.changeCarName(
-                                    e.target.value,
-                                    index
-                                )
-                            }
-                            onChangeTitle={this.changeTitle.bind(
-                                this,
-                                car.name
-                            )}
+                            deleteCar={this.deleteCar.bind(this, index)}
+                            changeName={(e) => this.changeCarName(e.target.value, index)}
+                            onChangeTitle={this.changeTitle.bind(this, car.name)}
                         >
                             <Link
                                 style={{
@@ -131,6 +116,7 @@ class App extends Component {
             });
         }
 
+        console.log('app', this.props);
         return (
             <div className={'App'}>
                 <nav className="nav">
@@ -185,19 +171,9 @@ class App extends Component {
                 <hr />
 
                 <Switch>
-                    <Route
-                        exact
-                        path="/"
-                        render={() => <h1>Home page</h1>}
-                    />
+                    <Route exact path="/" render={() => <h1>Home page</h1>} />
 
-                    {this.state.isLogged ? (
-                        <Route
-                            exact
-                            path="/about"
-                            component={About}
-                        />
-                    ) : null}
+                    {this.state.isLogged ? <Route exact path="/about" component={About} /> : null}
 
                     <Route path="/cars/:name" component={CarDetail} />
 
@@ -215,9 +191,7 @@ class App extends Component {
                                     >
                                         toggle cars
                                     </button>
-                                    <div className={'App-container'}>
-                                        {cars}
-                                    </div>
+                                    <div className={'App-container'}>{cars}</div>
 
                                     <hr />
                                 </React.Fragment>
@@ -229,18 +203,11 @@ class App extends Component {
                         path="/counter"
                         render={() => {
                             return (
-                                <ClickedContext.Provider
-                                    value={this.state.clicked}
-                                >
+                                <ClickedContext.Provider value={this.props.clicked}>
                                     <Counter />
 
                                     <button
-                                        onClick={() =>
-                                            this.setState({
-                                                clicked: !this.state
-                                                    .clicked
-                                            })
-                                        }
+                                        onClick={this.props.toggleClicked}
                                         style={{
                                             display: 'block',
                                             margin: '10px auto'
@@ -277,4 +244,18 @@ class App extends Component {
     }
 }
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        /* теперь получаем доступ к сlicked через this.props в компоненте */
+        clicked: state.clicked // clicked можно задать любое новое имя
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        /* передаем сюда из компонента value */
+        toggleClicked: () => dispatch({ type: 'UPDATE_CLICKED' })
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

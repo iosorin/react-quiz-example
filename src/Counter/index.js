@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Auxiliary from '../hoc/Auxiliary';
-import Counter2 from '../Counter2';
-
-export default class Counter extends Component {
+import Clicked from '../Clicked';
+import { connect } from 'react-redux';
+class Counter extends Component {
     state = {
         counter: 0
     };
@@ -16,20 +16,35 @@ export default class Counter extends Component {
     };
 
     decrement = () => {
-        this.setState({ counter: this.state.counter - 1 });
+        this.setState({ counter: this.props.counter - 1 });
     };
 
     render() {
         return (
             <Auxiliary>
-                <h2>Counter {this.state.counter}</h2>
-                <button onClick={this.increment}>+</button>
-                <button onClick={this.decrement}>-</button>
+                <h2>Counter {this.props.counter}</h2>
+                <button onClick={() => this.props.increment()}>+</button>
+                <button onClick={() => this.props.decrement()}>-</button>
                 <hr />
 
                 {this.props.children}
-                <Counter2 />
+                <Clicked />
             </Auxiliary>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        counter: state.counter
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        increment: (value = 1) => dispatch({ type: 'INCREMENT_COUNTER', value }),
+        decrement: (value = 1) => dispatch({ type: 'DECREMENT_COUNTER', value })
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
