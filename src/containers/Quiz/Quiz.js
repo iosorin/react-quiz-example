@@ -5,7 +5,7 @@ import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz';
 import Loader from '../../components/UI/Loader/Loader';
 
 import { connect } from 'react-redux';
-import { fetchQuizById, quizAnswerClick, retryQuiz } from '../../reducer/actions/actions';
+import { fetchQuizById, quizAnswerClick, retryQuiz } from '../../reducer/actions/quiz';
 
 class Quiz extends Component {
     onAnswerClickHandler = (answerId) => {
