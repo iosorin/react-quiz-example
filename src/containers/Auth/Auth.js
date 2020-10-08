@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import classes from './Auth.module.scss';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { auth } from '../../reducer/actions/auth';
 
 class Auth extends Component {
     state = {
@@ -40,46 +41,50 @@ class Auth extends Component {
         console.log('submitHandler', e);
     };
 
-    loginHandler = async () => {
+    loginHandler = () => {
         const { email, password } = this.state.formControls;
 
-        const data = {
-            email: email.value,
-            password: password.value,
-            returnSecureToken: true
-        };
+        this.props.auth(email.value, password.value, true);
 
-        try {
-            const response = await axios.post(
-                'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw',
-                data
-            );
+        // const data = {
+        //     email: email.value,
+        //     password: password.value,
+        //     returnSecureToken: true
+        // };
 
-            console.log('response', response.data);
-        } catch (error) {
-            console.log(error);
-        }
+        // try {
+        //     const response = await axios.post(
+        //         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw',
+        //         data
+        //     );
+
+        //     console.log('response', response.data);
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
 
-    registerHandler = async () => {
+    registerHandler = () => {
         const { email, password } = this.state.formControls;
 
-        const data = {
-            email: email.value,
-            password: password.value,
-            returnSecureToken: true
-        };
+        this.props.auth(email.value, password.value, false);
 
-        try {
-            const response = await axios.post(
-                'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw',
-                data
-            );
+        // const data = {
+        //     email: email.value,
+        //     password: password.value,
+        //     returnSecureToken: true
+        // };
 
-            console.log('response', response.data);
-        } catch (error) {
-            console.log(error);
-        }
+        // try {
+        //     const response = await axios.post(
+        //         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw',
+        //         data
+        //     );
+
+        //     console.log('response', response.data);
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
 
     validateControl = (value, validation) => {
@@ -172,4 +177,10 @@ class Auth extends Component {
     }
 }
 
-export default Auth;
+function mapDispatchToProps(dispatch) {
+    return {
+        auth: (email, pwd, isLogin) => dispatch(auth(email, pwd, isLogin))
+    };
+}
+
+export default connect(null, mapDispatchToProps)(Auth);
