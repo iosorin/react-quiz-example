@@ -38,53 +38,18 @@ class Auth extends Component {
 
     submitHandler = (e) => {
         e.preventDefault();
-        console.log('submitHandler', e);
     };
 
     loginHandler = () => {
         const { email, password } = this.state.formControls;
 
         this.props.auth(email.value, password.value, true);
-
-        // const data = {
-        //     email: email.value,
-        //     password: password.value,
-        //     returnSecureToken: true
-        // };
-
-        // try {
-        //     const response = await axios.post(
-        //         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw',
-        //         data
-        //     );
-
-        //     console.log('response', response.data);
-        // } catch (error) {
-        //     console.log(error);
-        // }
     };
 
     registerHandler = () => {
         const { email, password } = this.state.formControls;
 
         this.props.auth(email.value, password.value, false);
-
-        // const data = {
-        //     email: email.value,
-        //     password: password.value,
-        //     returnSecureToken: true
-        // };
-
-        // try {
-        //     const response = await axios.post(
-        //         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw',
-        //         data
-        //     );
-
-        //     console.log('response', response.data);
-        // } catch (error) {
-        //     console.log(error);
-        // }
     };
 
     validateControl = (value, validation) => {

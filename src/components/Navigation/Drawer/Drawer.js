@@ -4,26 +4,8 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 
 import { NavLink } from 'react-router-dom';
 
-const links = [
-    {
-        to: '/',
-        label: 'Список',
-        exact: true
-    },
-    {
-        to: '/auth',
-        label: 'Авторизация',
-        exact: true
-    },
-    {
-        to: '/quiz-creator',
-        label: 'Создать тест',
-        exact: true
-    }
-];
-
 class Drawer extends Component {
-    renderLinks() {
+    renderLinks(links) {
         return links.map((link, index) => {
             return (
                 <li key={index}>
@@ -40,6 +22,29 @@ class Drawer extends Component {
         });
     }
 
+    getLinks() {
+        const links = [
+            {
+                to: '/',
+                label: 'Список',
+                exact: true
+            }
+        ];
+
+        if (this.props.isLogged) {
+            links.push({ to: '/quiz-creator', label: 'Создать тест' });
+            links.push({ to: '/logout', label: 'Выйти' });
+        } else {
+            links.push({
+                to: '/auth',
+                label: 'Авторизация',
+                exact: true
+            });
+        }
+
+        return links;
+    }
+
     render() {
         const cls = [classes.Drawer];
 
@@ -50,7 +55,7 @@ class Drawer extends Component {
         return (
             <React.Fragment>
                 <nav className={cls.join(' ')}>
-                    <ul>{this.renderLinks()}</ul>
+                    <ul>{this.renderLinks(this.getLinks())}</ul>
                 </nav>
 
                 {this.props.isOpen ? <Backdrop onClick={this.props.onToggle} /> : null}
