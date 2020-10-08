@@ -9,7 +9,6 @@ import { fetchQuizes } from '../../reducer/actions/quiz';
 
 class QuizList extends Component {
     renderQuizes() {
-        console.log('this.props', this.props);
         return this.props.quizes.map((quiz) => {
             return (
                 <li key={quiz.id}>
