@@ -2,22 +2,22 @@ import './App.scss';
 import React, { Component } from 'react';
 import { Route, NavLink, Link, Switch, Redirect } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import { updateClicked } from './redux/actions/actions';
+
 import Car from './Car';
 import CarDetail from './CarDetail';
 
 import About from './About';
 import Counter from './Counter';
-import ErrorBoundary from './ErrorBoundary';
+import StarWarsChars from './StarWarsChars';
 
-import { connect } from 'react-redux';
-import { updateClicked } from './redux/actions/actions';
+import ErrorBoundary from './ErrorBoundary';
 
 export const ClickedContext = React.createContext(false);
 
 class App extends Component {
     constructor(props) {
-        console.log('constructor');
-
         super(props);
 
         this.state = {
@@ -34,8 +34,9 @@ class App extends Component {
             ],
             // clicked: false,
             showCars: true,
-            title: 'Title',
-            isLogged: false
+            title: 'React theory',
+            isLogged: false,
+            isDarkSide: false
         };
     }
 
@@ -64,11 +65,6 @@ class App extends Component {
     };
 
     deleteCar(carIndex) {
-        if (true) {
-            console.log('bla');
-        } else {
-            console.log('bla');
-        }
         const cars = [...this.state.cars].splice(carIndex, 1);
 
         this.setState({ cars });
@@ -117,11 +113,10 @@ class App extends Component {
             });
         }
 
-        console.log('app', this.props);
         return (
             <div className={'App'}>
                 <nav className="nav">
-                    <ul>
+                    <ul style={{ margin: 0, padding: 0 }}>
                         <li>
                             <NavLink
                                 to={{
@@ -134,31 +129,38 @@ class App extends Component {
                                 Home
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink
-                                to="/about"
-                                activeStyle={{
-                                    textTransform: 'uppercase'
-                                }}
-                            >
-                                About
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/cars">Cars</NavLink>
-                        </li>
+                        {this.state.isLogged ? (
+                            <li>
+                                <NavLink
+                                    to="/about"
+                                    activeStyle={{
+                                        textTransform: 'uppercase'
+                                    }}
+                                >
+                                    About
+                                </NavLink>
+                            </li>
+                        ) : null}
+
+                        {this.state.isLogged ? (
+                            <li>
+                                <NavLink to="/cars">Cars</NavLink>
+                            </li>
+                        ) : null}
 
                         <li>
                             <NavLink to="/counter">Counter</NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/swc">Star Wars Chars</NavLink>
+                        </li>
                     </ul>
                 </nav>
 
-                <h1>{this.state.title}</h1>
-
                 <button
                     style={{
-                        margin: '0 auto 20px'
+                        margin: '20px auto 0',
+                        textTransform: 'uppercase'
                     }}
                     onClick={() =>
                         this.setState({
@@ -168,6 +170,8 @@ class App extends Component {
                 >
                     {this.state.isLogged ? 'Logout' : 'Login'}
                 </button>
+
+                <h1>{this.state.title}</h1>
 
                 <hr />
 
@@ -217,6 +221,31 @@ class App extends Component {
                                         Change clicked
                                     </button>
                                 </ClickedContext.Provider>
+                            );
+                        }}
+                    />
+
+                    <Route
+                        path="/swc"
+                        render={() => {
+                            return (
+                                <React.Fragment>
+                                    <h2>Star Wars Characters</h2>
+
+                                    <StarWarsChars
+                                        side={this.state.isDarkSide ? 'dark' : 'light'}
+                                    />
+
+                                    <button
+                                        onClick={() =>
+                                            this.setState({
+                                                isDarkSide: !this.state.isDarkSide
+                                            })
+                                        }
+                                    >
+                                        go to {!this.state.isDarkSide ? 'dark' : 'light'} side
+                                    </button>
+                                </React.Fragment>
                             );
                         }}
                     />
