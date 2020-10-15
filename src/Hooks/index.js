@@ -6,6 +6,7 @@ import MemoExample from './MemoExample';
 import CallbackExample from './CallbackExample';
 import ContextExample from './ContextExample/Parent';
 import ReducerExample from './ReducerExample/Parent';
+import CustomExamples from './CustomExamples';
 
 const Hooks = () => {
     const n1 = 'John Duglas';
@@ -43,7 +44,7 @@ const Hooks = () => {
 
                 <button onClick={() => setName(name === n1 ? n2 : n1)}>Update name</button>
             </div>
-            <hr />
+            <r />
             <FetchEffectExample />
             <hr />
             <RefExample />
@@ -55,6 +56,8 @@ const Hooks = () => {
             <ContextExample />
             <hr />
             <ReducerExample />
+            <hr />
+            <CustomExamples />
         </div>
     );
 };
