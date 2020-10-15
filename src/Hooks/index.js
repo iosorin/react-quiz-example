@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import FetchEffectExample from './FetchEffectExample';
 import RefExample from './RefExample';
 
@@ -15,14 +15,18 @@ const Hooks = () => {
 
     const [pos, setPos] = useState({ left: 0, top: 0 });
 
+    const mouseMoveTarget = useRef(null);
+
     useEffect(() => {
+        const target = mouseMoveTarget.current;
+
         function handleMouseMove(e) {
             setPos({ left: e.pageX, top: e.pageY });
         }
 
-        document.addEventListener('mousemove', handleMouseMove);
+        target.addEventListener('mousemove', handleMouseMove);
 
-        return () => document.removeEventListener('mousemove', handleMouseMove);
+        return () => target.removeEventListener('mousemove', handleMouseMove);
     });
 
     function renderPos() {
@@ -41,11 +45,13 @@ const Hooks = () => {
 
     return (
         <div>
-            <h2>State, Effect Examples</h2>
+            <div className="mousemove-target" ref={mouseMoveTarget}>
+                <h2>State, Effect Examples</h2>
 
-            {renderPos()}
+                {renderPos()}
 
-            <button onClick={() => setName(name === n1 ? n2 : n1)}>Update name</button>
+                <button onClick={() => setName(name === n1 ? n2 : n1)}>Update name</button>
+            </div>
             <hr />
 
             <FetchEffectExample />

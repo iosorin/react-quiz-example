@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Hooks2 = () => {
+const FetchEffectExample = () => {
     const [type, setType] = useState('users');
     const [data, setData] = useState([]);
 
@@ -23,4 +23,4 @@ const Hooks2 = () => {
     );
 };
 
-export default Hooks2;
+export default FetchEffectExample;
