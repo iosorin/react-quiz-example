@@ -9,13 +9,13 @@ import Car from './Car';
 import CarDetail from './CarDetail';
 
 import About from './About';
-import Counter from './Counter';
+import Counter from './Counters/Counter';
+import Hooks from './Hooks';
 import StarWarsChars from './StarWarsChars';
 
 import ErrorBoundary from './ErrorBoundary';
 
 export const ClickedContext = React.createContext(false);
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -154,6 +154,16 @@ class App extends Component {
                         <li>
                             <NavLink to="/swc">Star Wars Chars</NavLink>
                         </li>
+                        <li>
+                            <NavLink
+                                to={{
+                                    pathname: '/hooks'
+                                }}
+                                exact
+                            >
+                                Hooks 3
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
 
@@ -181,6 +191,7 @@ class App extends Component {
                     {this.state.isLogged ? <Route exact path="/about" component={About} /> : null}
 
                     <Route path="/cars/:name" component={CarDetail} />
+                    <Route path="/hooks" component={Hooks} />
 
                     <Route
                         path="/cars"
