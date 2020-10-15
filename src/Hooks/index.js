@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+
 import FetchEffectExample from './FetchEffectExample';
 import RefExample from './RefExample';
 import MemoExample from './MemoExample';
+import CallbackExample from './CallbackExample';
+import ContextExample from './ContextExample/Parent';
 
 const Hooks = () => {
     const n1 = 'John Duglas';
@@ -45,6 +48,11 @@ const Hooks = () => {
             <RefExample />
             <hr />
             <MemoExample />
+            <hr />
+            <CallbackExample />
+
+            <hr />
+            <ContextExample />
         </div>
     );
 };
