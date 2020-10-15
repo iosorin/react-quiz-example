@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import FetchEffectExample from './FetchEffectExample';
 import RefExample from './RefExample';
+import MemoExample from './MemoExample';
 
 const Hooks = () => {
     const n1 = 'John Duglas';
@@ -29,35 +30,21 @@ const Hooks = () => {
         return () => target.removeEventListener('mousemove', handleMouseMove);
     });
 
-    function renderPos() {
-        return (
-            <ul>
-                {Object.keys(pos).map((key) => {
-                    return (
-                        <li key={pos[key]}>
-                            {key}: {pos[key]}
-                        </li>
-                    );
-                })}
-            </ul>
-        );
-    }
-
     return (
         <div>
             <div className="mousemove-target" ref={mouseMoveTarget}>
                 <h2>State, Effect Examples</h2>
 
-                {renderPos()}
+                <code>{JSON.stringify(pos, null, 2)}</code>
 
                 <button onClick={() => setName(name === n1 ? n2 : n1)}>Update name</button>
             </div>
             <hr />
-
             <FetchEffectExample />
             <hr />
-
             <RefExample />
+            <hr />
+            <MemoExample />
         </div>
     );
 };
