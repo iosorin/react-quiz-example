@@ -5,6 +5,7 @@ import RefExample from './RefExample';
 import MemoExample from './MemoExample';
 import CallbackExample from './CallbackExample';
 import ContextExample from './ContextExample/Parent';
+import ReducerExample from './ReducerExample/Parent';
 
 const Hooks = () => {
     const n1 = 'John Duglas';
@@ -50,9 +51,10 @@ const Hooks = () => {
             <MemoExample />
             <hr />
             <CallbackExample />
-
             <hr />
             <ContextExample />
+            <hr />
+            <ReducerExample />
         </div>
     );
 };

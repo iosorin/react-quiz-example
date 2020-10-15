@@ -8,8 +8,8 @@ function Parent() {
         <AlertProvider>
             <div>
                 <h2>Context example</h2>
-                <Alert />
 
+                <Alert />
                 <Button />
             </div>
         </AlertProvider>
