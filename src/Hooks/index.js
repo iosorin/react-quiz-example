@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import FetchEffectExample from './FetchEffectExample';
+import RefExample from './RefExample';
 
 const Hooks = () => {
     const n1 = 'John Duglas';
@@ -39,13 +41,17 @@ const Hooks = () => {
 
     return (
         <div>
-            <h2>Pos:</h2>
+            <h2>State, Effect Examples</h2>
 
             {renderPos()}
 
+            <button onClick={() => setName(name === n1 ? n2 : n1)}>Update name</button>
             <hr />
 
-            <button onClick={() => setName(name === n1 ? n2 : n1)}>Update name</button>
+            <FetchEffectExample />
+            <hr />
+
+            <RefExample />
         </div>
     );
 };

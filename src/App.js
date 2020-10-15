@@ -115,6 +115,8 @@ class App extends Component {
 
         return (
             <div className={'App'}>
+                <b>{this.state.title}</b>
+
                 <nav className="nav">
                     <ul style={{ margin: 0, padding: 0 }}>
                         <li>
@@ -161,7 +163,7 @@ class App extends Component {
                                 }}
                                 exact
                             >
-                                Hooks 3
+                                Hooks
                             </NavLink>
                         </li>
                     </ul>
@@ -170,7 +172,8 @@ class App extends Component {
                 <button
                     style={{
                         margin: '20px auto 0',
-                        textTransform: 'uppercase'
+                        textTransform: 'uppercase',
+                        display: 'block'
                     }}
                     onClick={() =>
                         this.setState({
@@ -180,8 +183,6 @@ class App extends Component {
                 >
                     {this.state.isLogged ? 'Logout' : 'Login'}
                 </button>
-
-                <h1>{this.state.title}</h1>
 
                 <hr />
 
