@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { useInput, useLogger } from './hooks';
 
 const CustomExamples = () => {
@@ -11,11 +10,12 @@ const CustomExamples = () => {
     return (
         <div>
             <h2>My own Custpm examples</h2>
-            <b>name: {name.value};</b> &nbsp;
-            <b>lastname: {lastname.value};</b>&nbsp;
+            {name.value.length ? <b>name: {name.value};</b> : null}&nbsp;
+            {lastname.value.length ? <b>lastname: {lastname.value};</b> : null}&nbsp;
             <br />
-            <input type="text" {...name} />
-            <input type="text" {...lastname} />
+            <input type="text" {...name.bind} />
+            <button onClick={name.clear}>clear name</button>
+            <input type="text" {...lastname.bind} />
         </div>
     );
 };
