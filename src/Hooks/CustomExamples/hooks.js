@@ -14,8 +14,14 @@ export function useInput(initialValue) {
         setValue(event.target.value);
     };
 
+    const clear = () => setValue('');
+
     return {
+        bind: {
+            value,
+            onChange
+        },
         value,
-        onChange
+        clear
     };
 }
