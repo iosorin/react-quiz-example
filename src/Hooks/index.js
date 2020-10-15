@@ -37,6 +37,9 @@ const Hooks = () => {
 
     return (
         <div>
+            <a href="https://usehooks.com/" target="_blank">
+                <h2>https://usehooks.com/</h2>
+            </a>
             <div className="mousemove-target" ref={mouseMoveTarget}>
                 <h2>State, Effect Examples</h2>
 
