@@ -8,13 +8,14 @@ const ChildAlert = () => {
 
     return (
         <div
+            onClick={alert.hide}
             style={{
                 backgroundColor: 'red',
                 padding: '10px',
                 margin: '10px'
             }}
         >
-            Child Alert: очень важное сообщение
+            {alert.text}
         </div>
     );
 };

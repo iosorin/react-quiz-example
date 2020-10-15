@@ -7,9 +7,9 @@ function Parent() {
     return (
         <AlertProvider>
             <div>
-                <h2>Context example</h2>
-                <Alert />
+                <h2>Reducer example (AlertContext)</h2>
 
+                <Alert />
                 <Button />
             </div>
         </AlertProvider>
