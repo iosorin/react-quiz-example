@@ -8,23 +8,19 @@ import Drawer from '../../components/Navigation/Drawer/Drawer';
 
 class Layout extends Component {
     state = {
-        menu: false
+        menu: false,
     };
 
     toggleMenuHandler = () => {
         this.setState({
-            menu: !this.state.menu
+            menu: !this.state.menu,
         });
     };
 
     render() {
         return (
             <div className={classes.Layout}>
-                <Drawer
-                    isOpen={this.state.menu}
-                    isLogged={this.props.isLogged}
-                    onToggle={this.toggleMenuHandler}
-                />
+                <Drawer isOpen={this.state.menu} isLogged={this.props.isLogged} onToggle={this.toggleMenuHandler} />
                 <MenuToggle isOpen={this.state.menu} onToggle={this.toggleMenuHandler} />
                 <main>{this.props.children}</main>
             </div>
@@ -34,7 +30,7 @@ class Layout extends Component {
 
 function mapStateToProps(state) {
     return {
-        isLogged: !!state.auth.token
+        isLogged: !!state.auth.token,
     };
 }
 

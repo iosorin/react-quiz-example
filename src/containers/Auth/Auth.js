@@ -18,8 +18,8 @@ class Auth extends Component {
                 touched: false,
                 validation: {
                     required: true,
-                    email: true
-                }
+                    email: true,
+                },
             },
             password: {
                 value: '',
@@ -30,10 +30,10 @@ class Auth extends Component {
                 touched: false,
                 validation: {
                     required: true,
-                    minLength: 6
-                }
-            }
-        }
+                    minLength: 6,
+                },
+            },
+        },
     };
 
     submitHandler = (e) => {
@@ -90,7 +90,7 @@ class Auth extends Component {
 
         this.setState({
             formControls,
-            isFormValid
+            isFormValid,
         });
     };
 
@@ -121,19 +121,11 @@ class Auth extends Component {
                 <form onSubmit={this.submitHandler} className={classes.AuthForm}>
                     {this.renderInput()}
 
-                    <Button
-                        type="success"
-                        disabled={!this.state.isFormValid}
-                        onClick={this.loginHandler}
-                    >
+                    <Button type="success" disabled={!this.state.isFormValid} onClick={this.loginHandler}>
                         Войти
                     </Button>
 
-                    <Button
-                        type="primary"
-                        disabled={!this.state.isFormValid}
-                        onClick={this.registerHandler}
-                    >
+                    <Button type="primary" disabled={!this.state.isFormValid} onClick={this.registerHandler}>
                         Зарегестрироваться
                     </Button>
                 </form>
@@ -144,7 +136,7 @@ class Auth extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        auth: (email, pwd, isLogin) => dispatch(auth(email, pwd, isLogin))
+        auth: (email, pwd, isLogin) => dispatch(auth(email, pwd, isLogin)),
     };
 }
 

@@ -6,7 +6,7 @@ import {
     FINISH_QUIZ,
     QUIZE_RETRY,
     QUIZ_NEXT_QUESTION,
-    QUIZ_SET_STATE
+    QUIZ_SET_STATE,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -17,7 +17,7 @@ const initialState = {
     isFinished: false,
     activeQuestion: 0,
     answerState: null,
-    quiz: []
+    quiz: [],
 };
 
 export default function quizReducer(state = initialState, action) {
@@ -25,47 +25,47 @@ export default function quizReducer(state = initialState, action) {
         case FETCH_QUIZES_START:
             return {
                 ...state,
-                loading: true
+                loading: true,
             };
         case FETCH_QUIZES_SUCCESS:
             return {
                 ...state,
                 quizes: action.quizes,
-                loading: false
+                loading: false,
             };
 
         case FETCH_QUIZ_SUCCESS:
             return {
                 ...state,
                 quiz: action.quiz,
-                loading: false
+                loading: false,
             };
 
         case FETCH_QUIZES_ERROR:
             return {
                 ...state,
                 loading: false,
-                error: action.error
+                error: action.error,
             };
 
         case QUIZ_SET_STATE:
             return {
                 ...state,
                 answerState: action.answerState,
-                results: action.results
+                results: action.results,
             };
 
         case QUIZ_NEXT_QUESTION:
             return {
                 ...state,
                 answerState: null,
-                activeQuestion: action.number
+                activeQuestion: action.number,
             };
 
         case FINISH_QUIZ:
             return {
                 ...state,
-                isFinished: true
+                isFinished: true,
             };
 
         case QUIZE_RETRY:
@@ -74,7 +74,7 @@ export default function quizReducer(state = initialState, action) {
                 activeQuestion: 0,
                 answerState: null,
                 isFinished: false,
-                results: {}
+                results: {},
             };
 
         default:

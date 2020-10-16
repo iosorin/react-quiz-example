@@ -6,5 +6,5 @@ import authReducer from './auth';
 export default combineReducers({
     quiz: quizReducer,
     create: createReducer,
-    auth: authReducer
+    auth: authReducer,
 });

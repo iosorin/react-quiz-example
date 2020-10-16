@@ -28,18 +28,18 @@ class Quiz extends Component {
 
             this.setState({
                 answerState: { [answerId]: 'success' },
-                results
+                results,
             });
 
             const tm = window.setTimeout(() => {
                 if (this.isQuizFinished()) {
                     this.setState({
-                        isFinished: true
+                        isFinished: true,
                     });
                 } else {
                     this.setState({
                         answerState: null,
-                        activeQuestion: this.props.activeQuestion + 1
+                        activeQuestion: this.props.activeQuestion + 1,
                     });
                 }
                 window.clearTimeout(tm);
@@ -49,7 +49,7 @@ class Quiz extends Component {
 
             this.setState({
                 answerState: { [answerId]: 'error' },
-                results
+                results,
             });
         }
     };
@@ -67,9 +67,7 @@ class Quiz extends Component {
             <div className={classes.Quiz}>
                 <div className={classes.QuizWrapper}>
                     <h1>Тест</h1>
-                    {this.props.loading ||
-                    !this.props.quiz ||
-                    !this.props.quiz[this.props.activeQuestion] ? (
+                    {this.props.loading || !this.props.quiz || !this.props.quiz[this.props.activeQuestion] ? (
                         <Loader />
                     ) : this.props.isFinished ? (
                         <FinishedQuiz
@@ -100,7 +98,7 @@ function mapStateToProps(state) {
         activeQuestion: state.quiz.activeQuestion,
         answerState: state.quiz.answerState, // {[id]: 'success' 'error'}
         quiz: state.quiz.quiz,
-        loading: state.quiz.loading
+        loading: state.quiz.loading,
     };
 }
 
@@ -108,7 +106,7 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchQuizById: (id) => dispatch(fetchQuizById(id)),
         quizAnswerClick: (answerId) => dispatch(quizAnswerClick(answerId)),
-        retryQuiz: () => dispatch(retryQuiz())
+        retryQuiz: () => dispatch(retryQuiz()),
     };
 }
 

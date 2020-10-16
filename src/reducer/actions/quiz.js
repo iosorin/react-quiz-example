@@ -6,7 +6,7 @@ import {
     FINISH_QUIZ,
     QUIZ_SET_STATE,
     QUIZ_NEXT_QUESTION,
-    QUIZE_RETRY
+    QUIZE_RETRY,
 } from './actionTypes';
 import axiosQuiz from '../../axios';
 
@@ -20,7 +20,7 @@ export function fetchQuizes(payload) {
             Object.keys(response.data).forEach((key, index) => {
                 quizes.push({
                     id: key,
-                    name: 'Тест № ' + index + 1
+                    name: 'Тест № ' + index + 1,
                 });
             });
 
@@ -51,28 +51,28 @@ export function fetchQuizById(quizId) {
 
 export function fetchQuizesStart() {
     return {
-        type: FETCH_QUIZES_START
+        type: FETCH_QUIZES_START,
     };
 }
 
 export function fetchQuizSuccess(quiz) {
     return {
         type: FETCH_QUIZ_SUCCESS,
-        quiz
+        quiz,
     };
 }
 
 export function fetchQuizesSuccess(quizes) {
     return {
         type: FETCH_QUIZES_SUCCESS,
-        quizes
+        quizes,
     };
 }
 
 export function fetchQuizesError(error) {
     return {
         type: FETCH_QUIZES_ERROR,
-        error
+        error,
     };
 }
 
@@ -80,20 +80,20 @@ export function quizSetState(answerState, results) {
     return {
         type: QUIZ_SET_STATE,
         answerState,
-        results
+        results,
     };
 }
 
 function finishQuiz() {
     return {
-        type: FINISH_QUIZ
+        type: FINISH_QUIZ,
     };
 }
 
 function quizNextQuestion(questionNumber) {
     return {
         type: QUIZ_NEXT_QUESTION,
-        number: questionNumber
+        number: questionNumber,
     };
 }
 
@@ -142,6 +142,6 @@ export function quizAnswerClick(answerId) {
 
 export function retryQuiz() {
     return {
-        type: QUIZE_RETRY
+        type: QUIZE_RETRY,
     };
 }
