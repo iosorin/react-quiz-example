@@ -1,0 +1,33 @@
+html {
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: $sans-serif;
+    color: $font-color;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    display: block;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+::selection {
+    background: $primary;
+    color: white;
+}

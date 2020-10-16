@@ -1,6 +1,6 @@
 .Backdrop {
     z-index: 50;
-    background: rgba(black, 0.5);
+    background: $backdrop-background;
     position: fixed;
     top: 0;
     left: 0;

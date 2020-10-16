@@ -10,7 +10,7 @@ import {
 } from './actionTypes';
 import axiosQuiz from '../../axios';
 
-export function fetchQuizes(payload) {
+export function fetchQuizes() {
     return async (dispatch) => {
         dispatch(fetchQuizesStart());
         try {

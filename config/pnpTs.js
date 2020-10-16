@@ -7,5 +7,11 @@ exports.resolveModuleName = (typescript, moduleName, containingFile, compilerOpt
 };
 
 exports.resolveTypeReferenceDirective = (typescript, moduleName, containingFile, compilerOptions, resolutionHost) => {
-    return resolveModuleName(moduleName, containingFile, compilerOptions, resolutionHost, typescript.resolveTypeReferenceDirective);
+    return resolveModuleName(
+        moduleName,
+        containingFile,
+        compilerOptions,
+        resolutionHost,
+        typescript.resolveTypeReferenceDirective
+    );
 };
