@@ -19,9 +19,9 @@ class App extends Component {
     render() {
         let routes = (
             <Switch>
-                <Route path="/auth" component={Auth} />
-                <Route path="/quiz/:id" component={Quiz} />
-                <Route path="/" exact component={QuizList} />
+                <Route component={Auth} path="/auth" />
+                <Route component={Quiz} path="/quiz/:id" />
+                <Route component={QuizList} exact path="/" />
                 <Redirect to="/" />
             </Switch>
         );
@@ -29,10 +29,10 @@ class App extends Component {
         if (this.props.isLogged) {
             routes = (
                 <Switch>
-                    <Route path="/quiz-creator" component={QuizCreator} />
-                    <Route path="/quiz/:id" component={Quiz} />
-                    <Route path="/logout" component={Logout} />
-                    <Route path="/" exact component={QuizList} />
+                    <Route component={QuizCreator} path="/quiz-creator" />
+                    <Route component={Quiz} path="/quiz/:id" />
+                    <Route component={Logout} path="/logout" />
+                    <Route component={QuizList} exact path="/" />
                     <Redirect to="/" />
                 </Switch>
             );
@@ -44,13 +44,13 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-        isLogged: !!state.auth.token
+        isLogged: !!state.auth.token,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        autoLogin: () => dispatch(autoLogin())
+        autoLogin: () => dispatch(autoLogin()),
     };
 }
 

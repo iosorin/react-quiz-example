@@ -8,6 +8,10 @@
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
+        "@types/jest": "^26.0.14",
+        "@types/node": "^14.11.8",
+        "@types/react": "^16.9.52",
+        "@types/react-dom": "^16.9.8",
         "@typescript-eslint/eslint-plugin": "^2.10.0",
         "@typescript-eslint/parser": "^2.10.0",
         "axios": "^0.20.0",
@@ -65,6 +69,7 @@
         "style-loader": "0.23.1",
         "terser-webpack-plugin": "2.3.8",
         "ts-pnp": "1.1.6",
+        "typescript": "^4.0.3",
         "url-loader": "2.3.0",
         "webpack": "4.42.0",
         "webpack-dev-server": "3.11.0",
@@ -74,10 +79,8 @@
     "scripts": {
         "start": "node scripts/start.js",
         "build": "node scripts/build.js",
-        "test": "node scripts/test.js"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
+        "test": "node scripts/test.js",
+        "cc:eslint": "rm -rf node_modules/.cache/eslint-loader"
     },
     "browserslist": {
         "production": [
@@ -145,5 +148,10 @@
         "presets": [
             "react-app"
         ]
+    },
+    "devDependencies": {
+        "eslint-config-prettier": "^6.12.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "prettier": "^2.1.2"
     }
 }

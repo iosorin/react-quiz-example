@@ -10,11 +10,7 @@ const AnswersList = (props) => {
                     <AnswerItem
                         answer={answer}
                         key={index}
-                        state={
-                            props.state
-                                ? props.state[answer.id]
-                                : null
-                        }
+                        state={props.state ? props.state[answer.id] : null}
                         onAnswerClick={props.onAnswerClick}
                     />
                 );

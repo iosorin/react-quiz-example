@@ -18,7 +18,7 @@ const FinishedQuiz = (props) => {
                     const cls = [
                         'fa',
                         props.results[quizItem.id] === 'error' ? 'fa-times' : 'fa-check',
-                        classes[props.results[quizItem.id]]
+                        classes[props.results[quizItem.id]],
                     ];
 
                     // debugger;
@@ -28,7 +28,7 @@ const FinishedQuiz = (props) => {
                             <strong>
                                 {index + 1} &nbsp;
                                 {quizItem.question}
-                                <i className={cls.join(' ')}></i>
+                                <i className={cls.join(' ')} />
                             </strong>
                         </li>
                     );

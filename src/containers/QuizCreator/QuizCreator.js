@@ -14,7 +14,7 @@ function createOptionControl(number) {
         {
             label: 'Вариант ' + number,
             errorMessage: 'Заполните поле',
-            id: number
+            id: number,
         },
         { required: true }
     );
@@ -25,21 +25,21 @@ function createFormContols() {
         question: createControl(
             {
                 label: 'Введите вопрос',
-                errorMessage: 'Заполните поле'
+                errorMessage: 'Заполните поле',
             },
             { required: true }
         ),
         option1: createOptionControl(1),
         option2: createOptionControl(2),
         option3: createOptionControl(3),
-        option4: createOptionControl(4)
+        option4: createOptionControl(4),
     };
 }
 class QuizCreator extends Component {
     state = {
         rightAnswerId: 1,
         formControls: createFormContols(),
-        isFormValid: false
+        isFormValid: false,
     };
 
     submitHandler = (e) => {
@@ -52,7 +52,7 @@ class QuizCreator extends Component {
         this.setState({
             rightAnswerId: 1,
             isFormValid: false,
-            formControls: createFormContols()
+            formControls: createFormContols(),
         });
 
         this.props.finishCreateQuiz();
@@ -70,21 +70,21 @@ class QuizCreator extends Component {
             answers: [
                 {
                     text: option1.value,
-                    id: option1.id
+                    id: option1.id,
                 },
                 {
                     text: option2.value,
-                    id: option2.id
+                    id: option2.id,
                 },
                 {
                     text: option3.value,
-                    id: option3.id
+                    id: option3.id,
                 },
                 {
                     text: option4.value,
-                    id: option4.id
-                }
-            ]
+                    id: option4.id,
+                },
+            ],
         };
 
         this.props.createQuizQuestion(questionItem);
@@ -93,7 +93,7 @@ class QuizCreator extends Component {
         this.setState({
             rightAnswerId: 1,
             formControls: createFormContols(),
-            isFormValid: false
+            isFormValid: false,
         });
     };
 
@@ -114,13 +114,13 @@ class QuizCreator extends Component {
 
         this.setState({
             formControls,
-            isFormValid
+            isFormValid,
         });
     };
 
     selectChangeHandler = (e) => {
         this.setState({
-            rightAnswerId: +e.target.value
+            rightAnswerId: +e.target.value,
         });
     };
 
@@ -152,20 +152,20 @@ class QuizCreator extends Component {
                 options={[
                     {
                         text: 1,
-                        value: 1
+                        value: 1,
                     },
                     {
                         text: 2,
-                        value: 2
+                        value: 2,
                     },
                     {
                         text: 3,
-                        value: 3
+                        value: 3,
                     },
                     {
                         text: 4,
-                        value: 4
-                    }
+                        value: 4,
+                    },
                 ]}
                 onChange={this.selectChangeHandler}
             />
@@ -181,19 +181,11 @@ class QuizCreator extends Component {
 
                         {select}
 
-                        <Button
-                            type="primary"
-                            disabled={!this.state.isFormValid}
-                            onClick={this.addQuestionHandler}
-                        >
+                        <Button type="primary" disabled={!this.state.isFormValid} onClick={this.addQuestionHandler}>
                             Добавить вопрос
                         </Button>
 
-                        <Button
-                            type="success"
-                            disabled={this.props.quiz.length === 0}
-                            onClick={this.createQuizHandler}
-                        >
+                        <Button type="success" disabled={this.props.quiz.length === 0} onClick={this.createQuizHandler}>
                             Создать тест
                         </Button>
                     </form>
@@ -205,14 +197,14 @@ class QuizCreator extends Component {
 
 function mapStateToProps(state) {
     return {
-        quiz: state.create.quiz
+        quiz: state.create.quiz,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         createQuizQuestion: (item) => dispatch(createQuizQuestion(item)),
-        finishCreateQuiz: () => dispatch(finishCreateQuiz())
+        finishCreateQuiz: () => dispatch(finishCreateQuiz()),
     };
 }
 

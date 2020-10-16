@@ -6,7 +6,7 @@ export function auth(email, password, isLogin) {
         const settings = {
             email,
             password,
-            returnSecureToken: true
+            returnSecureToken: true,
         };
 
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp';
@@ -38,7 +38,7 @@ export function auth(email, password, isLogin) {
 export function authSuccess(token) {
     return {
         type: AUTH_SUCCESS,
-        token
+        token,
     };
 }
 
@@ -75,6 +75,6 @@ export function logout() {
     localStorage.removeItem('expirationDate');
 
     return {
-        type: AUTH_LOGOUT
+        type: AUTH_LOGOUT,
     };
 }

@@ -1,7 +1,7 @@
 import { AUTH_LOGOUT, AUTH_SUCCESS } from '../actions/actionTypes';
 
 const initialState = {
-    token: null
+    token: null,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -9,14 +9,14 @@ export default function authReducer(state = initialState, action) {
         case AUTH_SUCCESS: {
             return {
                 ...state,
-                token: action.token
+                token: action.token,
             };
         }
 
         case AUTH_LOGOUT: {
             return {
                 ...state,
-                token: null
+                token: null,
             };
         }
 

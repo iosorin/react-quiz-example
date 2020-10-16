@@ -27,8 +27,8 @@ class Drawer extends Component {
             {
                 to: '/',
                 label: 'Список',
-                exact: true
-            }
+                exact: true,
+            },
         ];
 
         if (this.props.isLogged) {
@@ -38,7 +38,7 @@ class Drawer extends Component {
             links.push({
                 to: '/auth',
                 label: 'Авторизация',
-                exact: true
+                exact: true,
             });
         }
 

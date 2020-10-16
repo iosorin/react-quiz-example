@@ -36,13 +36,13 @@ class QuizList extends Component {
 function mapStateToProps(state) {
     return {
         quizes: state.quiz.quizes,
-        loading: state.quiz.loading
+        loading: state.quiz.loading,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchQuizes: (payload) => dispatch(fetchQuizes(payload))
+        fetchQuizes: (payload) => dispatch(fetchQuizes(payload)),
     };
 }
 
