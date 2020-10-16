@@ -43,10 +43,10 @@
 }
 
 .error {
-    background: rgba(red, 0.6);
+    background: $error;
 }
 
 .primary {
-    background: #6820c6;
+    background: $primary;
     color: #fff;
 }

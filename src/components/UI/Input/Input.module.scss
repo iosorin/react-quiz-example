@@ -3,7 +3,7 @@
 
     &.invalid {
         label {
-            color: rgba(red, 0.6);
+            color: $error;
         }
     }
 
@@ -26,7 +26,7 @@
     }
 
     span {
-        color: rgba(red, 0.6);
+        color: $error;
         font-size: 12px;
         font-weight: bold;
     }

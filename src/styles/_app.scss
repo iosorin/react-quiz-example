@@ -27,6 +27,19 @@ ul {
     padding: 0;
 }
 
+a {
+    color: #000;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    text-shadow: 1px 1px 1px rgba(black, 0.2);
+
+    &:hover,
+    &.active {
+        text-decoration: underline;
+    }
+}
+
 ::selection {
     background: $primary;
     color: white;
