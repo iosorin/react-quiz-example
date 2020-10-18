@@ -1,22 +1,23 @@
-import { QuizQuestionType } from 'types/quiz';
-import axiosQuiz from 'axios';
-import { CREATE_QUIZ_QUESTION, RESET_QUIZ_CREATION } from 'redux/contants';
+import axiosInstance from '@/axios';
+
+import { QUIZ } from '@/redux/contants';
+import { QuizQuestionType } from '@/types/quiz';
 
 type CreateQuizQuestionActionType = {
-    type: typeof CREATE_QUIZ_QUESTION;
+    type: typeof QUIZ.question.create;
     item: QuizQuestionType;
 };
 export function createQuizQuestion(item: QuizQuestionType): CreateQuizQuestionActionType {
     return {
-        type: CREATE_QUIZ_QUESTION,
+        type: QUIZ.question.create,
         item,
     };
 }
 
-type ResetQuizCreationActionType = { type: typeof RESET_QUIZ_CREATION };
+type ResetQuizCreationActionType = { type: typeof QUIZ.creation.reset };
 export function resetQuizCreation(): ResetQuizCreationActionType {
     return {
-        type: RESET_QUIZ_CREATION,
+        type: QUIZ.creation.reset,
     };
 }
 
@@ -27,7 +28,7 @@ export function finishCreateQuiz(): any {
         const { quiz } = getState().create;
 
         try {
-            await axiosQuiz.post('/quizes.json', quiz);
+            await axiosInstance.post('/quizes.json', quiz);
 
             dispatch(resetQuizCreation());
         } catch (error) {

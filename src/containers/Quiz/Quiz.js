@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
-import { fetchQuizById, quizAnswerClick, retryQuiz } from 'redux/actions/quiz';
+import { fetchQuizById, quizAnswerClick, retryQuiz } from '@/redux/actions/quiz';
 
-import ActiveQuiz from 'components/ActiveQuiz/ActiveQuiz';
-import FinishedQuiz from 'components/FinishedQuiz/FinishedQuiz';
-import Loader from 'components/UI/Loader/Loader';
+import ActiveQuiz from '@/components/ActiveQuiz/ActiveQuiz';
+import FinishedQuiz from '@/components/FinishedQuiz/FinishedQuiz';
+import Loader from '@/components/UI/Loader/Loader';
 
 import classes from './Quiz.module.scss';
 

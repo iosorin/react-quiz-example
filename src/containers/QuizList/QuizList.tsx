@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
+
 import { connect } from 'react-redux';
+import { fetchQuizes } from '@/redux/actions/quiz';
+import { QuizListItemType } from '@/types/quiz';
+
+import Loader from '@/components/UI/Loader/Loader';
+import { NavLink } from 'react-router-dom';
 
 import classes from './QuizList.module.scss';
-import { NavLink } from 'react-router-dom';
-import Loader from 'components/UI/Loader/Loader';
-import { fetchQuizes } from 'redux/actions/quiz';
-import { QuizListItemType } from 'types/quiz';
 
 const QuizList = (props: any) => {
     useEffect(() => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { NavLink } from 'react-router-dom';
-import Backdrop from 'components/UI/Backdrop/Backdrop';
+import Backdrop from '@/components/UI/Backdrop/Backdrop';
 
 import classes from './Drawer.module.scss';
 

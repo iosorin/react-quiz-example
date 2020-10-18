@@ -1,15 +1,5 @@
+import { QUIZES, QUIZ } from '@/redux/contants';
 import { QuizInitialStateType } from 'types/quiz';
-
-import {
-    FETCH_QUIZES_ERROR,
-    FETCH_QUIZES_START,
-    FETCH_QUIZES_SUCCESS,
-    FETCH_QUIZ_SUCCESS,
-    FINISH_QUIZ,
-    QUIZE_RETRY,
-    QUIZ_NEXT_QUESTION,
-    QUIZ_SET_STATE,
-} from 'redux/contants';
 
 const initialState: QuizInitialStateType = {
     quizes: [],
@@ -24,53 +14,53 @@ const initialState: QuizInitialStateType = {
 
 export default function quizReducer(state = initialState, action: any): QuizInitialStateType {
     switch (action.type) {
-        case FETCH_QUIZES_START:
+        case QUIZES.fetch.start:
             return {
                 ...state,
                 loading: true,
             };
-        case FETCH_QUIZES_SUCCESS:
+        case QUIZES.fetch.success:
             return {
                 ...state,
                 quizes: action.quizes,
                 loading: false,
             };
 
-        case FETCH_QUIZ_SUCCESS:
+        case QUIZ.fetch.success:
             return {
                 ...state,
                 quiz: action.quiz,
                 loading: false,
             };
 
-        case FETCH_QUIZES_ERROR:
+        case QUIZES.fetch.error:
             return {
                 ...state,
                 loading: false,
                 error: action.error,
             };
 
-        case QUIZ_SET_STATE:
+        case QUIZ.state.set:
             return {
                 ...state,
                 answerState: action.answerState,
                 results: action.results,
             };
 
-        case QUIZ_NEXT_QUESTION:
+        case QUIZ.question.next:
             return {
                 ...state,
                 answerState: null,
                 activeQuestion: action.number,
             };
 
-        case FINISH_QUIZ:
+        case QUIZ.finish:
             return {
                 ...state,
                 isFinished: true,
             };
 
-        case QUIZE_RETRY:
+        case QUIZ.retry:
             return {
                 ...state,
                 activeQuestion: 0,

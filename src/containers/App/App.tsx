@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { autoLogin } from 'redux/actions/auth';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
-import Layout from 'hoc/Layout/Layout';
-import Quiz from 'containers/Quiz/Quiz';
-import QuizList from 'containers/QuizList/QuizList';
-import QuizCreator from 'containers/QuizCreator/QuizCreator';
-import Auth from 'containers/Auth/Auth';
-import Logout from 'components/Logout/Logout';
+import Layout from '@/hoc/Layout/Layout';
+import Quiz from '@/containers/Quiz/Quiz';
+import QuizList from '@/containers/QuizList/QuizList';
+import QuizCreator from '@/containers/QuizCreator/QuizCreator';
+import Auth from '@/containers/Auth/Auth';
+import Logout from '@/components/Logout/Logout';
 
-const App = (props) => {
+const App = (props: any) => {
     useEffect(() => {
         props.autoLogin();
     }, []);
@@ -40,13 +40,13 @@ const App = (props) => {
     return <Layout>{routes}</Layout>;
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
     return {
         isLogged: !!state.auth.token,
     };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
     return {
         autoLogin: () => dispatch(autoLogin()),
     };

@@ -63,6 +63,7 @@ module.exports = {
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-use-before-define": "off",
     },
+
     overrides: [
         {
             files: ["*.tsx"],
@@ -70,5 +71,11 @@ module.exports = {
                 "react/prop-types": "error",
             }
         }
-    ]
+    ],
+
+    settings: {
+        "import/resolver": {
+            typescript: {}
+        }
+    },
 };

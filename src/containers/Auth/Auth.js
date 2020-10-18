@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
-import { auth } from 'redux/actions/auth';
-import { createControl, validate, validateForm } from 'form/formFramework';
+import { auth } from '@/redux/actions/auth';
+import { createControl, validate, validateForm } from '@/form/formFramework';
 
-import Button from 'components/UI/Button/Button';
-import Input from 'components/UI/Input/Input';
+import Button from '@/components/UI/Button/Button';
+import Input from '@/components/UI/Input/Input';
 
 import classes from './Auth.module.scss';
 
