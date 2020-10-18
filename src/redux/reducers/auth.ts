@@ -1,5 +1,5 @@
 import { AuthInitialStateType } from 'types/auth';
-import { AUTH_LOGOUT, AUTH_SUCCESS } from '../actions/actionTypes';
+import { AUTH_LOGOUT, AUTH_SUCCESS } from 'redux/contants';
 
 const initialState: AuthInitialStateType = {
     token: null,

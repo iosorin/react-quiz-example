@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+
 import { connect } from 'react-redux';
+import { autoLogin } from 'redux/actions/auth';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
 import Layout from 'hoc/Layout/Layout';
-
-import Auth from 'containers/Auth/Auth';
 import Quiz from 'containers/Quiz/Quiz';
 import QuizList from 'containers/QuizList/QuizList';
 import QuizCreator from 'containers/QuizCreator/QuizCreator';
-import { autoLogin } from 'redux/actions/auth';
+import Auth from 'containers/Auth/Auth';
 import Logout from 'components/Logout/Logout';
 
 const App = (props) => {

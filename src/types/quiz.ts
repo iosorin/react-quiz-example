@@ -24,11 +24,13 @@ export type QuizListItemType = {
     name: string;
 };
 
+export type IDWithStatusType = { [key: number]: keyof typeof Status } | null;
+
 export type QuizInitialStateType = {
     quiz: QuizQuestionType[];
     activeQuestion: number;
-    results: { [key: number]: keyof typeof Status };
-    answerState: { [key: number]: keyof typeof Status } | null;
+    results: IDWithStatusType;
+    answerState: IDWithStatusType;
     quizes: QuizListItemType[];
     error: any;
     loading: boolean;

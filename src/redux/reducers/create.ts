@@ -1,4 +1,4 @@
-import { CREATE_QUIZ_QUESTION, RESET_QUIZ_CREATION } from '../actions/actionTypes';
+import { CREATE_QUIZ_QUESTION, RESET_QUIZ_CREATION } from 'redux/contants';
 import { QuizType, QuizQuestionType } from 'types/quiz';
 
 const itialState: QuizType = {

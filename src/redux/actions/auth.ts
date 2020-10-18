@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { AUTH_LOGOUT, AUTH_SUCCESS } from './actionTypes';
+import { AUTH_LOGOUT, AUTH_SUCCESS } from 'redux/contants';
 import { AuthInitialStateType } from 'types/auth';
 
-export function auth(email: string, password: string, isLogin: boolean) {
+export function auth(email: string, password: string, isLogin: boolean): any {
     return async (dispatch: any) => {
         const settings = {
             email,
@@ -45,7 +45,6 @@ type AuthSuccessType = {
     type: typeof AUTH_SUCCESS;
     payload: AuthInitialStateType;
 };
-
 export function authSuccess(payload: AuthInitialStateType): AuthSuccessType {
     return {
         type: AUTH_SUCCESS,
@@ -53,7 +52,7 @@ export function authSuccess(payload: AuthInitialStateType): AuthSuccessType {
     };
 }
 
-export function autoLogin() {
+export function autoLogin(): any {
     /* todo: fix any */
     return (dispatch: any) => {
         const data = localStorage.getItem('auth');
@@ -72,7 +71,7 @@ export function autoLogin() {
     };
 }
 
-export function autoLogout(time: number) {
+export function autoLogout(time: number): any {
     /* todo: fix any */
     return (dispatch: any) => {
         setTimeout(() => {
@@ -81,7 +80,8 @@ export function autoLogout(time: number) {
     };
 }
 
-export function logout(): { type: typeof AUTH_LOGOUT } {
+type LogoutActionType = { type: typeof AUTH_LOGOUT };
+export function logout(): LogoutActionType {
     localStorage.removeItem('auth');
 
     return {

@@ -1,21 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 import Backdrop from 'components/UI/Backdrop/Backdrop';
 
 import classes from './Drawer.module.scss';
 
-class Drawer extends Component {
-    renderLinks(links) {
+const Drawer = (props) => {
+    function renderLinks(links) {
         return links.map((link, index) => {
             return (
                 <li key={index}>
-                    <NavLink
-                        activeClassName={classes.active}
-                        exact={link.exact}
-                        onClick={this.props.onToggle}
-                        to={link.to}
-                    >
+                    <NavLink activeClassName={classes.active} exact={link.exact} onClick={props.onToggle} to={link.to}>
                         {link.label}
                     </NavLink>
                 </li>
@@ -23,7 +18,7 @@ class Drawer extends Component {
         });
     }
 
-    getLinks() {
+    function getLinks() {
         const links = [
             {
                 to: '/',
@@ -32,7 +27,7 @@ class Drawer extends Component {
             },
         ];
 
-        if (this.props.isLogged) {
+        if (props.isLogged) {
             links.push({ to: '/quiz-creator', label: 'Создать тест' });
             links.push({ to: '/logout', label: 'Выйти' });
         } else {
@@ -46,34 +41,36 @@ class Drawer extends Component {
         return links;
     }
 
-    render() {
+    function render() {
         const cls = [classes.Drawer];
 
-        if (!this.props.isOpen) {
+        if (!props.isOpen) {
             cls.push(classes.close);
         }
 
         return (
             <React.Fragment>
                 <nav className={cls.join(' ')}>
-                    <ul>{this.renderLinks(this.getLinks())}</ul>
+                    <ul>{renderLinks(getLinks())}</ul>
 
-                    {this.props.email && (
+                    {props.email && (
                         <div>
                             <hr />
 
                             <i>
                                 Email: &nbsp;
-                                {this.props.email}
+                                {props.email}
                             </i>
                         </div>
                     )}
                 </nav>
 
-                {this.props.isOpen ? <Backdrop onClick={this.props.onToggle} /> : null}
+                {props.isOpen ? <Backdrop onClick={props.onToggle} /> : null}
             </React.Fragment>
         );
     }
-}
+
+    return render();
+};
 
 export default Drawer;

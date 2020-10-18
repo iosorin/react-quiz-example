@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import classes from './QuizCreator.module.scss';
+import React, { useState } from 'react';
+
+import { connect } from 'react-redux';
+import { createQuizQuestion, finishCreateQuiz } from 'redux/actions/create';
 import { createControl, validate, validateForm } from 'form/formFramework';
 
 import Button from 'components/UI/Button/Button';
 import Input from 'components/UI/Input/Input';
 import Select from 'components/UI/Select/Select';
 
-import { connect } from 'react-redux';
-import { createQuizQuestion, finishCreateQuiz } from 'redux/actions/create';
+import classes from './QuizCreator.module.scss';
 
 function createOptionControl(number) {
     return createControl(
@@ -35,38 +36,53 @@ function createFormContols() {
         option4: createOptionControl(4),
     };
 }
-class QuizCreator extends Component {
-    state = {
-        rightAnswerId: 1,
-        formControls: createFormContols(),
-        isFormValid: false,
-    };
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-    };
+const QuizCreator = (props) => {
+    const [rightAnswerId, setRightAnswerId] = useState(1);
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [formControls, setFormControls] = useState(createFormContols());
 
-    handleNewQuiz = (event) => {
-        event.preventDefault();
+    function resetState() {
+        setRightAnswerId(1);
+        setIsFormValid(false);
+        setFormControls(createFormContols());
+    }
 
-        this.setState({
-            rightAnswerId: 1,
-            isFormValid: false,
-            formControls: createFormContols(),
-        });
-
-        this.props.finishCreateQuiz();
-    };
-
-    handleNewQuestion = (e) => {
+    function handleNewQuiz(e) {
         e.preventDefault();
 
-        const { question, option1, option2, option3, option4 } = this.state.formControls;
+        resetState();
+
+        props.finishCreateQuiz();
+    }
+
+    function onChangeHandler(e, controlName) {
+        if (!formControls) return;
+
+        const updatedFormControls = { ...formControls };
+        const control = { ...updatedFormControls[controlName] };
+
+        control.touched = true;
+        control.value = e.target.value;
+        control.valid = validate(control.value, control.validation);
+
+        updatedFormControls[controlName] = control;
+
+        const isFormValid = validateForm(updatedFormControls);
+
+        setIsFormValid(isFormValid);
+        setFormControls(updatedFormControls);
+    }
+
+    function handleNewQuestion(e) {
+        e.preventDefault();
+
+        const { question, option1, option2, option3, option4 } = formControls;
 
         const questionItem = {
-            id: this.props.quiz.length + 1,
+            rightAnswerId,
+            id: props.quiz.length + 1,
             question: question.value,
-            rightAnswerId: this.state.rightAnswerId,
             answers: [
                 {
                     text: option1.value,
@@ -87,53 +103,47 @@ class QuizCreator extends Component {
             ],
         };
 
-        this.props.createQuizQuestion(questionItem);
+        props.createQuizQuestion(questionItem);
 
-        /* зануляемся */
-        this.setState({
-            rightAnswerId: 1,
-            formControls: createFormContols(),
-            isFormValid: false,
-        });
-    };
+        resetState();
+    }
 
-    onChangeHandler = (e, controlName) => {
-        const formControls = { ...this.state.formControls };
+    const select = (
+        <Select
+            label="Выберите правильный ответ"
+            onChange={(e) => setRightAnswerId(+e.target.value)}
+            options={[
+                {
+                    text: 1,
+                    value: 1,
+                },
+                {
+                    text: 2,
+                    value: 2,
+                },
+                {
+                    text: 3,
+                    value: 3,
+                },
+                {
+                    text: 4,
+                    value: 4,
+                },
+            ]}
+            value={rightAnswerId}
+        />
+    );
 
-        if (!formControls) return;
-
-        const control = { ...formControls[controlName] };
-
-        control.touched = true;
-        control.value = e.target.value;
-        control.valid = validate(control.value, control.validation);
-
-        formControls[controlName] = control;
-
-        const isFormValid = validateForm(formControls);
-
-        this.setState({
-            formControls,
-            isFormValid,
-        });
-    };
-
-    handleSelect = (e) => {
-        this.setState({
-            rightAnswerId: +e.target.value,
-        });
-    };
-
-    renderInputs() {
-        return Object.keys(this.state.formControls).map((controlName, index) => {
-            const control = this.state.formControls[controlName];
+    function renderInputs() {
+        return Object.keys(formControls).map((controlName, index) => {
+            const control = formControls[controlName];
 
             return (
                 <Input
                     errorMessage={control.errorMessage}
                     key={index}
                     label={control.label}
-                    onChange={(e) => this.onChangeHandler(e, controlName)}
+                    onChange={(e) => onChangeHandler(e, controlName)}
                     shouldValidate={!!control.validation}
                     touched={control.touched}
                     type={control.type}
@@ -144,56 +154,28 @@ class QuizCreator extends Component {
         });
     }
 
-    render() {
-        const select = (
-            <Select
-                label="Выберите правильный ответ"
-                onChange={this.handleSelect}
-                options={[
-                    {
-                        text: 1,
-                        value: 1,
-                    },
-                    {
-                        text: 2,
-                        value: 2,
-                    },
-                    {
-                        text: 3,
-                        value: 3,
-                    },
-                    {
-                        text: 4,
-                        value: 4,
-                    },
-                ]}
-                value={this.state.rightAnswerId}
-            />
-        );
+    return (
+        <div className={classes.QuizCreator}>
+            <div>
+                <h1>Создание теста</h1>
 
-        return (
-            <div className={classes.QuizCreator}>
-                <div>
-                    <h1>Создание теста</h1>
+                <form className={classes.QuizCreatorForm} onSubmit={(e) => e.preventDefault()}>
+                    {renderInputs()}
 
-                    <form className={classes.QuizCreatorForm} onSubmit={this.handleSubmit}>
-                        {this.renderInputs()}
+                    {select}
 
-                        {select}
+                    <Button disabled={!isFormValid} onClick={handleNewQuestion} type="primary">
+                        Добавить вопрос
+                    </Button>
 
-                        <Button disabled={!this.state.isFormValid} onClick={this.handleNewQuestion} type="primary">
-                            Добавить вопрос
-                        </Button>
-
-                        <Button disabled={this.props.quiz.length === 0} onClick={this.handleNewQuiz} type="success">
-                            Создать тест
-                        </Button>
-                    </form>
-                </div>
+                    <Button disabled={props.quiz.length === 0} onClick={handleNewQuiz} type="success">
+                        Создать тест
+                    </Button>
+                </form>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 function mapStateToProps(state) {
     return {

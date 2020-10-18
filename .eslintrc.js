@@ -23,6 +23,9 @@ module.exports = {
     ],
 
     rules: {
+        // Common
+        // "brace-style": [1, "stroustrup"],
+
         // React
         "react/prop-types": "off",
         "react/no-set-state": "warn",
@@ -47,7 +50,7 @@ module.exports = {
         "react/jsx-indent-props": [ "error", 4 ],
         "react/jsx-indent": [ "error", 4 ],
         "react/jsx-key": "error",
-        "react/jsx-no-bind": "warn",
+        // "react/jsx-no-bind": "warn",
         "react/jsx-no-literals": "off",
         "react/jsx-no-target-blank": "error",
         "react/jsx-pascal-case": "error",
