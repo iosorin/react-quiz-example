@@ -1,22 +1,19 @@
 import React, { useEffect } from 'react';
 
+import { connect } from 'react-redux';
+import { fetchQuizById, quizAnswerClick, retryQuiz } from 'redux/actions/quiz';
+
 import ActiveQuiz from 'components/ActiveQuiz/ActiveQuiz';
 import FinishedQuiz from 'components/FinishedQuiz/FinishedQuiz';
 import Loader from 'components/UI/Loader/Loader';
-
-import { connect } from 'react-redux';
-import { fetchQuizById, quizAnswerClick, retryQuiz } from 'redux/actions/quiz';
 
 import classes from './Quiz.module.scss';
 
 const Quiz = (props) => {
     useEffect(() => {
-        console.log('FETCHQUIZBYID', props.match.params.id, props);
-
         props.fetchQuizById(props.match.params.id);
 
         return () => {
-            console.log('RETRY QUIZ');
             props.retryQuiz();
         };
     }, []);

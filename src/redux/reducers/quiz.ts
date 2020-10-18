@@ -9,7 +9,7 @@ import {
     QUIZE_RETRY,
     QUIZ_NEXT_QUESTION,
     QUIZ_SET_STATE,
-} from '../actions/actionTypes';
+} from 'redux/contants';
 
 const initialState: QuizInitialStateType = {
     quizes: [],

@@ -1,4 +1,5 @@
-import { QuizListItemType, QuizQuestionType, QuizType } from './../../types/quiz';
+import { QuizListItemType, QuizQuestionType, QuizType, IDWithStatusType } from 'types/quiz';
+
 import {
     FETCH_QUIZES_ERROR,
     FETCH_QUIZES_START,
@@ -8,11 +9,11 @@ import {
     QUIZ_SET_STATE,
     QUIZ_NEXT_QUESTION,
     QUIZE_RETRY,
-} from './actionTypes';
+} from 'redux/contants';
 
 import axiosQuiz from '../../axios';
 
-export function fetchQuizes() {
+export function fetchQuizes(): any {
     return async (dispatch: any) => {
         dispatch(fetchQuizesStart());
 
@@ -35,7 +36,7 @@ export function fetchQuizes() {
     };
 }
 
-export function fetchQuizById(quizId: number) {
+export function fetchQuizById(quizId: number): any {
     return async (dispatch: any) => {
         dispatch(fetchQuizesStart());
 
@@ -53,34 +54,43 @@ export function fetchQuizById(quizId: number) {
     };
 }
 
-export function fetchQuizesStart() {
+type FetchQuizesStartActionType = { type: typeof FETCH_QUIZES_START };
+export function fetchQuizesStart(): FetchQuizesStartActionType {
     return {
         type: FETCH_QUIZES_START,
     };
 }
 
-export function fetchQuizSuccess(quiz: QuizType) {
+type FetchQuizSuccessActionType = { type: typeof FETCH_QUIZ_SUCCESS; quiz: QuizType };
+export function fetchQuizSuccess(quiz: QuizType): FetchQuizSuccessActionType {
     return {
         type: FETCH_QUIZ_SUCCESS,
         quiz,
     };
 }
 
-export function fetchQuizesSuccess(quizes: QuizListItemType[]) {
+type FetchQuizesSuccessActionType = { type: typeof FETCH_QUIZES_SUCCESS; quizes: QuizListItemType[] };
+export function fetchQuizesSuccess(quizes: QuizListItemType[]): FetchQuizesSuccessActionType {
     return {
         type: FETCH_QUIZES_SUCCESS,
         quizes,
     };
 }
 
-export function fetchQuizesError(error: any) {
+type FetchQuizesErrorActionType = { type: typeof FETCH_QUIZES_ERROR; error: any };
+export function fetchQuizesError(error: any): FetchQuizesErrorActionType {
     return {
         type: FETCH_QUIZES_ERROR,
         error,
     };
 }
 
-export function quizSetState(answerState: any, results: any) {
+type QuizSetStateActionType = {
+    type: typeof QUIZ_SET_STATE;
+    answerState: IDWithStatusType;
+    results: IDWithStatusType;
+};
+export function quizSetState(answerState: IDWithStatusType, results: IDWithStatusType): QuizSetStateActionType {
     return {
         type: QUIZ_SET_STATE,
         answerState,
@@ -88,20 +98,22 @@ export function quizSetState(answerState: any, results: any) {
     };
 }
 
-function finishQuiz() {
+type FinishQuizActionType = { type: typeof FINISH_QUIZ };
+function finishQuiz(): FinishQuizActionType {
     return {
         type: FINISH_QUIZ,
     };
 }
 
-function quizNextQuestion(questionNumber: number) {
+type QuizNextQuestionActionType = { type: typeof QUIZ_NEXT_QUESTION; number: number };
+function quizNextQuestion(questionNumber: number): QuizNextQuestionActionType {
     return {
         type: QUIZ_NEXT_QUESTION,
         number: questionNumber,
     };
 }
 
-export function quizAnswerClick(answerId: number) {
+export function quizAnswerClick(answerId: number): any {
     return (dispatch: any, getState: any) => {
         const state = getState().quiz;
 
