@@ -42,11 +42,11 @@ class QuizCreator extends Component {
         isFormValid: false,
     };
 
-    submitHandler = (e) => {
+    handleSubmit = (e) => {
         e.preventDefault();
     };
 
-    createQuizHandler = (event) => {
+    handleNewQuiz = (event) => {
         event.preventDefault();
 
         this.setState({
@@ -58,7 +58,7 @@ class QuizCreator extends Component {
         this.props.finishCreateQuiz();
     };
 
-    addQuestionHandler = (e) => {
+    handleNewQuestion = (e) => {
         e.preventDefault();
 
         const { question, option1, option2, option3, option4 } = this.state.formControls;
@@ -118,7 +118,7 @@ class QuizCreator extends Component {
         });
     };
 
-    selectChangeHandler = (e) => {
+    handleSelect = (e) => {
         this.setState({
             rightAnswerId: +e.target.value,
         });
@@ -130,15 +130,15 @@ class QuizCreator extends Component {
 
             return (
                 <Input
-                    key={index}
-                    type={control.type}
-                    value={control.value}
-                    label={control.label}
-                    valid={control.valid}
-                    touched={control.touched}
                     errorMessage={control.errorMessage}
-                    shouldValidate={!!control.validation}
+                    key={index}
+                    label={control.label}
                     onChange={(e) => this.onChangeHandler(e, controlName)}
+                    shouldValidate={!!control.validation}
+                    touched={control.touched}
+                    type={control.type}
+                    valid={control.valid}
+                    value={control.value}
                 />
             );
         });
@@ -148,7 +148,7 @@ class QuizCreator extends Component {
         const select = (
             <Select
                 label="Выберите правильный ответ"
-                value={this.state.rightAnswerId}
+                onChange={this.handleSelect}
                 options={[
                     {
                         text: 1,
@@ -167,7 +167,7 @@ class QuizCreator extends Component {
                         value: 4,
                     },
                 ]}
-                onChange={this.selectChangeHandler}
+                value={this.state.rightAnswerId}
             />
         );
 
@@ -176,16 +176,16 @@ class QuizCreator extends Component {
                 <div>
                     <h1>Создание теста</h1>
 
-                    <form onSubmit={this.submitHandler} className={classes.QuizCreatorForm}>
+                    <form className={classes.QuizCreatorForm} onSubmit={this.handleSubmit}>
                         {this.renderInputs()}
 
                         {select}
 
-                        <Button type="primary" disabled={!this.state.isFormValid} onClick={this.addQuestionHandler}>
+                        <Button disabled={!this.state.isFormValid} onClick={this.handleNewQuestion} type="primary">
                             Добавить вопрос
                         </Button>
 
-                        <Button type="success" disabled={this.props.quiz.length === 0} onClick={this.createQuizHandler}>
+                        <Button disabled={this.props.quiz.length === 0} onClick={this.handleNewQuiz} type="success">
                             Создать тест
                         </Button>
                     </form>

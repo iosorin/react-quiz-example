@@ -7,6 +7,10 @@ import Loader from 'components/UI/Loader/Loader';
 import { fetchQuizes } from 'redux/actions/quiz';
 
 class QuizList extends Component {
+    componentDidMount() {
+        this.props.fetchQuizes();
+    }
+
     renderQuizes() {
         return this.props.quizes.map((quiz) => {
             return (
@@ -15,10 +19,6 @@ class QuizList extends Component {
                 </li>
             );
         });
-    }
-
-    componentDidMount() {
-        this.props.fetchQuizes();
     }
 
     render() {

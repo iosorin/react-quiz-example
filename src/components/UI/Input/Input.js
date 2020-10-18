@@ -18,7 +18,7 @@ const Input = (props) => {
         <div className={cls.join(' ')}>
             <label htmlFor={htmlFor}>{props.label}</label>
 
-            <input type={inputType} id={htmlFor} value={props.value} onChange={props.onChange} />
+            <input id={htmlFor} onChange={props.onChange} type={inputType} value={props.value} />
 
             {isInvalid(props) ? <span>{props.errorMessage}</span> : null}
         </div>

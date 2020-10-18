@@ -1,3 +1,5 @@
+import { QuizInitialStateType } from 'types/quiz';
+
 import {
     FETCH_QUIZES_ERROR,
     FETCH_QUIZES_START,
@@ -9,18 +11,18 @@ import {
     QUIZ_SET_STATE,
 } from '../actions/actionTypes';
 
-const initialState = {
+const initialState: QuizInitialStateType = {
     quizes: [],
     loading: false,
     error: null,
     results: {},
+    answerState: null,
     isFinished: false,
     activeQuestion: 0,
-    answerState: null,
     quiz: [],
 };
 
-export default function quizReducer(state = initialState, action) {
+export default function quizReducer(state = initialState, action: any): QuizInitialStateType {
     switch (action.type) {
         case FETCH_QUIZES_START:
             return {

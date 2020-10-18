@@ -99,15 +99,15 @@ class Auth extends Component {
             const control = this.state.formControls[controlName];
             return (
                 <Input
-                    key={controlName + index}
-                    type={control.type}
-                    value={control.value}
-                    label={control.label}
-                    valid={control.valid}
-                    touched={control.touched}
                     errorMessage={control.errorMessage}
-                    shouldValidate={!!control.validation}
+                    key={controlName + index}
+                    label={control.label}
                     onChange={(e) => this.onChangeHandler(e, controlName)}
+                    shouldValidate={!!control.validation}
+                    touched={control.touched}
+                    type={control.type}
+                    valid={control.valid}
+                    value={control.value}
                 />
             );
         });
@@ -118,14 +118,14 @@ class Auth extends Component {
             <div className={classes.Auth}>
                 <h1>Авторизация</h1>
 
-                <form onSubmit={this.submitHandler} className={classes.AuthForm}>
+                <form className={classes.AuthForm} onSubmit={this.submitHandler}>
                     {this.renderInput()}
 
-                    <Button type="success" disabled={!this.state.isFormValid} onClick={this.loginHandler}>
+                    <Button disabled={!this.state.isFormValid} onClick={this.loginHandler} type="success">
                         Войти
                     </Button>
 
-                    <Button type="primary" disabled={!this.state.isFormValid} onClick={this.registerHandler}>
+                    <Button disabled={!this.state.isFormValid} onClick={this.registerHandler} type="primary">
                         Зарегестрироваться
                     </Button>
                 </form>
