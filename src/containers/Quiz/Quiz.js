@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import classes from './Quiz.module.scss';
-import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz';
-import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz';
-import Loader from '../../components/UI/Loader/Loader';
+
+import ActiveQuiz from 'components/ActiveQuiz/ActiveQuiz';
+import FinishedQuiz from 'components/FinishedQuiz/FinishedQuiz';
+import Loader from 'components/UI/Loader/Loader';
 
 import { connect } from 'react-redux';
-import { fetchQuizById, quizAnswerClick, retryQuiz } from '../../reducer/actions/quiz';
+import { fetchQuizById, quizAnswerClick, retryQuiz } from 'redux/actions/quiz';
+
+import classes from './Quiz.module.scss';
 
 class Quiz extends Component {
     onAnswerClickHandler = (answerId) => {
