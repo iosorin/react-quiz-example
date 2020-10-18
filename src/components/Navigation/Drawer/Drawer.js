@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import classes from './Drawer.module.scss';
-import Backdrop from '../../UI/Backdrop/Backdrop';
 
 import { NavLink } from 'react-router-dom';
+import Backdrop from 'components/UI/Backdrop/Backdrop';
+
+import classes from './Drawer.module.scss';
 
 class Drawer extends Component {
     renderLinks(links) {
@@ -10,10 +11,10 @@ class Drawer extends Component {
             return (
                 <li key={index}>
                     <NavLink
-                        to={link.to}
-                        exact={link.exact}
                         activeClassName={classes.active}
+                        exact={link.exact}
                         onClick={this.props.onToggle}
+                        to={link.to}
                     >
                         {link.label}
                     </NavLink>
@@ -56,6 +57,17 @@ class Drawer extends Component {
             <React.Fragment>
                 <nav className={cls.join(' ')}>
                     <ul>{this.renderLinks(this.getLinks())}</ul>
+
+                    {this.props.email && (
+                        <div>
+                            <hr />
+
+                            <i>
+                                Email: &nbsp;
+                                {this.props.email}
+                            </i>
+                        </div>
+                    )}
                 </nav>
 
                 {this.props.isOpen ? <Backdrop onClick={this.props.onToggle} /> : null}

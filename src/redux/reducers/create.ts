@@ -1,14 +1,13 @@
 import { CREATE_QUIZ_QUESTION, RESET_QUIZ_CREATION } from '../actions/actionTypes';
+import { QuizType, QuizQuestionType } from 'types/quiz';
 
-export type CreateInitialStateType = {
-    quiz: Array<Record<string, any>>;
-};
-
-const initialState: CreateInitialStateType = {
+const itialState: QuizType = {
     quiz: [],
 };
 
-export default function createReducer(state = initialState, action: any) {
+type ActionT = { type: string; item: QuizQuestionType };
+
+export default function createReducer(state = itialState, action: ActionT): QuizType {
     switch (action.type) {
         case CREATE_QUIZ_QUESTION:
             return {

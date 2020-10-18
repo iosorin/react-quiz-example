@@ -1,3 +1,4 @@
+import { QuizListItemType, QuizQuestionType, QuizType } from './../../types/quiz';
 import {
     FETCH_QUIZES_ERROR,
     FETCH_QUIZES_START,
@@ -8,15 +9,18 @@ import {
     QUIZ_NEXT_QUESTION,
     QUIZE_RETRY,
 } from './actionTypes';
+
 import axiosQuiz from '../../axios';
 
 export function fetchQuizes() {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         dispatch(fetchQuizesStart());
+
         try {
             const response = await axiosQuiz.get('/quizes.json');
 
-            const quizes = [];
+            const quizes: QuizListItemType[] = [];
+
             Object.keys(response.data).forEach((key, index) => {
                 quizes.push({
                     id: key,
@@ -31,8 +35,8 @@ export function fetchQuizes() {
     };
 }
 
-export function fetchQuizById(quizId) {
-    return async (dispatch) => {
+export function fetchQuizById(quizId: number) {
+    return async (dispatch: any) => {
         dispatch(fetchQuizesStart());
 
         try {
@@ -55,28 +59,28 @@ export function fetchQuizesStart() {
     };
 }
 
-export function fetchQuizSuccess(quiz) {
+export function fetchQuizSuccess(quiz: QuizType) {
     return {
         type: FETCH_QUIZ_SUCCESS,
         quiz,
     };
 }
 
-export function fetchQuizesSuccess(quizes) {
+export function fetchQuizesSuccess(quizes: QuizListItemType[]) {
     return {
         type: FETCH_QUIZES_SUCCESS,
         quizes,
     };
 }
 
-export function fetchQuizesError(error) {
+export function fetchQuizesError(error: any) {
     return {
         type: FETCH_QUIZES_ERROR,
         error,
     };
 }
 
-export function quizSetState(answerState, results) {
+export function quizSetState(answerState: any, results: any) {
     return {
         type: QUIZ_SET_STATE,
         answerState,
@@ -90,15 +94,15 @@ function finishQuiz() {
     };
 }
 
-function quizNextQuestion(questionNumber) {
+function quizNextQuestion(questionNumber: number) {
     return {
         type: QUIZ_NEXT_QUESTION,
         number: questionNumber,
     };
 }
 
-export function quizAnswerClick(answerId) {
-    return (dispatch, getState) => {
+export function quizAnswerClick(answerId: number) {
+    return (dispatch: any, getState: any) => {
         const state = getState().quiz;
 
         const isQuizFinished = () => {
@@ -107,14 +111,14 @@ export function quizAnswerClick(answerId) {
 
         /* double success click fix */
         if (state.answerState) {
-            const key = Object.keys(state.answerState);
+            const key = Object.keys(state.answerState)[0];
 
             if (state.answerState[key] === 'success') {
                 return;
             }
         }
 
-        const question = state.quiz[state.activeQuestion];
+        const question: QuizQuestionType = state.quiz[state.activeQuestion];
         const results = state.results;
 
         if (question.rightAnswerId === answerId) {
@@ -140,7 +144,7 @@ export function quizAnswerClick(answerId) {
     };
 }
 
-export function retryQuiz() {
+export function retryQuiz(): { type: typeof QUIZE_RETRY } {
     return {
         type: QUIZE_RETRY,
     };
