@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import classes from './Auth.module.scss';
-import Button from '../../components/UI/Button/Button';
-import Input from '../../components/UI/Input/Input';
+import Button from 'components/UI/Button/Button';
+import Input from 'components/UI/Input/Input';
 import { connect } from 'react-redux';
-import { auth } from '../../reducer/actions/auth';
+import { auth } from 'redux/actions/auth';
 
 class Auth extends Component {
     state = {

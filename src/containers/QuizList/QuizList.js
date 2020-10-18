@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import classes from './QuizList.module.scss';
 import { NavLink } from 'react-router-dom';
-import Loader from '../../components/UI/Loader/Loader';
-import { fetchQuizes } from '../../reducer/actions/quiz';
+import Loader from 'components/UI/Loader/Loader';
+import { fetchQuizes } from 'redux/actions/quiz';
 
 class QuizList extends Component {
     renderQuizes() {

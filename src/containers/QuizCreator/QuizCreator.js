@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import classes from './QuizCreator.module.scss';
-import { createControl, validate, validateForm } from '../../form/formFramework';
+import { createControl, validate, validateForm } from 'form/formFramework';
 
-import Button from '../../components/UI/Button/Button';
-import Input from '../../components/UI/Input/Input';
-import Select from '../../components/UI/Select/Select';
+import Button from 'components/UI/Button/Button';
+import Input from 'components/UI/Input/Input';
+import Select from 'components/UI/Select/Select';
 
 import { connect } from 'react-redux';
-import { createQuizQuestion, finishCreateQuiz } from '../../reducer/actions/create';
+import { createQuizQuestion, finishCreateQuiz } from 'redux/actions/create';
 
 function createOptionControl(number) {
     return createControl(

@@ -8,8 +8,8 @@ import Auth from 'containers/Auth/Auth';
 import Quiz from 'containers/Quiz/Quiz';
 import QuizList from 'containers/QuizList/QuizList';
 import QuizCreator from 'containers/QuizCreator/QuizCreator';
+import { autoLogin } from 'redux/actions/auth';
 import Logout from 'components/Logout/Logout';
-import { autoLogin } from 'reducer/actions/auth';
 
 const App = (props) => {
     useEffect(() => {
