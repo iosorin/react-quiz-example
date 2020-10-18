@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
-import { createQuizQuestion, finishCreateQuiz } from 'redux/actions/create';
-import { createControl, validate, validateForm } from 'form/formFramework';
+import { createQuizQuestion, finishCreateQuiz } from '@/redux/actions/create';
+import { createControl, validate, validateForm } from '@/form/formFramework';
 
-import Button from 'components/UI/Button/Button';
-import Input from 'components/UI/Input/Input';
-import Select from 'components/UI/Select/Select';
+import Button from '@/components/UI/Button/Button';
+import Input from '@/components/UI/Input/Input';
+import Select from '@/components/UI/Select/Select';
 
 import classes from './QuizCreator.module.scss';
 

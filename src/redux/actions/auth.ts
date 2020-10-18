@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { AUTH_LOGOUT, AUTH_SUCCESS } from 'redux/contants';
-import { AuthInitialStateType } from 'types/auth';
+
+import { AUTH } from '@/redux/contants';
+import { AuthInitialStateType } from '@/types/auth';
 
 export function auth(email: string, password: string, isLogin: boolean): any {
     return async (dispatch: any) => {
@@ -42,12 +43,12 @@ export function auth(email: string, password: string, isLogin: boolean): any {
 }
 
 type AuthSuccessType = {
-    type: typeof AUTH_SUCCESS;
+    type: typeof AUTH.success;
     payload: AuthInitialStateType;
 };
 export function authSuccess(payload: AuthInitialStateType): AuthSuccessType {
     return {
-        type: AUTH_SUCCESS,
+        type: AUTH.success,
         payload,
     };
 }
@@ -80,11 +81,11 @@ export function autoLogout(time: number): any {
     };
 }
 
-type LogoutActionType = { type: typeof AUTH_LOGOUT };
+type LogoutActionType = { type: typeof AUTH.logout };
 export function logout(): LogoutActionType {
     localStorage.removeItem('auth');
 
     return {
-        type: AUTH_LOGOUT,
+        type: AUTH.logout,
     };
 }

@@ -1,5 +1,5 @@
 import { AuthInitialStateType } from 'types/auth';
-import { AUTH_LOGOUT, AUTH_SUCCESS } from 'redux/contants';
+import { AUTH } from '@/redux/contants';
 
 const initialState: AuthInitialStateType = {
     token: null,
@@ -10,7 +10,7 @@ const initialState: AuthInitialStateType = {
 
 export default function authReducer(state = initialState, action: any): AuthInitialStateType {
     switch (action.type) {
-        case AUTH_SUCCESS: {
+        case AUTH.success: {
             const { token, email, expirationDate, userId } = action.payload;
 
             return {
@@ -22,7 +22,7 @@ export default function authReducer(state = initialState, action: any): AuthInit
             };
         }
 
-        case AUTH_LOGOUT: {
+        case AUTH.logout: {
             return {
                 ...state,
                 ...initialState,
