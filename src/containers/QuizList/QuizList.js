@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import axiosQuiz from '../../axios';
 import { connect } from 'react-redux';
 
 import classes from './QuizList.module.scss';
