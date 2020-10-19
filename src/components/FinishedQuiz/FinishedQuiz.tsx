@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classes from './FinishedQuiz.module.scss';
 import Button from '@/components/UI/Button/Button';
 import { Link } from 'react-router-dom';
+import { IDWithStatusType, Status, QuizQuestionType } from '@/types/quiz';
 
-const FinishedQuiz = (props) => {
+type Props = {
+    results: IDWithStatusType;
+    quiz: Array<QuizQuestionType>;
+    onRetry: () => void;
+};
+
+const FinishedQuiz: FC<Props> = (props) => {
+    if (!props.results) return null;
+
     const successCount = Object.keys(props.results).reduce((total, key) => {
-        if (props.results[key] === 'success') {
+        const status: keyof typeof Status = props.results[parseInt(key)];
+
+        if (status === Status.success) {
             total++;
         }
 
         return total;
     }, 0);
+
     return (
         <div className={classes.FinishedQuiz}>
             <ul>
-                {props.quiz.map((quizItem, index) => {
+                {props.quiz.map((item, index) => {
                     const cls = [
                         'fa',
-                        props.results[quizItem.id] === 'error' ? 'fa-times' : 'fa-check',
-                        classes[props.results[quizItem.id]],
+                        props.results[item.id] === 'error' ? 'fa-times' : 'fa-check',
+                        classes[props.results[item.id]],
                     ];
 
                     // debugger;
@@ -27,7 +39,7 @@ const FinishedQuiz = (props) => {
                         <li key={index}>
                             <strong>
                                 {index + 1} &nbsp;
-                                {quizItem.question}
+                                {item.question}
                                 <i className={cls.join(' ')} />
                             </strong>
                         </li>

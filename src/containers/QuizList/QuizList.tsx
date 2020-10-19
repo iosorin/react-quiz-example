@@ -1,15 +1,30 @@
 import React, { useEffect } from 'react';
 
-import { connect } from 'react-redux';
-import { fetchQuizes } from '@/redux/actions/quiz';
-import { QuizListItemType } from '@/types/quiz';
-
+import classes from './QuizList.module.scss';
 import Loader from '@/components/UI/Loader/Loader';
 import { NavLink } from 'react-router-dom';
 
-import classes from './QuizList.module.scss';
+import { connect, ConnectedProps } from 'react-redux';
+import { fetchQuizes } from '@/redux/actions/quiz';
+import { QuizListItemType } from '@/types/quiz';
+import { RootState } from '@/types/root';
 
-const QuizList = (props: any) => {
+const mapState = (state: RootState) => {
+    return {
+        quizes: state.quiz.quizes,
+        loading: state.quiz.loading,
+    };
+};
+
+const mapDispatch = {
+    fetchQuizes,
+};
+
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const QuizList = (props: PropsFromRedux) => {
     useEffect(() => {
         props.fetchQuizes();
     }, []);
@@ -32,17 +47,4 @@ const QuizList = (props: any) => {
     );
 };
 
-function mapStateToProps(state: any) {
-    return {
-        quizes: state.quiz.quizes,
-        loading: state.quiz.loading,
-    };
-}
-
-function mapDispatchToProps(dispatch: any) {
-    return {
-        fetchQuizes: () => dispatch(fetchQuizes()),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuizList);
+export default connector(QuizList);

@@ -21,8 +21,8 @@ export function resetQuizCreation(): ResetQuizCreationActionType {
     };
 }
 
-// type FinishCreateQuizActionType = { type: typeof RESET_QUIZ_CREATION };
-export function finishCreateQuiz(): any {
+type FinishCreateQuizActionType = any;
+export function finishCreateQuiz(): FinishCreateQuizActionType {
     /* todo: fix any */
     return async (dispatch: any, getState: any) => {
         const { quiz } = getState().create;
@@ -36,3 +36,5 @@ export function finishCreateQuiz(): any {
         }
     };
 }
+
+export type CreateActionTypes = FinishCreateQuizActionType | ResetQuizCreationActionType | CreateQuizQuestionActionType;

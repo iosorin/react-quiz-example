@@ -8,6 +8,7 @@ module.exports = {
             jsx: true
         }
     },
+
     settings: {
         react: {
             version: "detect"
@@ -25,6 +26,10 @@ module.exports = {
     rules: {
         // Common
         // "brace-style": [1, "stroustrup"],
+        'newline-before-return': "error",
+        'object-curly-newline': ['error', {
+            ImportDeclaration: { minProperties: 2048 }
+        }],
 
         // React
         "react/prop-types": "off",
@@ -55,7 +60,7 @@ module.exports = {
         "react/jsx-no-target-blank": "error",
         "react/jsx-pascal-case": "error",
         "react/jsx-sort-props": "error",
-        "react/jsx-space-before-closing": "error",
+        "react/jsx-tag-spacing": "error",
         // "react/jsx-curly-spacing": [ "error", "always" ],
         // "react/jsx-handler-names": "error",
 
@@ -68,14 +73,15 @@ module.exports = {
         {
             files: ["*.tsx"],
             rules: {
-                "react/prop-types": "error",
             }
         }
     ],
 
     settings: {
         "import/resolver": {
-            typescript: {}
+            typescript: {
+                "react/prop-types": "error",
+            }
         }
     },
 };

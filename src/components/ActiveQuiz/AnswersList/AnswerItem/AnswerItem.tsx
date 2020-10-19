@@ -1,7 +1,14 @@
-import React from 'react';
+import { QuizQuestionAnswerType, Status } from '@/types/quiz';
+import React, { FC } from 'react';
 import classes from './AnswerItem.module.scss';
 
-const AnswerItem = (props) => {
+type Props = {
+    state: keyof typeof Status | null;
+    onAnswerClick: (id: number) => void;
+    answer: QuizQuestionAnswerType;
+};
+
+const AnswerItem: FC<Props> = (props) => {
     const cls = [classes.AnswerItem];
 
     if (props.state) {

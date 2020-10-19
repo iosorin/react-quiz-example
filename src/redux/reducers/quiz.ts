@@ -6,7 +6,7 @@ const initialState: QuizInitialStateType = {
     loading: false,
     error: null,
     results: {},
-    answerState: null,
+    answerState: {},
     isFinished: false,
     activeQuestion: 0,
     quiz: [],
@@ -50,8 +50,8 @@ export default function quizReducer(state = initialState, action: any): QuizInit
         case QUIZ.question.next:
             return {
                 ...state,
-                answerState: null,
                 activeQuestion: action.number,
+                answerState: {},
             };
 
         case QUIZ.finish:
@@ -64,8 +64,8 @@ export default function quizReducer(state = initialState, action: any): QuizInit
             return {
                 ...state,
                 activeQuestion: 0,
-                answerState: null,
                 isFinished: false,
+                answerState: {},
                 results: {},
             };
 

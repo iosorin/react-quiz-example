@@ -24,7 +24,7 @@ export type QuizListItemType = {
     name: string;
 };
 
-export type IDWithStatusType = { [key: number]: keyof typeof Status } | null;
+export type IDWithStatusType = { [key: number]: keyof typeof Status };
 
 export type QuizInitialStateType = {
     quiz: QuizQuestionType[];
