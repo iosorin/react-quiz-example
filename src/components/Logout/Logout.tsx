@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { logout } from '@/redux/actions/auth';
 
-const Logout: FC<any> = (props) => {
+const Logout: FC<PropsFromRedux> = (props) => {
     useEffect(() => {
         props.logout();
     }, []);
@@ -11,10 +11,12 @@ const Logout: FC<any> = (props) => {
     return <Redirect to={'/'} />;
 };
 
-function mapDispatchToProps(dispatch: any) {
-    return {
-        logout: () => dispatch(logout()),
-    };
-}
+const mapDispatch = {
+    logout,
+};
 
-export default connect(null, mapDispatchToProps)(Logout);
+const connector = connect(null, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Logout);

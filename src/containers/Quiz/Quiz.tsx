@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 
+import { match } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchQuizById, quizAnswerClick, retryQuiz } from '@/redux/actions/quiz';
 
@@ -12,10 +13,10 @@ import { QuizInitialStateType } from '@/types';
 import { getQuiz } from '@/redux/selectors';
 
 type Props = QuizInitialStateType & {
-    quizAnswerClick: any;
-    fetchQuizById: any;
-    retryQuiz: any;
-    match: any;
+    quizAnswerClick: (answerId: number) => void;
+    fetchQuizById: (quizUid: string) => void;
+    retryQuiz: () => void;
+    match: match<{ id: string }>;
 };
 
 const Quiz: FC<Props> = (props) => {
@@ -27,13 +28,10 @@ const Quiz: FC<Props> = (props) => {
         };
     }, []);
 
-    return (
-        <div className={classes.Quiz}>
-            <div className={classes.QuizWrapper}>
-                <h1>Тест</h1>
-                {props.loading || !props.quiz || !props.quiz[props.activeQuestion] ? (
-                    <Loader />
-                ) : props.isFinished ? (
+    const renderQuiz = () => {
+        return (
+            <div className={classes.QuizInner}>
+                {props.isFinished ? (
                     <FinishedQuiz onRetry={props.retryQuiz} quiz={props.quiz} results={props.results} />
                 ) : (
                     <ActiveQuiz
@@ -45,6 +43,15 @@ const Quiz: FC<Props> = (props) => {
                         state={props.answerState}
                     />
                 )}
+            </div>
+        );
+    };
+
+    return (
+        <div className={classes.Quiz}>
+            <div className={classes.QuizOuter}>
+                <h1>Quiz</h1>
+                {props.loading || !props.quiz || !props.quiz[props.activeQuestion] ? <Loader /> : renderQuiz()}
             </div>
         </div>
     );
@@ -58,7 +65,7 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        fetchQuizById: (id: number) => dispatch(fetchQuizById(id)),
+        fetchQuizById: (quizUid: string) => dispatch(fetchQuizById(quizUid)),
         quizAnswerClick: (answerId: number) => dispatch(quizAnswerClick(answerId)),
         retryQuiz: () => dispatch(retryQuiz()),
     };

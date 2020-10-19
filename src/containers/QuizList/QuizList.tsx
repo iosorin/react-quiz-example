@@ -41,7 +41,7 @@ const QuizList = (props: PropsFromRedux) => {
 
     return (
         <div className={classes.QuizList}>
-            <h1>Список тестов</h1>
+            <h1>Quiz List</h1>
             {props.loading ? <Loader /> : <ul>{renderQuizes()}</ul>}
         </div>
     );

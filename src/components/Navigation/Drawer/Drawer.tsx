@@ -33,20 +33,16 @@ const Drawer: FC<Props> = (props) => {
 
     function getLinks(): LinkType[] {
         const links = [
-            {
-                to: '/',
-                label: 'Список',
-                exact: true,
-            },
+            { to: '/', label: 'Quiz List', exact: true },
+            { to: '/quiz-creator', label: 'New quiz', exact: true },
         ];
 
         if (props.isLogged) {
-            links.push({ to: '/quiz-creator', label: 'Создать тест', exact: false });
-            links.push({ to: '/logout', label: 'Выйти', exact: false });
+            links.push({ to: '/logout', label: 'Sign Out', exact: false });
         } else {
             links.push({
                 to: '/auth',
-                label: 'Авторизация',
+                label: 'Sign In',
                 exact: true,
             });
         }
@@ -66,16 +62,7 @@ const Drawer: FC<Props> = (props) => {
                 <nav className={cls.join(' ')}>
                     <ul>{renderLinks(getLinks())}</ul>
 
-                    {props.email && (
-                        <div>
-                            <hr />
-
-                            <i>
-                                Email: &nbsp;
-                                {props.email}
-                            </i>
-                        </div>
-                    )}
+                    {props.email && <div className={classes.Email}>{props.email}</div>}
                 </nav>
 
                 {props.isOpen ? <Backdrop onClick={props.onToggle} /> : null}

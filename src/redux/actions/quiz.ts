@@ -16,7 +16,7 @@ export function fetchQuizes(): FetchQuizesActionType {
             Object.keys(response.data).forEach((key, index) => {
                 list.push({
                     id: key,
-                    name: 'Тест № ' + index + 1,
+                    name: '№ ' + index + 1,
                 });
             });
 
@@ -28,12 +28,12 @@ export function fetchQuizes(): FetchQuizesActionType {
 }
 
 type FetchQuizByIdActionType = any;
-export function fetchQuizById(quizId: number): FetchQuizByIdActionType {
+export function fetchQuizById(quizUid: string): FetchQuizByIdActionType {
     return async (dispatch: any) => {
         dispatch(fetchQuizesStart());
 
         try {
-            const response = await axiosInstance.get('/quizes/' + quizId + '.json');
+            const response = await axiosInstance.get('/quizes/' + quizUid + '.json');
 
             dispatch(fetchQuizSuccess(response.data));
         } catch (error) {
@@ -123,6 +123,7 @@ export function quizAnswerClick(answerId: number): QuizAnswerClickActionType {
         const question: QuizQuestionType = state.quiz[state.activeQuestion];
         const results = state.results;
 
+        console.log(question.rightAnswerId, answerId);
         if (question.rightAnswerId === answerId) {
             if (!results[question.id]) {
                 results[question.id] = 'success';

@@ -4,7 +4,7 @@
     top: 40px;
     left: 40px;
     cursor: pointer;
-    transition: opacity, left 0.22s;
+    transition: calc(#{$drawer-transition-duration} + 0.35s);
     z-index: 100;
     background: #fff;
     color: $font-color;
@@ -17,6 +17,7 @@
     border: 2px solid $font-color;
 
     &.open {
-        left: 320px;
+        left: calc(#{$drawer-width} + 20px);
+        transform: rotate(360deg);
     }
 }

@@ -32,7 +32,7 @@ export type QuizInitialStateType = {
     results: IDWithStatusType;
     answerState: IDWithStatusType;
     quizes: QuizListItemType[];
-    error: any;
     loading: boolean;
     isFinished: boolean;
+    error: any;
 };

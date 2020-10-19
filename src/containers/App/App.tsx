@@ -20,6 +20,7 @@ const App = (props: any) => {
     let routes = (
         <Switch>
             <Route component={Auth} path="/auth" />
+            <Route component={QuizCreator} path="/quiz-creator" />
             <Route component={Quiz} path="/quiz/:id" />
             <Route component={QuizList} exact path="/" />
             <Redirect to="/" />

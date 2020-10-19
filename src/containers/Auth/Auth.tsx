@@ -17,15 +17,15 @@ const Auth = (props: any) => {
             {
                 type: 'email',
                 label: 'Email',
-                errorMessage: 'Введите корректный email',
+                errorMessage: 'Invalid email',
             },
             { required: true, email: true }
         ),
         password: createControl(
             {
                 type: 'password',
-                label: 'Пароль',
-                errorMessage: 'Введите корректный пароль',
+                label: 'Password',
+                errorMessage: 'Invalid password',
             },
             { required: true, minLength: 6 }
         ),
@@ -81,17 +81,17 @@ const Auth = (props: any) => {
 
     return (
         <div className={classes.Auth}>
-            <h1>Авторизация</h1>
+            <h1>Authorization</h1>
 
             <form className={classes.AuthForm} onSubmit={(e) => e.preventDefault()}>
                 {renderInput()}
 
                 <Button disabled={!isFormValid} onClick={loginHandler} type="success">
-                    Войти
+                    Sign in
                 </Button>
 
                 <Button disabled={!isFormValid} onClick={registerHandler} type="primary">
-                    Зарегестрироваться
+                    Register
                 </Button>
             </form>
         </div>
