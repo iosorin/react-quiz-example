@@ -62,6 +62,7 @@ const Auth = (props) => {
     function renderInput() {
         return Object.keys(formControls).map((controlName, index) => {
             const control = formControls[controlName];
+
             return (
                 <Input
                     errorMessage={control.errorMessage}

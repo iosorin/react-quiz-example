@@ -1,10 +1,21 @@
-import React from 'react';
+import { IDWithStatusType, QuizQuestionAnswerType } from '@/types/quiz';
+import React, { FC } from 'react';
 import AnswerItem from './AnswerItem/AnswerItem';
 
-const AnswersList = (props) => {
+type Props = {
+    state: IDWithStatusType;
+    answers: Array<QuizQuestionAnswerType>;
+    onAnswerClick: (id: number) => void;
+};
+
+const AnswersList: FC<Props> = (props) => {
+    if (!props.answers.length) return null;
+
     return (
         <ul>
             {props.answers.map((answer, index) => {
+                if (!answer) return;
+
                 return (
                     <AnswerItem
                         answer={answer}

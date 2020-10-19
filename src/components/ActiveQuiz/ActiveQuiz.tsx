@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classes from './ActiveQuiz.module.scss';
+
+import { IDWithStatusType, QuizQuestionAnswerType } from '@/types/quiz';
 
 import AnswersList from './AnswersList/AnswersList';
 
-const ActiveQuiz = (props) => {
+type Props = {
+    answerNumber: number;
+    quizLength: number;
+    answers: Array<QuizQuestionAnswerType>;
+    state: IDWithStatusType;
+    question: string;
+    onAnswerClick: (id: number) => void;
+};
+
+const ActiveQuiz: FC<Props> = (props) => {
     return (
         <div className={classes.ActiveQuiz}>
             <p className={classes.Question}>

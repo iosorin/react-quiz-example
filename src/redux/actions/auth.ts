@@ -3,7 +3,8 @@ import axios from 'axios';
 import { AUTH } from '@/redux/contants';
 import { AuthInitialStateType } from '@/types/auth';
 
-export function auth(email: string, password: string, isLogin: boolean): any {
+type AuthActionType = any;
+export function auth(email: string, password: string, isLogin: boolean): AuthActionType {
     return async (dispatch: any) => {
         const settings = {
             email,
@@ -89,3 +90,5 @@ export function logout(): LogoutActionType {
         type: AUTH.logout,
     };
 }
+
+export type AuthActionTypes = LogoutActionType | AuthActionType;

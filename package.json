@@ -6,7 +6,10 @@
         "start": "node scripts/start.js",
         "build": "node scripts/build.js",
         "test": "node scripts/test.js",
-        "eslint:cache": "rm -rf node_modules/.cache/eslint-loader"
+        "eslint:cache": "rm -rf node_modules/.cache/eslint-loader",
+        "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+        "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
+        "isready": "npm run format && npm run lint && npm run build"
     },
     "browserslist": {
         "production": [
@@ -77,10 +80,10 @@
     },
     "dependencies": {
         "axios": "^0.20.0",
-        "react": "^16.13.1",
+        "react": "^16.14.0",
         "react-app-polyfill": "^1.0.6",
         "react-dev-utils": "^10.2.1",
-        "react-dom": "^16.13.1",
+        "react-dom": "^16.14.0",
         "react-redux": "^7.2.1",
         "react-router-dom": "^5.2.0",
         "redux": "^4.0.5",
@@ -94,8 +97,8 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "@types/jest": "^26.0.14",
-        "@types/node": "^14.11.8",
-        "@types/react": "^16.9.52",
+        "@types/node": "^14.11.10",
+        "@types/react": "^16.9.53",
         "@types/react-dom": "^16.9.8",
         "@types/react-redux": "^7.1.9",
         "@types/react-router-dom": "^5.1.6",
@@ -115,7 +118,7 @@
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.5",
         "eslint": "^6.6.0",
-        "eslint-config-prettier": "^6.12.0",
+        "eslint-config-prettier": "^6.13.0",
         "eslint-config-react-app": "^5.2.1",
         "eslint-import-resolver-typescript": "^2.3.0",
         "eslint-loader": "3.0.3",
@@ -144,7 +147,7 @@
         "postcss-safe-parser": "4.0.1",
         "prettier": "^2.1.2",
         "prop-types": "^15.7.2",
-        "react-test-renderer": "^16.13.1",
+        "react-test-renderer": "^16.14.0",
         "resolve": "1.15.0",
         "resolve-url-loader": "3.1.1",
         "sass-loader": "8.0.2",

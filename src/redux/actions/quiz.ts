@@ -3,7 +3,8 @@ import axiosInstance from '@/axios';
 import { QUIZES, QUIZ } from '@/redux/contants';
 import { QuizListItemType, QuizQuestionType, QuizType, IDWithStatusType } from '@/types/quiz';
 
-export function fetchQuizes(): any {
+type FetchQuizesActionType = any;
+export function fetchQuizes(): FetchQuizesActionType {
     return async (dispatch: any) => {
         dispatch(fetchQuizesStart());
 
@@ -26,7 +27,8 @@ export function fetchQuizes(): any {
     };
 }
 
-export function fetchQuizById(quizId: number): any {
+type FetchQuizByIdActionType = any;
+export function fetchQuizById(quizId: number): FetchQuizByIdActionType {
     return async (dispatch: any) => {
         dispatch(fetchQuizesStart());
 
@@ -100,7 +102,8 @@ function quizNextQuestion(questionNumber: number): QuizNextQuestionActionType {
     };
 }
 
-export function quizAnswerClick(answerId: number): any {
+type QuizAnswerClickActionType = any;
+export function quizAnswerClick(answerId: number): QuizAnswerClickActionType {
     return (dispatch: any, getState: any) => {
         const state = getState().quiz;
 
@@ -143,8 +146,16 @@ export function quizAnswerClick(answerId: number): any {
     };
 }
 
-export function retryQuiz(): { type: typeof QUIZ.retry } {
+type RetryActionType = { type: typeof QUIZ.retry };
+export function retryQuiz(): RetryActionType {
     return {
         type: QUIZ.retry,
     };
 }
+
+export type QuizActionTypes =
+    | FetchQuizesActionType
+    | FetchQuizByIdActionType
+    | RetryActionType
+    | QuizNextQuestionActionType
+    | QuizAnswerClickActionType;

@@ -1,19 +1,18 @@
-import React, { MouseEventHandler } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import classes from './Button.module.scss';
 
 type Props = {
-    onClick: MouseEventHandler;
     type: string;
-    disabled: boolean;
-    children: React.ReactNode[];
+    disabled?: boolean;
+    onClick: MouseEventHandler;
 };
 
-const Button = (props: Props) => {
-    const cls = [classes.Button, classes[props.type]];
+const Button: FC<Props> = ({ children, type, disabled, onClick }) => {
+    const cls = [classes.Button, classes[type]];
 
     return (
-        <button className={cls.join(' ')} disabled={props.disabled} onClick={props.onClick}>
-            {props.children}
+        <button className={cls.join(' ')} disabled={disabled} onClick={onClick}>
+            {children}
         </button>
     );
 };
