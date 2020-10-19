@@ -1,7 +1,7 @@
 import axiosInstance from '@/axios';
 
 import { QUIZES, QUIZ } from '@/redux/contants';
-import { QuizListItemType, QuizQuestionType, QuizType, IDWithStatusType } from '@/types/quiz';
+import { QuizListItemType, QuizQuestionType, QuizType, IDWithStatusType } from '@/types';
 
 type FetchQuizesActionType = any;
 export function fetchQuizes(): FetchQuizesActionType {

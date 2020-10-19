@@ -10,6 +10,7 @@ import QuizList from '@/containers/QuizList/QuizList';
 import QuizCreator from '@/containers/QuizCreator/QuizCreator';
 import Auth from '@/containers/Auth/Auth';
 import Logout from '@/components/Logout/Logout';
+import { getLogged } from '@/redux/selectors';
 
 const App = (props: any) => {
     useEffect(() => {
@@ -42,7 +43,7 @@ const App = (props: any) => {
 
 function mapStateToProps(state: any) {
     return {
-        isLogged: !!state.auth.token,
+        isLogged: getLogged(state),
     };
 }
 

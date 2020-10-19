@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { NavLink } from 'react-router-dom';
 import Backdrop from '@/components/UI/Backdrop/Backdrop';
 
 import classes from './Drawer.module.scss';
 
-const Drawer = (props) => {
-    function renderLinks(links) {
+type Props = {
+    email: string;
+    isLogged: boolean;
+    isOpen: boolean;
+    onToggle: () => void;
+};
+
+type LinkType = {
+    to: string;
+    label: string;
+    exact?: boolean;
+};
+
+const Drawer: FC<Props> = (props) => {
+    function renderLinks(links: LinkType[]) {
         return links.map((link, index) => {
             return (
                 <li key={index}>
@@ -18,7 +31,7 @@ const Drawer = (props) => {
         });
     }
 
-    function getLinks() {
+    function getLinks(): LinkType[] {
         const links = [
             {
                 to: '/',
@@ -28,8 +41,8 @@ const Drawer = (props) => {
         ];
 
         if (props.isLogged) {
-            links.push({ to: '/quiz-creator', label: 'Создать тест' });
-            links.push({ to: '/logout', label: 'Выйти' });
+            links.push({ to: '/quiz-creator', label: 'Создать тест', exact: false });
+            links.push({ to: '/logout', label: 'Выйти', exact: false });
         } else {
             links.push({
                 to: '/auth',

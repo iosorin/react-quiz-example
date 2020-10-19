@@ -1,4 +1,4 @@
-import { IDWithStatusType, QuizQuestionAnswerType } from '@/types/quiz';
+import { IDWithStatusType, QuizQuestionAnswerType } from '@/types';
 import React, { FC } from 'react';
 import AnswerItem from './AnswerItem/AnswerItem';
 

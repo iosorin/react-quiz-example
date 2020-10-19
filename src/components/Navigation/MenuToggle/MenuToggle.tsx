@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { FC, MouseEvent } from 'react';
 import classes from './MenuToggle.module.scss';
 
-const MenuToggle = (props) => {
+type Props = {
+    isOpen: boolean;
+    onToggle: (e: MouseEvent) => void;
+};
+
+const MenuToggle: FC<Props> = (props) => {
     const cls = [classes.MenuToggle, 'fa'];
 
     cls.push(props.isOpen ? 'fa-times' : 'fa-bars');

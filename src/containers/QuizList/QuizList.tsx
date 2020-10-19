@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 import { connect, ConnectedProps } from 'react-redux';
 import { fetchQuizes } from '@/redux/actions/quiz';
-import { QuizListItemType } from '@/types/quiz';
+import { QuizListItemType } from '@/types';
 import { RootState } from '@/types/root';
 
 const mapState = (state: RootState) => {

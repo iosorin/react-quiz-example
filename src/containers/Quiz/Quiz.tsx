@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { connect } from 'react-redux';
 import { fetchQuizById, quizAnswerClick, retryQuiz } from '@/redux/actions/quiz';
@@ -8,8 +8,17 @@ import FinishedQuiz from '@/components/FinishedQuiz/FinishedQuiz';
 import Loader from '@/components/UI/Loader/Loader';
 
 import classes from './Quiz.module.scss';
+import { QuizInitialStateType } from '@/types';
+import { getQuiz } from '@/redux/selectors';
 
-const Quiz = (props) => {
+type Props = QuizInitialStateType & {
+    quizAnswerClick: any;
+    fetchQuizById: any;
+    retryQuiz: any;
+    match: any;
+};
+
+const Quiz: FC<Props> = (props) => {
     useEffect(() => {
         props.fetchQuizById(props.match.params.id);
 
@@ -41,21 +50,16 @@ const Quiz = (props) => {
     );
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
     return {
-        results: state.quiz.results,
-        isFinished: state.quiz.isFinished,
-        activeQuestion: state.quiz.activeQuestion,
-        answerState: state.quiz.answerState,
-        quiz: state.quiz.quiz,
-        loading: state.quiz.loading,
+        ...getQuiz(state),
     };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
     return {
-        fetchQuizById: (id) => dispatch(fetchQuizById(id)),
-        quizAnswerClick: (answerId) => dispatch(quizAnswerClick(answerId)),
+        fetchQuizById: (id: number) => dispatch(fetchQuizById(id)),
+        quizAnswerClick: (answerId: number) => dispatch(quizAnswerClick(answerId)),
         retryQuiz: () => dispatch(retryQuiz()),
     };
 }

@@ -1,4 +1,4 @@
-import { QuizQuestionAnswerType, Status } from '@/types/quiz';
+import { QuizQuestionAnswerType, Status } from '@/types';
 import React, { FC } from 'react';
 import classes from './AnswerItem.module.scss';
 

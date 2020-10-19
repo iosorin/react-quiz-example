@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 
 import { connect } from 'react-redux';
 import { auth } from '@/redux/actions/auth';
@@ -9,7 +9,7 @@ import Input from '@/components/UI/Input/Input';
 
 import classes from './Auth.module.scss';
 
-const Auth = (props) => {
+const Auth = (props: any) => {
     const [isFormValid, setIsFormValid] = useState(false);
 
     const [formControls, setFormContols] = useState({
@@ -31,11 +31,11 @@ const Auth = (props) => {
         ),
     });
 
-    function onChangeHandler(e, controlName) {
+    function onChangeHandler(e: FormEvent<HTMLInputElement>, controlName: keyof typeof formControls) {
         const updatedFormControls = { ...formControls };
         const control = { ...updatedFormControls[controlName] };
 
-        control.value = e.target.value;
+        control.value = e.currentTarget.value;
         control.valid = validate(control.value, control.validation);
         control.touched = true;
 
@@ -60,15 +60,15 @@ const Auth = (props) => {
     }
 
     function renderInput() {
-        return Object.keys(formControls).map((controlName, index) => {
-            const control = formControls[controlName];
+        return Object.keys(formControls).map((controlName: string, index) => {
+            const control = formControls[controlName as keyof typeof formControls];
 
             return (
                 <Input
                     errorMessage={control.errorMessage}
                     key={controlName + index}
                     label={control.label}
-                    onChange={(e) => onChangeHandler(e, controlName)}
+                    onChange={(e) => onChangeHandler(e, controlName as keyof typeof formControls)}
                     shouldValidate={!!control.validation}
                     touched={control.touched}
                     type={control.type}
@@ -98,9 +98,9 @@ const Auth = (props) => {
     );
 };
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
     return {
-        auth: (email, pwd, isLogin) => dispatch(auth(email, pwd, isLogin)),
+        auth: (email: string, pwd: string, isLogin: boolean) => dispatch(auth(email, pwd, isLogin)),
     };
 }
 

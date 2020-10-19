@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { FC, HTMLProps } from 'react';
 import classes from './Input.module.scss';
 
-function isInvalid({ valid, touched, shouldValidate } = {}) {
-    return !valid && shouldValidate && touched;
+type OwnProps = {
+    valid: boolean;
+    touched: boolean;
+    shouldValidate: boolean;
+    errorMessage?: string;
+};
+
+type Props = OwnProps & HTMLProps<HTMLInputElement>;
+
+function isInvalid(props: OwnProps) {
+    return !props.valid && props.shouldValidate && props.touched;
 }
 
-const Input = (props) => {
+const Input: FC<Props> = (props) => {
     const inputType = props.type || 'text';
     const cls = [classes.Input];
     const htmlFor = `${inputType}-${Math.floor(Math.random() * 100)}`;

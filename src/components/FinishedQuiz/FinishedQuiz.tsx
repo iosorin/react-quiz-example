@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import classes from './FinishedQuiz.module.scss';
 import Button from '@/components/UI/Button/Button';
 import { Link } from 'react-router-dom';
-import { IDWithStatusType, Status, QuizQuestionType } from '@/types/quiz';
+import { IDWithStatusType, Status, QuizQuestionType } from '@/types';
 
 type Props = {
     results: IDWithStatusType;
