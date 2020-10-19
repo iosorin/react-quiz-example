@@ -1,4 +1,4 @@
-export function createControl(config: FFormConfigType, validation: FFormValidationType) {
+export function createControl(config: FFormConfigType, validation: FFormValidationType): FFormControlsType {
     return {
         ...config,
         validation,
@@ -28,7 +28,7 @@ export function validate(value: string, validation: FFormValidationType = null) 
     return isValid;
 }
 
-export function validateForm(formControls: FFormControlsType) {
+export function validateForm(formControls: { [key: string]: FFormControlsType }) {
     let isFormValid = true;
 
     Object.keys(formControls).forEach((controlName) => {
@@ -38,7 +38,7 @@ export function validateForm(formControls: FFormControlsType) {
     return isFormValid;
 }
 
-type FFormConfigType = {
+export type FFormConfigType = {
     label: string;
     errorMessage: string;
     type?: string;
@@ -51,11 +51,11 @@ type FFormValidationType = {
     minLength?: number;
 } | null;
 
-type FFormControlsType = {
-    [key: string]: {
-        validation: FFormValidationType;
-        valid: boolean;
-        touched: boolean;
-        value: string;
-    };
+type FFormValidationFlagsType = {
+    validation: FFormValidationType;
+    valid: boolean;
+    touched: boolean;
+    value: string;
 };
+
+export type FFormControlsType = FFormConfigType & FFormValidationType & FFormValidationFlagsType;

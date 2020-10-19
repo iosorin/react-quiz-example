@@ -11,6 +11,7 @@ import Select from '@/components/UI/Select/Select';
 import classes from './QuizCreator.module.scss';
 import { RootState } from '@/types/root';
 import { QuizQuestionType } from '@/types';
+import { RouteComponentProps } from 'react-router-dom';
 
 function createOptionControl(id = 0) {
     return createControl(
@@ -39,7 +40,16 @@ function createFormContols() {
     };
 }
 
-type Props = any;
+type MapStatePropsType = {
+    quiz: QuizQuestionType[];
+};
+
+type MapDispatchPropsType = {
+    finishCreateQuiz: () => void;
+    createQuizQuestion: (question: QuizQuestionType) => void;
+};
+
+type Props = MapStatePropsType & MapDispatchPropsType;
 
 const QuizCreator: FC<Props> = (props) => {
     const [rightAnswerId, setRightAnswerId] = useState(1);
@@ -78,31 +88,32 @@ const QuizCreator: FC<Props> = (props) => {
         setFormControls(updatedFormControls);
     }
 
+    /* todo: fix optional id property */
     function handleNewQuestion(e: MouseEvent) {
         e.preventDefault();
 
         const { question, option1, option2, option3, option4 } = formControls;
 
-        const questionItem = {
+        const questionItem: QuizQuestionType = {
             rightAnswerId,
             id: props.quiz.length + 1,
             question: question.value,
             answers: [
                 {
                     text: option1.value,
-                    id: option1.id,
+                    id: option1.id || -1,
                 },
                 {
                     text: option2.value,
-                    id: option2.id,
+                    id: option2.id || -1,
                 },
                 {
                     text: option3.value,
-                    id: option3.id,
+                    id: option3.id || -1,
                 },
                 {
                     text: option4.value,
-                    id: option4.id,
+                    id: option4.id || -1,
                 },
             ],
         };
@@ -181,17 +192,11 @@ const QuizCreator: FC<Props> = (props) => {
     );
 };
 
-function mapStateToProps(state: RootState) {
-    return {
-        quiz: state.create.quiz,
-    };
-}
+const mapStateToProps = (state: RootState) => ({
+    quiz: state.create.quiz,
+});
 
-function mapDispatchToProps(dispatch: any) {
-    return {
-        createQuizQuestion: (item: QuizQuestionType) => dispatch(createQuizQuestion(item)),
-        finishCreateQuiz: () => dispatch(finishCreateQuiz()),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuizCreator);
+export default connect<MapStatePropsType, MapDispatchPropsType, RouteComponentProps, RootState>(mapStateToProps, {
+    createQuizQuestion,
+    finishCreateQuiz,
+})(QuizCreator);
