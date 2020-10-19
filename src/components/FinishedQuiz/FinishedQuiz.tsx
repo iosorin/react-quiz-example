@@ -48,17 +48,17 @@ const FinishedQuiz: FC<Props> = (props) => {
             </ul>
 
             <p>
-                Правильно {successCount} из {props.quiz.length}
+                Correct {successCount}/{props.quiz.length}
             </p>
 
             <div>
                 <Button onClick={props.onRetry} type="primary">
-                    Повторить
+                    Retry
                 </Button>
 
                 <Link to="/">
                     <Button onClick={props.onRetry} type="success">
-                        Перейти к списку тестов
+                        Try another
                     </Button>
                 </Link>
             </div>

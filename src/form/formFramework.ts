@@ -1,4 +1,3 @@
-import { HTMLProps } from 'react';
 export function createControl(config: FFormConfigType, validation: FFormValidationType) {
     return {
         ...config,
@@ -39,9 +38,11 @@ export function validateForm(formControls: FFormControlsType) {
     return isFormValid;
 }
 
-type FFormConfigType = HTMLProps<HTMLInputElement> & {
+type FFormConfigType = {
     label: string;
     errorMessage: string;
+    type?: string;
+    id?: number;
 };
 
 type FFormValidationType = {

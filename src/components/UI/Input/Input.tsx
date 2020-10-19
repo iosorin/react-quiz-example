@@ -29,7 +29,7 @@ const Input: FC<Props> = (props) => {
 
             <input id={htmlFor} onChange={props.onChange} type={inputType} value={props.value} />
 
-            {isInvalid(props) ? <span>{props.errorMessage}</span> : null}
+            {isInvalid(props) && props.errorMessage ? <span>{props.errorMessage}</span> : null}
         </div>
     );
 };

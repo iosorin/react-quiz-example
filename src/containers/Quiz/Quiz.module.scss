@@ -1,12 +1,21 @@
 .Quiz {
     display: flex;
-    background-image: linear-gradient(-20deg, #fc6076 0%, #ff9a44 100%);
-    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+    background-image: $quiz-gradient;
     justify-content: center;
-    padding-top: 100px;
+    flex-direction: column;
+    align-items: center;
     flex-grow: 1;
 }
 
-.QuizWrapper {
-    width: 600px;
+.QuizOuter {
+    width: $container-width;
+    text-align: center;
+}
+
+.QuizInner {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: $box-shadow;
+    text-align: left;
 }

@@ -14,8 +14,15 @@
         height: 30px;
         margin: 0 0 5px;
         box-sizing: border-box;
-        border: 1px solid #bebebe;
         outline: none;
         transition: 0.3s ease-in-out;
+        border: none;
+        background: #f5f5f5;
+        border-radius: 10px;
+        padding: 7px;
+
+        &:focus {
+            background: darken(#eee, 0.45);
+        }
     }
 }

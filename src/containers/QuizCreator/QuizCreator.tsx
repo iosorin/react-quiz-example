@@ -12,12 +12,12 @@ import classes from './QuizCreator.module.scss';
 import { RootState } from '@/types/root';
 import { QuizQuestionType } from '@/types';
 
-function createOptionControl(num = 0) {
+function createOptionControl(id = 0) {
     return createControl(
         {
-            label: 'Вариант ' + num,
-            errorMessage: 'Заполните поле',
-            id: num.toString(),
+            label: 'Answer ' + id,
+            errorMessage: 'Field must be filled in',
+            id,
         },
         { required: true }
     );
@@ -27,8 +27,8 @@ function createFormContols() {
     return {
         question: createControl(
             {
-                label: 'Введите вопрос',
-                errorMessage: 'Заполните поле',
+                label: 'Come Up With a Question',
+                errorMessage: 'Field must be filled in',
             },
             { required: true }
         ),
@@ -114,7 +114,7 @@ const QuizCreator: FC<Props> = (props) => {
 
     const select = (
         <Select
-            label="Выберите правильный ответ"
+            label="Choose Right Answer"
             onChange={(e) => setRightAnswerId(+e.currentTarget.value)}
             options={[
                 {
@@ -161,7 +161,7 @@ const QuizCreator: FC<Props> = (props) => {
     return (
         <div className={classes.QuizCreator}>
             <div>
-                <h1>Создание теста</h1>
+                <h1>New Quiz</h1>
 
                 <form className={classes.QuizCreatorForm} onSubmit={(e) => e.preventDefault()}>
                     {renderInputs()}
@@ -169,11 +169,11 @@ const QuizCreator: FC<Props> = (props) => {
                     {select}
 
                     <Button disabled={!isFormValid} onClick={handleNewQuestion} type="primary">
-                        Добавить вопрос
+                        Add question
                     </Button>
 
                     <Button disabled={props.quiz.length === 0} onClick={handleNewQuiz} type="success">
-                        Создать тест
+                        Save new quiz
                     </Button>
                 </form>
             </div>
