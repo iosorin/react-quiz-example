@@ -20,13 +20,13 @@
         "noUnusedParameters": true, // Report errors on unused parameters
         "incremental": true, // Enable incremental compilation by reading/writing information from prior compilations to a file on disk
         "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statement,
-        "baseUrl": "src",
+        "baseUrl": "./",
         "paths": {
-            "@/*": ["*"]
+            "@/*": ["./src/*"]
         }
     },
     "include": [
         "src/**/*" // *** The files TypeScript should type check ***
     ],
-    "exclude": ["node_modules", "build"] // *** The files to not type check ***
+    "exclude": ["node_modules", "build", "./config"] // *** The files to not type check ***
 }

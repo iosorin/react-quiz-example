@@ -4,8 +4,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { RootState } from '@/types';
-import { getQuiz } from '@/redux/selectors';
-import { fetchQuizById, quizAnswerClick, retryQuiz } from '@/redux/actions/quiz';
+import { getQuiz } from '@/store/selectors';
+import { fetchQuizById, quizAnswerClick, retryQuiz } from '@/store/actions/quiz';
 
 import ActiveQuiz from '@/components/ActiveQuiz/ActiveQuiz';
 import FinishedQuiz from '@/components/FinishedQuiz/FinishedQuiz';

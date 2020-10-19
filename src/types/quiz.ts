@@ -15,9 +15,7 @@ export type QuizQuestionType = {
     answers: QuizQuestionAnswerType[];
 };
 
-export type QuizType = {
-    quiz: QuizQuestionType[];
-};
+export type QuizType = QuizQuestionType[];
 
 export type QuizListItemType = {
     id: string;
@@ -34,5 +32,5 @@ export type QuizInitialStateType = {
     quizes: QuizListItemType[];
     loading: boolean;
     isFinished: boolean;
-    error?: any;
+    error?: unknown;
 };

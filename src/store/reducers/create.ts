@@ -1,13 +1,12 @@
-import { QUIZ } from '@/redux/contants';
-import { QuizType, QuizQuestionType } from 'types/quiz';
+import { QuizType } from '@/types/quiz';
+import { QUIZ } from '@/store/contants';
+import { CreateActionsTypes } from '@/store/actions/create';
 
-const itialState: QuizType = {
-    quiz: [],
+const initialState = {
+    quiz: [] as QuizType,
 };
 
-type ActionType = { type: string; item: QuizQuestionType };
-
-export default function createReducer(state = itialState, action: ActionType): QuizType {
+const createReducer = (state = initialState, action: CreateActionsTypes): typeof initialState => {
     switch (action.type) {
         case QUIZ.question.create:
             return {
@@ -24,4 +23,6 @@ export default function createReducer(state = itialState, action: ActionType): Q
         default:
             return state;
     }
-}
+};
+
+export default createReducer;

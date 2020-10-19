@@ -1,8 +1,3 @@
-import rootReducer from '@/redux/reducers/rootReducer';
-
-import { CreateActionTypes } from '@/redux/actions/create';
-import { AuthActionTypes } from '@/redux/actions/auth';
-import { QuizActionTypes } from '@/redux/actions/quiz';
+import rootReducer from '@/store/reducers';
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type RootAction = QuizActionTypes | CreateActionTypes | AuthActionTypes;

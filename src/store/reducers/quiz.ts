@@ -1,5 +1,6 @@
-import { QUIZES, QUIZ } from '@/redux/contants';
-import { QuizInitialStateType } from 'types/quiz';
+import { QuizInitialStateType } from '@/types/quiz';
+import { QUIZES, QUIZ } from '@/store/contants';
+import { QuizActionsTypes } from '@/store/actions/quiz';
 
 const initialState: QuizInitialStateType = {
     quizes: [],
@@ -12,13 +13,14 @@ const initialState: QuizInitialStateType = {
     quiz: [],
 };
 
-export default function quizReducer(state = initialState, action: any): QuizInitialStateType {
+const quizReducer = (state = initialState, action: QuizActionsTypes): QuizInitialStateType => {
     switch (action.type) {
         case QUIZES.fetch.start:
             return {
                 ...state,
                 loading: true,
             };
+
         case QUIZES.fetch.success:
             return {
                 ...state,
@@ -72,4 +74,6 @@ export default function quizReducer(state = initialState, action: any): QuizInit
         default:
             return state;
     }
-}
+};
+
+export default quizReducer;

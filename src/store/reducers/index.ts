@@ -5,9 +5,9 @@ import createReducer from './create';
 import authReducer from './auth';
 
 const rootReducer = combineReducers({
+    auth: authReducer,
     quiz: quizReducer,
     create: createReducer,
-    auth: authReducer,
 });
 
 export default rootReducer;
