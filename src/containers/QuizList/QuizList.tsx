@@ -9,21 +9,6 @@ import { fetchQuizes } from '@/redux/actions/quiz';
 import { QuizListItemType } from '@/types';
 import { RootState } from '@/types/root';
 
-const mapState = (state: RootState) => {
-    return {
-        quizes: state.quiz.quizes,
-        loading: state.quiz.loading,
-    };
-};
-
-const mapDispatch = {
-    fetchQuizes,
-};
-
-const connector = connect(mapState, mapDispatch);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
 const QuizList = (props: PropsFromRedux) => {
     useEffect(() => {
         props.fetchQuizes();
@@ -46,5 +31,20 @@ const QuizList = (props: PropsFromRedux) => {
         </div>
     );
 };
+
+const mapState = (state: RootState) => {
+    return {
+        quizes: state.quiz.quizes,
+        loading: state.quiz.loading,
+    };
+};
+
+const mapDispatchToProps = {
+    fetchQuizes,
+};
+
+const connector = connect(mapState, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default connector(QuizList);

@@ -1,7 +1,10 @@
 import React, { FC, useEffect } from 'react';
 
-import { match } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
+import { connect, ConnectedProps } from 'react-redux';
+
+import { RootState } from '@/types';
+import { getQuiz } from '@/redux/selectors';
 import { fetchQuizById, quizAnswerClick, retryQuiz } from '@/redux/actions/quiz';
 
 import ActiveQuiz from '@/components/ActiveQuiz/ActiveQuiz';
@@ -9,15 +12,9 @@ import FinishedQuiz from '@/components/FinishedQuiz/FinishedQuiz';
 import Loader from '@/components/UI/Loader/Loader';
 
 import classes from './Quiz.module.scss';
-import { QuizInitialStateType } from '@/types';
-import { getQuiz } from '@/redux/selectors';
 
-type Props = QuizInitialStateType & {
-    quizAnswerClick: (answerId: number) => void;
-    fetchQuizById: (quizUid: string) => void;
-    retryQuiz: () => void;
-    match: match<{ id: string }>;
-};
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type Props = PropsFromRedux & RouteComponentProps<{ id: string }>;
 
 const Quiz: FC<Props> = (props) => {
     useEffect(() => {
@@ -57,18 +54,16 @@ const Quiz: FC<Props> = (props) => {
     );
 };
 
-function mapStateToProps(state: any) {
-    return {
-        ...getQuiz(state),
-    };
-}
+const mapStateToProps = (state: RootState) => ({
+    ...getQuiz(state),
+});
 
-function mapDispatchToProps(dispatch: any) {
-    return {
-        fetchQuizById: (quizUid: string) => dispatch(fetchQuizById(quizUid)),
-        quizAnswerClick: (answerId: number) => dispatch(quizAnswerClick(answerId)),
-        retryQuiz: () => dispatch(retryQuiz()),
-    };
-}
+const mapDispatchToProps = {
+    quizAnswerClick,
+    fetchQuizById,
+    retryQuiz,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(Quiz);

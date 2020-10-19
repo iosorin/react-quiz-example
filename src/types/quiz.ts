@@ -34,5 +34,5 @@ export type QuizInitialStateType = {
     quizes: QuizListItemType[];
     loading: boolean;
     isFinished: boolean;
-    error: any;
+    error?: any;
 };

@@ -1,6 +1,6 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { auth } from '@/redux/actions/auth';
 import { createControl, validate, validateForm } from '@/form/formFramework';
 
@@ -9,7 +9,7 @@ import Input from '@/components/UI/Input/Input';
 
 import classes from './Auth.module.scss';
 
-const Auth = (props: any) => {
+const Auth: FC<PropsFromRedux> = (props) => {
     const [isFormValid, setIsFormValid] = useState(false);
 
     const [formControls, setFormContols] = useState({
@@ -98,10 +98,8 @@ const Auth = (props: any) => {
     );
 };
 
-function mapDispatchToProps(dispatch: any) {
-    return {
-        auth: (email: string, pwd: string, isLogin: boolean) => dispatch(auth(email, pwd, isLogin)),
-    };
-}
+const connector = connect(null, { auth });
 
-export default connect(null, mapDispatchToProps)(Auth);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Auth);

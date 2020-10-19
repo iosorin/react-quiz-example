@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { autoLogin } from 'redux/actions/auth';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
@@ -11,8 +11,9 @@ import QuizCreator from '@/containers/QuizCreator/QuizCreator';
 import Auth from '@/containers/Auth/Auth';
 import Logout from '@/components/Logout/Logout';
 import { getLogged } from '@/redux/selectors';
+import { RootState } from '@/types';
 
-const App = (props: any) => {
+const App: FC<PropsFromRedux> = (props) => {
     useEffect(() => {
         props.autoLogin();
     }, []);
@@ -42,16 +43,14 @@ const App = (props: any) => {
     return <Layout>{routes}</Layout>;
 };
 
-function mapStateToProps(state: any) {
+function mapStateToProps(state: RootState) {
     return {
         isLogged: getLogged(state),
     };
 }
 
-function mapDispatchToProps(dispatch: any) {
-    return {
-        autoLogin: () => dispatch(autoLogin()),
-    };
-}
+const connector = connect(mapStateToProps, { autoLogin });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default withRouter(connector(App));
