@@ -1,7 +1,7 @@
 import React, { FC, FormEvent, MouseEvent, useState } from 'react';
 
 import { connect } from 'react-redux';
-import { createQuizQuestion, finishCreateQuiz } from '@/redux/actions/create';
+import { createQuizQuestion, finishCreateQuiz } from '@/store/actions/create';
 import { createControl, validate, validateForm } from '@/form/formFramework';
 
 import Button from '@/components/UI/Button/Button';

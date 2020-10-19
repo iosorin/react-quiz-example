@@ -5,7 +5,7 @@ import Loader from '@/components/UI/Loader/Loader';
 import { NavLink } from 'react-router-dom';
 
 import { connect, ConnectedProps } from 'react-redux';
-import { fetchQuizes } from '@/redux/actions/quiz';
+import { fetchQuizes } from '@/store/actions/quiz';
 import { QuizListItemType } from '@/types';
 import { RootState } from '@/types/root';
 

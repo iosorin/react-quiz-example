@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 
 import { connect, ConnectedProps } from 'react-redux';
-import { autoLogin } from 'redux/actions/auth';
+import { autoLogin } from '@/store/actions/auth';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
 import Layout from '@/hoc/Layout/Layout';
@@ -10,7 +10,7 @@ import QuizList from '@/containers/QuizList/QuizList';
 import QuizCreator from '@/containers/QuizCreator/QuizCreator';
 import Auth from '@/containers/Auth/Auth';
 import Logout from '@/components/Logout/Logout';
-import { getLogged } from '@/redux/selectors';
+import { getLogged } from '@/store/selectors';
 import { RootState } from '@/types';
 
 const App: FC<PropsFromRedux> = (props) => {

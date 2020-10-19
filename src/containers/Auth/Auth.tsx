@@ -1,7 +1,7 @@
 import React, { FC, FormEvent, useState } from 'react';
 
 import { connect, ConnectedProps } from 'react-redux';
-import { auth } from '@/redux/actions/auth';
+import { auth } from '@/store/actions/auth';
 import { createControl, validate, validateForm } from '@/form/formFramework';
 
 import Button from '@/components/UI/Button/Button';

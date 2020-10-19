@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, RouteProps } from 'react-router-dom';
-import { logout } from '@/redux/actions/auth';
+import { logout } from '@/store/actions/auth';
 
 type Props = RouteProps & {
     logout: () => void;
