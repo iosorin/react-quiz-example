@@ -1,7 +1,7 @@
 import axiosInstance from '@/axios';
 
 import { QUIZ } from '@/redux/contants';
-import { QuizQuestionType } from '@/types/quiz';
+import { QuizQuestionType } from '@/types';
 
 type CreateQuizQuestionActionType = {
     type: typeof QUIZ.question.create;

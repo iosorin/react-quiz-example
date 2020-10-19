@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, FormEvent, MouseEvent, useState } from 'react';
 
 import { connect } from 'react-redux';
 import { createQuizQuestion, finishCreateQuiz } from '@/redux/actions/create';
@@ -9,13 +9,15 @@ import Input from '@/components/UI/Input/Input';
 import Select from '@/components/UI/Select/Select';
 
 import classes from './QuizCreator.module.scss';
+import { RootState } from '@/types/root';
+import { QuizQuestionType } from '@/types';
 
-function createOptionControl(number) {
+function createOptionControl(num = 0) {
     return createControl(
         {
-            label: 'Вариант ' + number,
+            label: 'Вариант ' + num,
             errorMessage: 'Заполните поле',
-            id: number,
+            id: num.toString(),
         },
         { required: true }
     );
@@ -37,7 +39,9 @@ function createFormContols() {
     };
 }
 
-const QuizCreator = (props) => {
+type Props = any;
+
+const QuizCreator: FC<Props> = (props) => {
     const [rightAnswerId, setRightAnswerId] = useState(1);
     const [isFormValid, setIsFormValid] = useState(false);
     const [formControls, setFormControls] = useState(createFormContols());
@@ -48,7 +52,7 @@ const QuizCreator = (props) => {
         setFormControls(createFormContols());
     }
 
-    function handleNewQuiz(e) {
+    function handleNewQuiz(e: MouseEvent) {
         e.preventDefault();
 
         resetState();
@@ -56,14 +60,14 @@ const QuizCreator = (props) => {
         props.finishCreateQuiz();
     }
 
-    function onChangeHandler(e, controlName) {
+    function onChangeHandler(e: FormEvent<HTMLInputElement>, controlName: keyof typeof formControls) {
         if (!formControls) return;
 
         const updatedFormControls = { ...formControls };
         const control = { ...updatedFormControls[controlName] };
 
         control.touched = true;
-        control.value = e.target.value;
+        control.value = e.currentTarget.value;
         control.valid = validate(control.value, control.validation);
 
         updatedFormControls[controlName] = control;
@@ -74,7 +78,7 @@ const QuizCreator = (props) => {
         setFormControls(updatedFormControls);
     }
 
-    function handleNewQuestion(e) {
+    function handleNewQuestion(e: MouseEvent) {
         e.preventDefault();
 
         const { question, option1, option2, option3, option4 } = formControls;
@@ -111,7 +115,7 @@ const QuizCreator = (props) => {
     const select = (
         <Select
             label="Выберите правильный ответ"
-            onChange={(e) => setRightAnswerId(+e.target.value)}
+            onChange={(e) => setRightAnswerId(+e.currentTarget.value)}
             options={[
                 {
                     text: 1,
@@ -136,14 +140,14 @@ const QuizCreator = (props) => {
 
     function renderInputs() {
         return Object.keys(formControls).map((controlName, index) => {
-            const control = formControls[controlName];
+            const control = formControls[controlName as keyof typeof formControls];
 
             return (
                 <Input
                     errorMessage={control.errorMessage}
                     key={index}
                     label={control.label}
-                    onChange={(e) => onChangeHandler(e, controlName)}
+                    onChange={(e) => onChangeHandler(e, controlName as keyof typeof formControls)}
                     shouldValidate={!!control.validation}
                     touched={control.touched}
                     type={control.type}
@@ -177,15 +181,15 @@ const QuizCreator = (props) => {
     );
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state: RootState) {
     return {
         quiz: state.create.quiz,
     };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
     return {
-        createQuizQuestion: (item) => dispatch(createQuizQuestion(item)),
+        createQuizQuestion: (item: QuizQuestionType) => dispatch(createQuizQuestion(item)),
         finishCreateQuiz: () => dispatch(finishCreateQuiz()),
     };
 }

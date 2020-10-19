@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { FC, HTMLProps } from 'react';
 import classes from './Select.module.scss';
 
-const Select = (props) => {
+type OptionProps = {
+    value: number;
+    text: string | number;
+};
+
+type Props = HTMLProps<HTMLSelectElement> & { options: OptionProps[] };
+
+const Select: FC<Props> = (props) => {
     const htmlFor = `${props.label} ${Math.floor(Math.random() * 100)}`;
 
     return (

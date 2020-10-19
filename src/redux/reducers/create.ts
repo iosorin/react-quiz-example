@@ -5,9 +5,9 @@ const itialState: QuizType = {
     quiz: [],
 };
 
-type ActionT = { type: string; item: QuizQuestionType };
+type ActionType = { type: string; item: QuizQuestionType };
 
-export default function createReducer(state = itialState, action: ActionT): QuizType {
+export default function createReducer(state = itialState, action: ActionType): QuizType {
     switch (action.type) {
         case QUIZ.question.create:
             return {

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import classes from './ActiveQuiz.module.scss';
 
-import { IDWithStatusType, QuizQuestionAnswerType } from '@/types/quiz';
+import { IDWithStatusType, QuizQuestionAnswerType } from '@/types';
 
 import AnswersList from './AnswersList/AnswersList';
 

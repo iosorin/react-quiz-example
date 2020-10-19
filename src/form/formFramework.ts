@@ -1,4 +1,5 @@
-export function createControl(config, validation) {
+import { HTMLProps } from 'react';
+export function createControl(config: FFormConfigType, validation: FFormValidationType) {
     return {
         ...config,
         validation,
@@ -8,7 +9,7 @@ export function createControl(config, validation) {
     };
 }
 
-export function validate(value, validation = null) {
+export function validate(value: string, validation: FFormValidationType = null) {
     if (!validation) return true;
 
     let isValid = true;
@@ -28,7 +29,7 @@ export function validate(value, validation = null) {
     return isValid;
 }
 
-export function validateForm(formControls) {
+export function validateForm(formControls: FFormControlsType) {
     let isFormValid = true;
 
     Object.keys(formControls).forEach((controlName) => {
@@ -37,3 +38,23 @@ export function validateForm(formControls) {
 
     return isFormValid;
 }
+
+type FFormConfigType = HTMLProps<HTMLInputElement> & {
+    label: string;
+    errorMessage: string;
+};
+
+type FFormValidationType = {
+    required?: boolean;
+    email?: boolean;
+    minLength?: number;
+} | null;
+
+type FFormControlsType = {
+    [key: string]: {
+        validation: FFormValidationType;
+        valid: boolean;
+        touched: boolean;
+        value: string;
+    };
+};
