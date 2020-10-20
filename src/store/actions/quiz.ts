@@ -1,6 +1,7 @@
+import API from '@/api';
+
 import { RootState } from '@/types/root';
 import { ThunkAction } from 'redux-thunk';
-import axiosInstance from '@/axios';
 
 import { QUIZES, QUIZ } from '@/store/contants';
 import { QuizListItemType, QuizQuestionType, QuizType, IDWithStatusType } from '@/types';
@@ -11,16 +12,15 @@ type ThunkType = ThunkAction<Promise<void> | void, RootState, unknown, QuizActio
 export const fetchQuizes = (): ThunkType => {
     // eslint-disable-next-line
     return async (dispatch, _getState, _extraArgument) => {
-        // _extraArgument usage example - passing an api instance
+        // _extraArgument usage example - passing an API instance
 
         dispatch(fetchQuizesStart());
 
         try {
-            const response = await axiosInstance.get('/quizes.json');
-
             const list: QuizListItemType[] = [];
+            const quizes = await API.fetchQuizes();
 
-            Object.keys(response.data).forEach((key, index) => {
+            Object.keys(quizes).forEach((key, index) => {
                 list.push({
                     id: key,
                     name: '№ ' + index + 1,
@@ -34,14 +34,14 @@ export const fetchQuizes = (): ThunkType => {
     };
 };
 
-export const fetchQuizById = (quizUid: string): ThunkType => {
+export const fetchQuizById = (uid: string): ThunkType => {
     return async (dispatch) => {
         dispatch(fetchQuizesStart());
 
         try {
-            const response = await axiosInstance.get('/quizes/' + quizUid + '.json');
+            const quiz = await API.fetchQuiz(uid);
 
-            dispatch(fetchQuizSuccess(response.data));
+            dispatch(fetchQuizSuccess(quiz));
         } catch (error) {
             fetchQuizesError(error);
 
@@ -70,7 +70,6 @@ export const quizAnswerClick = (answerId: number): ThunkType => {
         const question: QuizQuestionType = state.quiz[state.activeQuestion];
         const results = state.results;
 
-        console.log(question.rightAnswerId, answerId);
         if (question.rightAnswerId === answerId) {
             if (!results[question.id]) {
                 results[question.id] = 'success';

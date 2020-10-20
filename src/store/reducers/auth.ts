@@ -1,5 +1,4 @@
 import { AuthInitialStateType } from '@/types/auth';
-import { AUTH } from '@/store/contants';
 import { AuthActionsTypes } from '@/store/actions/auth';
 
 const initialState: AuthInitialStateType = {
@@ -11,7 +10,7 @@ const initialState: AuthInitialStateType = {
 
 const authReducer = (state = initialState, action: AuthActionsTypes): AuthInitialStateType => {
     switch (action.type) {
-        case AUTH.success: {
+        case 'AUTH.success': {
             const { token, email, expirationDate, userId } = action.payload;
 
             return {
@@ -23,7 +22,7 @@ const authReducer = (state = initialState, action: AuthActionsTypes): AuthInitia
             };
         }
 
-        case AUTH.logout: {
+        case 'AUTH.logout': {
             return {
                 ...state,
                 ...initialState,

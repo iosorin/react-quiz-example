@@ -1,35 +1,23 @@
-import axios from 'axios';
+import API from '@/api';
 
-import { AUTH } from '@/store/contants';
 import { AuthInitialStateType } from '@/types/auth';
 
-import { RootState } from '@/types/root';
 import { Dispatch } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import { InferActionsType, ThunkType } from '@/store/help';
 
-type ThunkType = ThunkAction<Promise<void> | void, RootState, unknown, AuthActionsTypes>;
-
-/* ThunkAction Usage Example */
-export const auth = (email: string, password: string, isLogin: boolean): ThunkType => async (dispatch) => {
+/* ThunkAction Usage Example (@/store/help) */
+export const auth = (email: string, password: string, isLogin: boolean): ThunkType<AuthActionsTypes> => async (
+    dispatch
+) => {
     const settings = {
         email,
         password,
         returnSecureToken: true,
     };
 
-    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp';
-
-    if (isLogin) {
-        url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword';
-    }
-
-    url += '?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw';
-
     try {
-        const response = await axios.post(url, settings);
-        const data = response.data;
-
-        const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000 || Date.now());
+        const data = await API.auth(settings, isLogin);
+        const expirationDate = new Date(Date.now() + parseInt(data.expiresIn) * 1000);
 
         const payload = {
             token: data.idToken,
@@ -40,28 +28,28 @@ export const auth = (email: string, password: string, isLogin: boolean): ThunkTy
 
         localStorage.setItem('auth', JSON.stringify(payload));
 
-        dispatch(authSuccess(payload));
-        dispatch(autoLogout(data.expiresIn));
+        dispatch(actions.authSuccess(payload));
+        dispatch(autoLogout(parseInt(data.expiresIn)));
     } catch (error) {
         console.log(error);
     }
 };
 
 /* fix dispatch chain (saga - ?) -> replace 1st 'any' with another async call and last with type of it */
-export const autoLogin = (): ThunkType => {
+export const autoLogin = (): ThunkType<AuthActionsTypes> => {
     return (dispatch) => {
         const data = localStorage.getItem('auth');
         const payload = data ? JSON.parse(data) : {};
 
         if (payload.token) {
             if (payload.expirationDate <= new Date()) {
-                dispatch(logout());
+                dispatch(actions.logout());
             } else {
-                dispatch(authSuccess(payload));
-                dispatch(autoLogout((new Date(payload.expirationDate).getTime() - new Date().getTime()) / 1000));
+                dispatch(actions.authSuccess(payload));
+                dispatch(autoLogout((new Date(payload.expirationDate).getTime() - Date.now()) / 1000));
             }
         } else {
-            dispatch(logout());
+            dispatch(actions.logout());
         }
     };
 };
@@ -70,26 +58,22 @@ export const autoLogin = (): ThunkType => {
 export const autoLogout = (time: number) => {
     return (dispatch: Dispatch<AuthActionsTypes>) => {
         setTimeout(() => {
-            dispatch(logout());
+            dispatch(actions.logout());
         }, time * 1000);
     };
 };
 
-type AuthSuccessType = { type: typeof AUTH.success; payload: AuthInitialStateType };
-export const authSuccess = (payload: AuthInitialStateType): AuthSuccessType => {
-    return {
-        type: AUTH.success,
-        payload,
-    };
+/* Example of excess (or not, not sure) constants declaration fix*/
+export const actions = {
+    logout: () => {
+        /* todo: fix side-effect */
+        localStorage.removeItem('auth');
+
+        return {
+            type: 'AUTH.logout',
+        } as const;
+    },
+    authSuccess: (payload: AuthInitialStateType) => ({ type: 'AUTH.success', payload } as const),
 };
 
-type AuthLogoutActionType = { type: typeof AUTH.logout };
-export const logout = (): AuthLogoutActionType => {
-    localStorage.removeItem('auth');
-
-    return {
-        type: AUTH.logout,
-    };
-};
-
-export type AuthActionsTypes = AuthSuccessType | AuthLogoutActionType;
+export type AuthActionsTypes = InferActionsType<typeof actions>;
