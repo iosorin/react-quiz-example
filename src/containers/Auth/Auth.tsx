@@ -99,7 +99,6 @@ const Auth: FC<PropsFromRedux> = (props) => {
 };
 
 const connector = connect(null, { auth });
-
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default connector(Auth);
