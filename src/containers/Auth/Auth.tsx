@@ -7,8 +7,6 @@ import { createControl, validate, validateForm } from '@/form/formFramework';
 import Button from '@/components/UI/Button/Button';
 import Input from '@/components/UI/Input/Input';
 
-import classes from './Auth.module.scss';
-
 const Auth: FC<PropsFromRedux> = (props) => {
     const [isFormValid, setIsFormValid] = useState(false);
 
@@ -80,10 +78,10 @@ const Auth: FC<PropsFromRedux> = (props) => {
     }
 
     return (
-        <div className={classes.Auth}>
+        <div className="container">
             <h1>Authorization</h1>
 
-            <form className={classes.AuthForm} onSubmit={(e) => e.preventDefault()}>
+            <form className="form" onSubmit={(e) => e.preventDefault()}>
                 {renderInput()}
 
                 <Button disabled={!isFormValid} onClick={loginHandler} type="success">

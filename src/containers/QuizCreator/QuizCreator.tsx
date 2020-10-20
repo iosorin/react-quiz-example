@@ -88,7 +88,6 @@ const QuizCreator: FC<Props> = (props) => {
         setFormControls(updatedFormControls);
     }
 
-    /* todo: fix optional id property */
     function handleNewQuestion(e: MouseEvent) {
         e.preventDefault();
 
@@ -101,7 +100,7 @@ const QuizCreator: FC<Props> = (props) => {
             answers: [
                 {
                     text: option1.value,
-                    id: option1.id || -1,
+                    id: option1.id || -1, // todo: fix optional id property
                 },
                 {
                     text: option2.value,
@@ -193,9 +192,12 @@ const QuizCreator: FC<Props> = (props) => {
 };
 
 const mapStateToProps = (state: RootState) => ({ quiz: state.create.quiz });
+const mapDispatchToProps = { createQuizQuestion, finishCreateQuiz };
 
 /* Connect Custom Typing Usage example - manually defined (MapStatePropsType, MapDispatchPropsType, RouteComponentProps, RootState) above  */
-export default connect<MapStatePropsType, MapDispatchPropsType, RouteComponentProps, RootState>(mapStateToProps, {
-    createQuizQuestion,
-    finishCreateQuiz,
-})(QuizCreator);
+const connector = connect<MapStatePropsType, MapDispatchPropsType, RouteComponentProps, RootState>(
+    mapStateToProps,
+    mapDispatchToProps
+);
+
+export default connector(QuizCreator);

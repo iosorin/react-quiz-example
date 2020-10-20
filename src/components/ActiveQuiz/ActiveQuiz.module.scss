@@ -5,5 +5,11 @@
 .Question {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+
+    small {
+        flex-shrink: 0;
+        font-weight: 600;
+        margin: 2px 0 0 6px;
+    }
 }

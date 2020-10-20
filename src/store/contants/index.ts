@@ -23,3 +23,8 @@ export const QUIZ = {
         success: 'quiz/fetch/success' as const,
     },
 };
+
+export const AUTH = {
+    success: 'auth/success',
+    logout: 'auth/logout',
+};

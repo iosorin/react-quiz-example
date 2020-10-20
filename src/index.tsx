@@ -11,11 +11,11 @@ import '@/styles';
 
 const application = (
     <Provider store={store}>
-        <BrowserRouter>
-            <React.StrictMode>
+        <React.StrictMode>
+            <BrowserRouter>
                 <App />
-            </React.StrictMode>
-        </BrowserRouter>
+            </BrowserRouter>
+        </React.StrictMode>
     </Provider>
 );
 

@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import classes from './FinishedQuiz.module.scss';
-import Button from '@/components/UI/Button/Button';
-import { Link } from 'react-router-dom';
 import { IDWithStatusType, Status, QuizQuestionType } from '@/types';
+import { Link } from 'react-router-dom';
+import Button from '@/components/UI/Button/Button';
+import classes from './FinishedQuiz.module.scss';
 
 type Props = {
     results: IDWithStatusType;
@@ -22,6 +22,8 @@ const FinishedQuiz: FC<Props> = (props) => {
 
         return total;
     }, 0);
+
+    console.log('props.quiz', props.quiz, props);
 
     return (
         <div className={classes.FinishedQuiz}>
@@ -48,7 +50,9 @@ const FinishedQuiz: FC<Props> = (props) => {
             </ul>
 
             <p>
-                Correct {successCount}/{props.quiz.length}
+                <b>
+                    Correct {successCount}/{props.quiz.length}
+                </b>
             </p>
 
             <div>

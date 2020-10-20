@@ -1,13 +1,13 @@
-import React, { FC, MouseEventHandler } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import classes from './Button.module.scss';
 
 type Props = {
-    type: string;
+    type?: string;
     disabled?: boolean;
-    onClick: MouseEventHandler;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
-const Button: FC<Props> = ({ children, type, disabled, onClick }) => {
+const Button: FC<Props> = ({ children, type = 'primary', disabled, onClick }) => {
     const cls = [classes.Button, classes[type]];
 
     return (
