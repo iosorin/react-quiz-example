@@ -66,8 +66,8 @@ export const autoLogin = (): ThunkType => {
     };
 };
 
+/* DispatchType Usage Example - plain */
 export const autoLogout = (time: number) => {
-    /* DispatchType Usage Example - plain */
     return (dispatch: Dispatch<AuthActionsTypes>) => {
         setTimeout(() => {
             dispatch(logout());

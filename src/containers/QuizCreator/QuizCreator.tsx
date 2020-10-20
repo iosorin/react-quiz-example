@@ -192,10 +192,9 @@ const QuizCreator: FC<Props> = (props) => {
     );
 };
 
-const mapStateToProps = (state: RootState) => ({
-    quiz: state.create.quiz,
-});
+const mapStateToProps = (state: RootState) => ({ quiz: state.create.quiz });
 
+/* Connect Custom Typing Usage example - manually defined (MapStatePropsType, MapDispatchPropsType, RouteComponentProps, RootState) above  */
 export default connect<MapStatePropsType, MapDispatchPropsType, RouteComponentProps, RootState>(mapStateToProps, {
     createQuizQuestion,
     finishCreateQuiz,

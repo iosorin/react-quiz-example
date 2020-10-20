@@ -54,15 +54,9 @@ const Quiz: FC<Props> = (props) => {
     );
 };
 
-const mapStateToProps = (state: RootState) => ({
-    ...getQuiz(state),
-});
-
-const mapDispatchToProps = {
-    quizAnswerClick,
-    fetchQuizById,
-    retryQuiz,
-};
+/* Spread state props via selector Usage example - not sure it's the correct */
+const mapStateToProps = (state: RootState) => ({ ...getQuiz(state) });
+const mapDispatchToProps = { quizAnswerClick, fetchQuizById, retryQuiz };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
