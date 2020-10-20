@@ -4,17 +4,17 @@ import { RootState } from '@/types';
 import MenuToggle from '@/components/Navigation/MenuToggle/MenuToggle';
 import Drawer from '@/components/Navigation/Drawer/Drawer';
 import classes from './Layout.module.scss';
-import { getLogged } from '@/store/selectors';
+import { getAuthenticated } from '@/store/selectors';
 
 const Layout: FC<PropsFromRedux> = (props) => {
     const [menu, setMenu] = useState(false);
     const toggleMenu = () => setMenu((prev) => !prev);
 
-    const classList = () => `${classes.Layout} ${props.isLogged ? classes.logged : ''}`;
+    const classList = () => `${classes.Layout} ${props.isAuthenticated ? classes.auth : ''}`;
 
     return (
         <div className={classList()}>
-            <Drawer email={props.email} isLogged={props.isLogged} isOpen={menu} onToggle={toggleMenu} />
+            <Drawer email={props.email} isAuthenticated={props.isAuthenticated} isOpen={menu} onToggle={toggleMenu} />
 
             <MenuToggle isOpen={menu} onToggle={toggleMenu} />
 
@@ -25,7 +25,7 @@ const Layout: FC<PropsFromRedux> = (props) => {
 
 const mapStateToProps = (state: RootState) => ({
     email: state.auth.email,
-    isLogged: getLogged(state),
+    isAuthenticated: getAuthenticated(state),
 });
 
 const connector = connect(mapStateToProps);

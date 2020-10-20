@@ -7,8 +7,8 @@ import classes from './Drawer.module.scss';
 
 type Props = {
     email: string;
-    isLogged: boolean;
     isOpen: boolean;
+    isAuthenticated: boolean;
     onToggle: () => void;
 };
 
@@ -16,13 +16,14 @@ type LinkType = {
     to: string;
     label: string;
     exact?: boolean;
+    class?: string;
 };
 
 const Drawer: FC<Props> = (props) => {
     function renderLinks(links: LinkType[]) {
         return links.map((link, index) => {
             return (
-                <li key={index}>
+                <li className={link.class} key={index}>
                     <NavLink activeClassName={classes.active} exact={link.exact} onClick={props.onToggle} to={link.to}>
                         {link.label}
                     </NavLink>
@@ -32,18 +33,20 @@ const Drawer: FC<Props> = (props) => {
     }
 
     function getLinks(): LinkType[] {
-        const links = [
+        const links: LinkType[] = [
             { to: '/', label: 'Quiz List', exact: true },
             { to: '/quiz-creator', label: 'New quiz', exact: true },
         ];
 
-        if (props.isLogged) {
-            links.push({ to: '/logout', label: 'Sign Out', exact: false });
+        if (props.isAuthenticated) {
+            links.push({ to: '/account', label: 'Account', exact: true });
+            links.push({ to: '/logout', label: 'Sign Out', exact: false, class: classes.Button });
         } else {
             links.push({
                 to: '/auth',
                 label: 'Sign In',
                 exact: true,
+                class: classes.Button,
             });
         }
 
@@ -62,7 +65,7 @@ const Drawer: FC<Props> = (props) => {
                 <nav className={cls.join(' ')}>
                     <ul>{renderLinks(getLinks())}</ul>
 
-                    {props.email && <div className={classes.Email}>{props.email}</div>}
+                    {/* {props.email && <div className={classes.Email}>{props.email}</div>} */}
                 </nav>
 
                 {props.isOpen ? <Backdrop onClick={props.onToggle} /> : null}

@@ -5,7 +5,7 @@
     bottom: 0;
     width: 80%;
     max-width: $drawer-width;
-    padding: 20px;
+    padding: 40px 20px 20px;
     box-sizing: border-box;
     background: #fff;
     z-index: 90;
@@ -20,15 +20,44 @@
         transform: translateX(-#{$drawer-width});
     }
 
+    ul {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
     li {
-        margin-bottom: 15px;
+        margin-bottom: 18px;
     }
 
     a {
-        font-size: 30px;
+        font-size: 28px;
     }
 }
 
 .Email {
     font-weight: 600;
+}
+
+.Button {
+    margin-top: auto;
+
+    a {
+        padding: 12px 20px;
+        border-radius: 4px;
+        font-weight: bold;
+        box-shadow: $box-shadow;
+        background: $primary;
+        line-height: 16px;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        text-decoration: none !important;
+        display: block;
+        transition: 0.3s;
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
 }

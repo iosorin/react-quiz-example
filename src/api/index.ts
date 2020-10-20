@@ -22,14 +22,14 @@ type AuthResponseType = {
 };
 
 const API = {
-    fetchQuiz(uid: string) {
+    all() {
+        return instance.get<FetchQuizesResponseType>('/quizes.json').then((res) => res.data);
+    },
+    get(uid: string) {
         return instance.get<FetchQuizResponseType>('/quizes/' + uid + '.json').then((res) => res.data);
     },
-    newQuiz(quiz: unknown) {
+    new(quiz: unknown) {
         return instance.post<NewQuizResponseType>('/quizes.json', quiz).then((res) => res.data);
-    },
-    fetchQuizes() {
-        return instance.get<FetchQuizesResponseType>('/quizes.json').then((res) => res.data);
     },
     auth(settings: AuthSettings, isLogin: boolean) {
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp';

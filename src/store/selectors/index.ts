@@ -5,4 +5,4 @@ export const getCreate = (state: RootState) => state.create;
 export const getAuth = (state: RootState) => state.auth;
 
 /* Computed selector example */
-export const getLogged = (state: RootState) => !!state.auth.token;
+export const getAuthenticated = (state: RootState) => !!state.auth.token;

@@ -16,6 +16,11 @@ body {
     box-sizing: inherit;
 }
 
+::selection {
+    background: $primary;
+    color: white;
+}
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
     display: block;
@@ -44,7 +49,30 @@ h1 {
     text-align: center;
 }
 
-::selection {
-    background: $primary;
-    color: white;
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.form {
+    width: 100%;
+    max-width: $container-width;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    box-shadow: $box-shadow;
+    background: #fff;
+
+    button {
+        align-self: center;
+
+        &:not(:last-child) {
+            margin-bottom: 15px;
+        }
+    }
 }

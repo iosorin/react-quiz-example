@@ -26,7 +26,7 @@ const ActiveQuiz: FC<Props> = (props) => {
                 </span>
 
                 <small>
-                    {props.answerNumber} из {props.quizLength}
+                    {props.answerNumber} / {props.quizLength}
                 </small>
             </p>
 
