@@ -4,3 +4,9 @@ export type AuthInitialStateType = {
     email: string;
     expirationDate: null | Date;
 };
+
+export type AuthSettings = {
+    email: string;
+    password: string;
+    returnSecureToken?: boolean;
+};

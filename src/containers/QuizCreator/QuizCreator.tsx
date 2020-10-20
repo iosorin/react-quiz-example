@@ -16,7 +16,7 @@ import { RouteComponentProps } from 'react-router-dom';
 function createOptionControl(id = 0) {
     return createControl(
         {
-            label: 'Answer ' + id,
+            label: 'Variant ' + id,
             errorMessage: 'Field must be filled in',
             id,
         },
@@ -28,7 +28,7 @@ function createFormContols() {
     return {
         question: createControl(
             {
-                label: 'Come Up With a Question',
+                label: 'Question:',
                 errorMessage: 'Field must be filled in',
             },
             { required: true }
@@ -125,7 +125,7 @@ const QuizCreator: FC<Props> = (props) => {
 
     const select = (
         <Select
-            label="Choose Right Answer"
+            label="Right Answer"
             onChange={(e) => setRightAnswerId(+e.currentTarget.value)}
             options={[
                 {
@@ -184,7 +184,7 @@ const QuizCreator: FC<Props> = (props) => {
                     </Button>
 
                     <Button disabled={props.quiz.length === 0} onClick={handleNewQuiz} type="success">
-                        Save new quiz
+                        Create new quiz
                     </Button>
                 </form>
             </div>

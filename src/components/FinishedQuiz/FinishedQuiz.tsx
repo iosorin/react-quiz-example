@@ -58,7 +58,7 @@ const FinishedQuiz: FC<Props> = (props) => {
 
                 <Link to="/">
                     <Button onClick={props.onRetry} type="success">
-                        Try another
+                        Go to list
                     </Button>
                 </Link>
             </div>

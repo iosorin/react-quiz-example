@@ -1,5 +1,6 @@
+import API from '@/api';
+
 import { RootState } from '@/types/root';
-import axiosInstance from '@/axios';
 import { Dispatch } from 'redux';
 
 import { QUIZ } from '@/store/contants';
@@ -14,7 +15,7 @@ export const finishCreateQuiz = () => {
         const { quiz } = getState().create;
 
         try {
-            await axiosInstance.post('/quizes.json', quiz);
+            await API.newQuiz(quiz);
 
             dispatch(resetQuizCreation());
         } catch (error) {
