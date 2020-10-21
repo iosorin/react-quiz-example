@@ -11,7 +11,7 @@ export function createControl(config: ConfigType, validation: ValidationType): F
     };
 }
 
-export function validateForm(formControls: { [key: string]: FFormControlsType }) {
+export const validateForm = (formControls: { [key: string]: FFormControlsType }) => {
     let isFormValid = true;
 
     Object.keys(formControls).forEach((controlName) => {
@@ -19,7 +19,7 @@ export function validateForm(formControls: { [key: string]: FFormControlsType })
     });
 
     return isFormValid;
-}
+};
 
 export const validate = (
     value: string,
@@ -50,11 +50,11 @@ export const validate = (
         result.valid = !result.errors.minLength && result.valid;
     }
 
-    result.errorMessage = String(
-        Object.keys(result.errors)
-            .map((e) => result.errors[e])
-            .filter((e) => e)[0]
-    );
+    const errorMessage = Object.keys(result.errors)
+        .map((e) => result.errors[e])
+        .filter((e) => e)[0];
+
+    result.errorMessage = errorMessage ? errorMessage : '';
 
     return result;
 };
