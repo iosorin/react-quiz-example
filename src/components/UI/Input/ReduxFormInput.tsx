@@ -1,12 +1,8 @@
 import React, { FC } from 'react';
+import { WrappedFieldProps } from 'redux-form';
 import Input from './Input';
 
-type Props = {
-    input: any;
-    meta: any;
-};
-
-const ReduxFormInput: FC<Props> = ({ input, meta, ...rest }) => {
+const ReduxFormInput: FC<WrappedFieldProps> = ({ input, meta, ...rest }) => {
     return <Input errorMessage={meta.error} touched={meta.visited} valid={meta.valid} {...input} {...rest} />;
 };
 

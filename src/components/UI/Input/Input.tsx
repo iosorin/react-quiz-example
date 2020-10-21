@@ -4,8 +4,8 @@ import classes from './Input.module.scss';
 type OwnProps = {
     valid: boolean;
     touched: boolean;
-    shouldValidate: boolean;
     errorMessage?: string;
+    shouldValidate?: boolean;
 };
 
 type Props = OwnProps & HTMLProps<HTMLInputElement>;

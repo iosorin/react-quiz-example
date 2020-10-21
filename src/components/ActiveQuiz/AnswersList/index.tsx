@@ -1,6 +1,6 @@
 import { IDWithStatusType, QuizQuestionAnswerType } from '@/types';
 import React, { FC } from 'react';
-import AnswerItem from './AnswerItem/AnswerItem';
+import AnswerItem from './AnswerItem';
 
 type Props = {
     state: IDWithStatusType;

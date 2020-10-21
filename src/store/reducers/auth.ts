@@ -1,28 +1,30 @@
+import { AUTH } from '@/store/contants';
 import { AuthInitialStateType } from '@/types/auth';
 import { AuthActionsTypes } from '@/store/actions/auth';
 
 const initialState: AuthInitialStateType = {
-    token: null,
-    userId: null,
-    email: '',
-    expirationDate: null,
+    token: '',
+    user: {
+        email: '',
+        displayName: '',
+    },
 };
 
 const authReducer = (state = initialState, action: AuthActionsTypes): AuthInitialStateType => {
     switch (action.type) {
-        case 'AUTH.success': {
-            const { token, email, expirationDate, userId } = action.payload;
+        case AUTH.success: {
+            const { token, user } = action.payload;
 
             return {
                 ...state,
                 token,
-                userId,
-                email,
-                expirationDate,
+                user,
             };
         }
 
         case 'AUTH.logout': {
+            console.trace('AUTH.logout');
+
             return {
                 ...state,
                 ...initialState,

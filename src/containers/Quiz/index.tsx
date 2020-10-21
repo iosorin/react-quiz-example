@@ -4,11 +4,11 @@ import { RouteComponentProps } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { RootState } from '@/types';
-import { getQuiz } from '@/store/selectors';
+import { getQuiz } from '@/selectors';
 import { fetchQuizById, quizAnswerClick, retryQuiz } from '@/store/actions/quiz';
 
-import ActiveQuiz from '@/components/ActiveQuiz/ActiveQuiz';
-import FinishedQuiz from '@/components/FinishedQuiz/FinishedQuiz';
+import ActiveQuiz from '@/components/ActiveQuiz';
+import FinishedQuiz from '@/components/FinishedQuiz';
 import Loader from '@/components/UI/Loader/Loader';
 
 import classes from './Quiz.module.scss';

@@ -2,19 +2,19 @@ import React, { FC, useEffect } from 'react';
 
 import { connect, ConnectedProps } from 'react-redux';
 import { autoLogin } from '@/store/actions/auth';
-import { getAuthenticated } from '@/store/selectors';
+import { getAuthenticated } from '@/selectors';
 import { RootState } from '@/types';
 
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 
 import Layout from '@/hoc/Layout/Layout';
-import GuardedRoute from '@/components/GuardedRoute/GuardedRoute';
-import Quiz from '@/containers/Quiz/Quiz';
-import QuizList from '@/containers/QuizList/QuizList';
-import QuizCreator from '@/containers/QuizCreator/QuizCreator';
-import Auth from '@/containers/Auth/Auth';
-import Account from '@/containers/Account/Account';
-import Logout from '@/components/Logout/Logout';
+import Auth from '@/containers/Auth';
+import Account from '@/containers/Account';
+import Logout from '@/components/Logout';
+import Quiz from '@/containers/Quiz';
+import QuizList from '@/containers/QuizList';
+import QuizCreator from '@/containers/QuizCreator';
+import GuardedRoute from '@/components/GuardedRoute';
 
 const App: FC<PropsFromRedux> = ({ isAuthenticated, autoLogin }) => {
     useEffect(() => {

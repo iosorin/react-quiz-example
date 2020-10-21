@@ -1,4 +1,4 @@
-import { QuizType, UserDataType } from '@/types';
+import { QuizType, FullUserInfoType } from '@/types';
 import axios from 'axios';
 
 const instance = axios.create({
@@ -18,6 +18,11 @@ type AuthResponseType = {
     expiresIn: string;
     localId: string;
     registered?: boolean;
+};
+
+type AuthUserFetchResponseType = {
+    kind: string;
+    users: Array<FullUserInfoType>;
 };
 
 const API = {
@@ -53,19 +58,25 @@ const API = {
 
             return res.data;
         },
-        async changeEmail(idToken: string, email: string) {
-            const url = this.url('update');
-            const settings = { email, idToken, returnSecureToken: true };
+        async update(settings: { idToken: string | null; email?: string; displayName?: string }) {
+            if (!settings.idToken) return;
 
-            const res = await axios.post<UserDataType>(url, settings);
+            const url = this.url('update');
+            const res = await axios.post<FullUserInfoType>(url, { ...settings, returnSecureToken: true });
 
             return res.data;
         },
-        changePassword() {
-            console.log('changePassword');
+        async fetchUser(idToken: string) {
+            const url = this.url('lookup');
+            const res = await axios.post<AuthUserFetchResponseType>(url, { idToken });
+
+            return res.data.users[0];
         },
-        updateProfile() {
-            console.log('updateProfile');
+        updateUser(idToken: string | null, user: FullUserInfoType) {
+            return this.update({ idToken, ...user });
+        },
+        updateUserEmail(idToken: string | null, email: string) {
+            return this.update({ idToken, email });
         },
     },
 };

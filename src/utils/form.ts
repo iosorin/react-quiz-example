@@ -1,6 +1,10 @@
-import validators from './validators';
+const validators = {
+    email: (value: string) => /^\S+@\S+\.\S{2,3}$/.test(value),
+    required: (value: string) => value && value.trim().length,
+    minLength: (value: string, minLength: number) => value && value.length >= minLength,
+};
 
-export function createControl(config: ConfigType, validation: ValidationType): FFormControlsType {
+export function createControl(config: ConfigType, validation: ValidationType): CreateControlType {
     return {
         value: '',
         validation,
@@ -11,7 +15,7 @@ export function createControl(config: ConfigType, validation: ValidationType): F
     };
 }
 
-export const validateForm = (formControls: { [key: string]: FFormControlsType }) => {
+export const validateForm = (formControls: { [key: string]: CreateControlType }) => {
     let isFormValid = true;
 
     Object.keys(formControls).forEach((controlName) => {
@@ -24,10 +28,10 @@ export const validateForm = (formControls: { [key: string]: FFormControlsType })
 export const validate = (
     value: string,
     validation: ValidationType = null
-): { valid: boolean; errors: any; errorMessage: string } => {
+): { valid: boolean; errors: object; errorMessage: string } => {
     const result = {
         valid: true,
-        errors: {} as any,
+        errors: {} as { [key: string]: string | boolean },
         errorMessage: '',
     };
 
@@ -54,19 +58,19 @@ export const validate = (
         .map((e) => result.errors[e])
         .filter((e) => e)[0];
 
-    result.errorMessage = errorMessage ? errorMessage : '';
+    result.errorMessage = errorMessage ? String(errorMessage) : '';
 
     return result;
 };
 
-export type ConfigType = {
+type ConfigType = {
     label: string;
     errorMessage?: string;
     type?: string;
     id?: number;
 };
 
-export type ValidationType = {
+type ValidationType = {
     email?: boolean;
     required?: boolean;
     minLength?: number;
@@ -79,6 +83,6 @@ type ValidationFlagsType = {
     value: string;
 };
 
-export type FFormControlsType = ConfigType & ValidationType & ValidationFlagsType;
+export type CreateControlType = ConfigType & ValidationType & ValidationFlagsType;
 
 /* custom form framework example */

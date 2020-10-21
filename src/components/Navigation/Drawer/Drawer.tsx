@@ -6,7 +6,6 @@ import Backdrop from '@/components/UI/Backdrop/Backdrop';
 import classes from './Drawer.module.scss';
 
 type Props = {
-    email: string;
     isOpen: boolean;
     isAuthenticated: boolean;
     onToggle: () => void;
@@ -39,7 +38,7 @@ const Drawer: FC<Props> = (props) => {
         ];
 
         if (props.isAuthenticated) {
-            links.push({ to: '/account', label: 'Account', exact: true });
+            links.push({ to: '/account/settings', label: 'Account', exact: true });
             links.push({ to: '/logout', label: 'Sign Out', exact: false, class: classes.Button });
         } else {
             links.push({
@@ -64,8 +63,6 @@ const Drawer: FC<Props> = (props) => {
             <React.Fragment>
                 <nav className={cls.join(' ')}>
                     <ul>{renderLinks(getLinks())}</ul>
-
-                    {/* {props.email && <div className={classes.Email}>{props.email}</div>} */}
                 </nav>
 
                 {props.isOpen ? <Backdrop onClick={props.onToggle} /> : null}
