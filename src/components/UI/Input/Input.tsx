@@ -8,7 +8,7 @@ type OwnProps = {
     errorMessage?: string;
 };
 
-type Props = OwnProps & HTMLProps<HTMLInputElement>;
+type Props = OwnProps & HTMLProps<HTMLInputElement> & { input?: HTMLProps<HTMLInputElement> };
 
 function isInvalid(props: OwnProps) {
     return !props.valid && props.shouldValidate && props.touched;
@@ -27,7 +27,7 @@ const Input: FC<Props> = (props) => {
         <div className={cls.join(' ')}>
             <label htmlFor={htmlFor}>{props.label}</label>
 
-            <input id={htmlFor} onChange={props.onChange} type={inputType} value={props.value} />
+            <input id={htmlFor} onChange={props.onChange} type={inputType} value={props.value} {...props.input} />
 
             {isInvalid(props) && props.errorMessage ? <span>{props.errorMessage}</span> : null}
         </div>

@@ -5,8 +5,7 @@ $sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 
 $monospace: Menlo, Monaco, Consolas, 'Courier New', monospace;
 
 // Colors
-$font-color: #222;
-$backdrop-background: rgba(black, 0.6);
+$black: #222;
 $primary: #6f4bfb;
 $error: #f54d50;
 $success: #26d062;
@@ -19,7 +18,7 @@ $gradinet-grey-1: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
 $gradinet-grey-2: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 
 $layout-gradient: $gradinet-grey-2;
-$layout-gradient--auth: $gradinet-pink;
+$layout-gradient--auth: $gradinet-violet;
 $quiz-gradient: $layout-gradient;
 
 // Sizes
@@ -28,3 +27,4 @@ $container-width: 600px;
 
 $drawer-transition-duration: 0.3s;
 $box-shadow: 10px 10px 10px rgba(black, 0.1);
+$backdrop-background: rgba(black, 0.6);

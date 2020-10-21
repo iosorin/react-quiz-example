@@ -16,10 +16,12 @@ import Auth from '@/containers/Auth/Auth';
 import Account from '@/containers/Account/Account';
 import Logout from '@/components/Logout/Logout';
 
-const App: FC<PropsFromRedux> = (props) => {
+const App: FC<PropsFromRedux> = ({ isAuthenticated, autoLogin }) => {
     useEffect(() => {
-        props.autoLogin();
-    }, []);
+        if (!isAuthenticated) {
+            autoLogin();
+        }
+    }, [isAuthenticated, autoLogin]);
 
     /* todo: fix protected routes */
     const routes = (
@@ -27,9 +29,9 @@ const App: FC<PropsFromRedux> = (props) => {
             <Route component={QuizList} exact path="/" />
             <Route component={Quiz} path="/quiz/:id" />
             <Route component={QuizCreator} path="/quiz-creator" />
-            <GuardedRoute component={Account} path="/account" show={props.isAuthenticated} />
-            <GuardedRoute component={Logout} path="/logout" show={props.isAuthenticated} />
-            <GuardedRoute component={Auth} path="/auth" show={!props.isAuthenticated} />
+            <Route component={Account} path="/account" show={isAuthenticated} />
+            <GuardedRoute component={Logout} path="/logout" show={isAuthenticated} />
+            <GuardedRoute component={Auth} path="/auth" show={!isAuthenticated} />
             <Redirect to="/" />
         </Switch>
     );

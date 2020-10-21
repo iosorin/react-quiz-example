@@ -18,7 +18,7 @@ export const fetchQuizes = (): ThunkType => {
 
         try {
             const list: QuizListItemType[] = [];
-            const quizes = await API.all();
+            const quizes = await API.quiz.all();
 
             Object.keys(quizes).forEach((key, index) => {
                 list.push({
@@ -39,7 +39,7 @@ export const fetchQuizById = (uid: string): ThunkType => {
         dispatch(fetchQuizesStart());
 
         try {
-            const quiz = await API.get(uid);
+            const quiz = await API.quiz.read(uid);
 
             dispatch(fetchQuizSuccess(quiz));
         } catch (error) {

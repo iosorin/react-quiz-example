@@ -7,14 +7,14 @@
     transition: calc(#{$drawer-transition-duration} + 0.35s);
     z-index: 100;
     background: #fff;
-    color: $font-color;
+    color: $black;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid $font-color;
+    border: 2px solid $black;
 
     &.open {
         left: calc(#{$drawer-width} + 20px);
