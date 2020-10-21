@@ -15,7 +15,6 @@ const Auth: FC<PropsFromRedux> = (props) => {
             {
                 type: 'email',
                 label: 'Email',
-                errorMessage: 'Invalid email',
             },
             { required: true, email: true }
         ),
@@ -23,9 +22,8 @@ const Auth: FC<PropsFromRedux> = (props) => {
             {
                 type: 'password',
                 label: 'Password',
-                errorMessage: 'Invalid password',
             },
-            { required: true, minLength: 6 }
+            { required: true, minLength: 5 }
         ),
     });
 
@@ -33,9 +31,13 @@ const Auth: FC<PropsFromRedux> = (props) => {
         const updatedFormControls = { ...formControls };
         const control = { ...updatedFormControls[controlName] };
 
-        control.value = e.currentTarget.value;
-        control.valid = validate(control.value, control.validation);
         control.touched = true;
+        control.value = e.currentTarget.value;
+
+        const { valid, errorMessage } = validate(control.value, control.validation);
+
+        control.valid = valid;
+        control.errorMessage = errorMessage;
 
         updatedFormControls[controlName] = control;
 

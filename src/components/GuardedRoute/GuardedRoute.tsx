@@ -8,9 +8,7 @@ type Props = RouteProps & {
 };
 
 const GuardedRoute: FC<Props> = ({ component: Component, redirect = '/', show = false, ...rest }) => {
-    return (
-        <Route render={(props) => (show === true ? <Component {...props} /> : <Redirect to={redirect} />)} {...rest} />
-    );
+    return <Route render={(props) => (show ? <Component {...props} /> : <Redirect to={redirect} />)} {...rest} />;
 };
 
 export default GuardedRoute;

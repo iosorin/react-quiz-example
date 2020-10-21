@@ -17,7 +17,6 @@ function createOptionControl(id = 0) {
     return createControl(
         {
             label: 'Variant ' + id,
-            errorMessage: 'Field must be filled in',
             id,
         },
         { required: true }
@@ -29,9 +28,8 @@ function createFormContols() {
         question: createControl(
             {
                 label: 'Question:',
-                errorMessage: 'Field must be filled in',
             },
-            { required: true }
+            { required: true, minLength: 5 }
         ),
         option1: createOptionControl(1),
         option2: createOptionControl(2),
@@ -78,7 +76,10 @@ const QuizCreator: FC<Props> = (props) => {
 
         control.touched = true;
         control.value = e.currentTarget.value;
-        control.valid = validate(control.value, control.validation);
+
+        const { valid, errorMessage } = validate(control.value, control.validation);
+        control.valid = valid;
+        control.errorMessage = errorMessage; // computed errorMessage example
 
         updatedFormControls[controlName] = control;
 

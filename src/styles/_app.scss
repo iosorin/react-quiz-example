@@ -7,7 +7,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: $sans-serif;
-    color: $font-color;
+    color: $black;
 }
 
 *,
@@ -74,5 +74,9 @@ h1 {
         &:not(:last-child) {
             margin-bottom: 15px;
         }
+    }
+
+    &.outlined {
+        border: 2px solid #000;
     }
 }

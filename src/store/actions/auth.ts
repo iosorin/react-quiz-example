@@ -9,14 +9,8 @@ import { InferActionsType, ThunkType } from '@/store/help';
 export const auth = (email: string, password: string, isLogin: boolean): ThunkType<AuthActionsTypes> => async (
     dispatch
 ) => {
-    const settings = {
-        email,
-        password,
-        returnSecureToken: true,
-    };
-
     try {
-        const data = await API.auth(settings, isLogin);
+        const data = await API.account.auth(email, password, isLogin);
         const expirationDate = new Date(Date.now() + parseInt(data.expiresIn) * 1000);
 
         const payload = {
@@ -36,22 +30,20 @@ export const auth = (email: string, password: string, isLogin: boolean): ThunkTy
 };
 
 /* fix dispatch chain (saga - ?) -> replace 1st 'any' with another async call and last with type of it */
-export const autoLogin = (): ThunkType<AuthActionsTypes> => {
-    return (dispatch) => {
-        const data = localStorage.getItem('auth');
-        const payload = data ? JSON.parse(data) : {};
+export const autoLogin = (): ThunkType<AuthActionsTypes> => async (dispatch) => {
+    const data = localStorage.getItem('auth');
+    const payload = data ? JSON.parse(data) : {};
 
-        if (payload.token) {
-            if (payload.expirationDate <= new Date()) {
-                dispatch(actions.logout());
-            } else {
-                dispatch(actions.authSuccess(payload));
-                dispatch(autoLogout((new Date(payload.expirationDate).getTime() - Date.now()) / 1000));
-            }
-        } else {
+    if (payload.token) {
+        if (payload.expirationDate <= new Date()) {
             dispatch(actions.logout());
+        } else {
+            dispatch(actions.authSuccess(payload));
+            dispatch(autoLogout((new Date(payload.expirationDate).getTime() - Date.now()) / 1000));
         }
-    };
+    } else {
+        dispatch(actions.logout());
+    }
 };
 
 /* DispatchType Usage Example - plain */

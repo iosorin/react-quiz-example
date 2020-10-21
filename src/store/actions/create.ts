@@ -15,7 +15,7 @@ export const finishCreateQuiz = () => {
         const { quiz } = getState().create;
 
         try {
-            await API.new(quiz);
+            await API.quiz.create(quiz);
 
             dispatch(resetQuizCreation());
         } catch (error) {

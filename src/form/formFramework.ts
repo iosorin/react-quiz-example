@@ -1,31 +1,14 @@
-export function createControl(config: FFormConfigType, validation: FFormValidationType): FFormControlsType {
+import validators from './validators';
+
+export function createControl(config: ConfigType, validation: ValidationType): FFormControlsType {
     return {
-        ...config,
+        value: '',
         validation,
         valid: !validation,
         touched: false,
-        value: '',
+        errorMessage: config.errorMessage || '',
+        ...config,
     };
-}
-
-export function validate(value: string, validation: FFormValidationType = null) {
-    if (!validation) return true;
-
-    let isValid = true;
-
-    if (validation.required) {
-        isValid = value.trim() !== '' && isValid;
-    }
-
-    if (validation.email) {
-        isValid = /^\S+@\S+\.\S{2,3}$/.test(value) && isValid;
-    }
-
-    if (validation.minLength) {
-        isValid = value.length >= validation.minLength && isValid;
-    }
-
-    return isValid;
 }
 
 export function validateForm(formControls: { [key: string]: FFormControlsType }) {
@@ -38,24 +21,64 @@ export function validateForm(formControls: { [key: string]: FFormControlsType })
     return isFormValid;
 }
 
-export type FFormConfigType = {
+export const validate = (
+    value: string,
+    validation: ValidationType = null
+): { valid: boolean; errors: any; errorMessage: string } => {
+    const result = {
+        valid: true,
+        errors: {} as any,
+        errorMessage: '',
+    };
+
+    if (!validation) return result;
+
+    if (validation.required) {
+        result.errors.required = !validators.required(value) && 'Field is required';
+        result.valid = !result.errors.required && result.valid;
+    }
+
+    if (validation.email) {
+        result.errors.email = !validators.email(value) && 'Invalid email address';
+        result.valid = !result.errors.email && result.valid;
+    }
+
+    if (validation.minLength) {
+        result.errors.minLength =
+            !validators.minLength(value, validation.minLength) &&
+            `Must be at least ${validation.minLength} characters long`;
+        result.valid = !result.errors.minLength && result.valid;
+    }
+
+    result.errorMessage = String(
+        Object.keys(result.errors)
+            .map((e) => result.errors[e])
+            .filter((e) => e)[0]
+    );
+
+    return result;
+};
+
+export type ConfigType = {
     label: string;
-    errorMessage: string;
+    errorMessage?: string;
     type?: string;
     id?: number;
 };
 
-type FFormValidationType = {
-    required?: boolean;
+export type ValidationType = {
     email?: boolean;
+    required?: boolean;
     minLength?: number;
 } | null;
 
-type FFormValidationFlagsType = {
-    validation: FFormValidationType;
+type ValidationFlagsType = {
+    validation: ValidationType;
     valid: boolean;
     touched: boolean;
     value: string;
 };
 
-export type FFormControlsType = FFormConfigType & FFormValidationType & FFormValidationFlagsType;
+export type FFormControlsType = ConfigType & ValidationType & ValidationFlagsType;
+
+/* custom form framework example */

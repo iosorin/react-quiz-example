@@ -9,13 +9,14 @@ type Props = RouteProps & {
 
 const Logout: FC<Props> = (props) => {
     useEffect(() => {
+        console.log('LOGOUT');
         props.logout();
     }, []);
 
     return <Redirect to={'/'} />;
 };
 
-// const connector = connect(null, { logout });
 // type PropsFromRedux = ConnectedProps<typeof connector>;
+const connector = connect<null, Props, RouteProps>(null, { logout: actions.logout });
 
-export default connect<null, Props, RouteProps>(null, { logout: actions.logout })(Logout);
+export default connector(Logout);

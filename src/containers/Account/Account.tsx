@@ -1,16 +1,15 @@
-import React, { FC } from 'react';
+import React from 'react';
+import { AccountForm } from '@/components/forms';
 
-import Button from '@/components/UI/Button/Button';
+const Account = (props: any) => {
+    const onSubmit = (values: any) => {
+        console.log(values);
+    };
 
-const Account: FC = () => {
     return (
         <div className="container">
             <h1>Account</h1>
-
-            <form className="form">
-                <code>/* account form */</code>
-                <Button>click</Button>
-            </form>
+            <AccountForm onSubmit={onSubmit} outlined />
         </div>
     );
 };

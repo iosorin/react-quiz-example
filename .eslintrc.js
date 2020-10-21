@@ -30,6 +30,7 @@ module.exports = {
         'object-curly-newline': ['error', {
             ImportDeclaration: { minProperties: 2048 }
         }],
+
         'no-unused-vars': 'warn',
 
         // React
