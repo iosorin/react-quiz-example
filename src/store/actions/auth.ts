@@ -1,29 +1,28 @@
 import API from '@/api';
 
-import { AuthInitialStateType } from '@/types/auth';
+import { AuthInitialStateType, UserInfoType } from '@/types/auth';
+import { InferActionsType, ThunkType } from '@/utils/typing';
 
 import { Dispatch } from 'redux';
-import { InferActionsType, ThunkType } from '@/store/help';
+import { AUTH } from '../contants';
 
-/* ThunkAction Usage Example (@/store/help) */
 export const auth = (email: string, password: string, isLogin: boolean): ThunkType<AuthActionsTypes> => async (
     dispatch
 ) => {
     try {
         const data = await API.account.auth(email, password, isLogin);
-        const expirationDate = new Date(Date.now() + parseInt(data.expiresIn) * 1000);
+        const { idToken: token, expiresIn } = data;
 
-        const payload = {
-            token: data.idToken,
-            userId: data.localId,
-            expirationDate,
-            email,
-        };
+        const user = await API.account.fetchUser(token);
 
-        localStorage.setItem('auth', JSON.stringify(payload));
+        if (user) {
+            const expirationDate = new Date(Date.now() + parseInt(expiresIn) * 1000);
 
-        dispatch(actions.authSuccess(payload));
-        dispatch(autoLogout(parseInt(data.expiresIn)));
+            localStorage.setItem('auth', JSON.stringify({ token, expirationDate }));
+
+            dispatch(actions.authSuccess({ user, token }));
+            dispatch(autoLogout(parseInt(expiresIn)));
+        }
     } catch (error) {
         console.log(error);
     }
@@ -33,13 +32,18 @@ export const auth = (email: string, password: string, isLogin: boolean): ThunkTy
 export const autoLogin = (): ThunkType<AuthActionsTypes> => async (dispatch) => {
     const data = localStorage.getItem('auth');
     const payload = data ? JSON.parse(data) : {};
+    const { token, expirationDate } = payload;
 
-    if (payload.token) {
-        if (payload.expirationDate <= new Date()) {
+    if (token) {
+        if (expirationDate <= new Date()) {
             dispatch(actions.logout());
         } else {
-            dispatch(actions.authSuccess(payload));
-            dispatch(autoLogout((new Date(payload.expirationDate).getTime() - Date.now()) / 1000));
+            const user = await API.account.fetchUser(token);
+
+            if (user) {
+                dispatch(actions.authSuccess({ user, token }));
+                dispatch(autoLogout((new Date(expirationDate).getTime() - Date.now()) / 1000));
+            }
         }
     } else {
         dispatch(actions.logout());
@@ -55,17 +59,32 @@ export const autoLogout = (time: number) => {
     };
 };
 
-/* Example of excess (or not, not sure) constants declaration fix*/
+export const updateUserData = ({ email, displayName }: UserInfoType): ThunkType<AuthActionsTypes> => async (
+    dispatch,
+    getState
+) => {
+    try {
+        const { token } = getState().auth;
+
+        await API.account.updateUser(token, { email, displayName });
+
+        dispatch(actions.setCurrentUser({ email, displayName }));
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const actions = {
     logout: () => {
-        /* todo: fix side-effect */
+        /* todo: move side-effect */
         localStorage.removeItem('auth');
 
         return {
             type: 'AUTH.logout',
         } as const;
     },
-    authSuccess: (payload: AuthInitialStateType) => ({ type: 'AUTH.success', payload } as const),
+    authSuccess: (payload: AuthInitialStateType) => ({ type: AUTH.success, payload }),
+    setCurrentUser: (payload: UserInfoType) => ({ type: AUTH.user.set, payload }),
 };
 
 export type AuthActionsTypes = InferActionsType<typeof actions>;

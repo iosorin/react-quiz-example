@@ -3,7 +3,7 @@ import classes from './ActiveQuiz.module.scss';
 
 import { IDWithStatusType, QuizQuestionAnswerType } from '@/types';
 
-import AnswersList from './AnswersList/AnswersList';
+import AnswersList from './AnswersList';
 
 type Props = {
     answerNumber: number;

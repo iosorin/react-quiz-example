@@ -2,16 +2,17 @@ import React, { FC, FormEvent, MouseEvent, useState } from 'react';
 
 import { connect } from 'react-redux';
 import { createQuizQuestion, finishCreateQuiz } from '@/store/actions/create';
-import { createControl, validate, validateForm } from '@/form/formFramework';
+import { createControl, validate, validateForm } from '@/utils/form';
+
+import { RouteComponentProps } from 'react-router-dom';
+import { RootState } from '@/types/root';
+import { QuizQuestionType } from '@/types';
 
 import Button from '@/components/UI/Button/Button';
 import Input from '@/components/UI/Input/Input';
 import Select from '@/components/UI/Select/Select';
 
 import classes from './QuizCreator.module.scss';
-import { RootState } from '@/types/root';
-import { QuizQuestionType } from '@/types';
-import { RouteComponentProps } from 'react-router-dom';
 
 function createOptionControl(id = 0) {
     return createControl(
