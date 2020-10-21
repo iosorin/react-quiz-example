@@ -8,10 +8,10 @@ type OwnProps = {
     errorMessage?: string;
 };
 
-type Props = OwnProps & HTMLProps<HTMLInputElement> & { input?: HTMLProps<HTMLInputElement> };
+type Props = OwnProps & HTMLProps<HTMLInputElement>;
 
-function isInvalid(props: OwnProps) {
-    return !props.valid && props.shouldValidate && props.touched;
+function isInvalid({ valid, touched, shouldValidate = true }: OwnProps) {
+    return !valid && touched && shouldValidate;
 }
 
 const Input: FC<Props> = (props) => {
@@ -27,7 +27,14 @@ const Input: FC<Props> = (props) => {
         <div className={cls.join(' ')}>
             <label htmlFor={htmlFor}>{props.label}</label>
 
-            <input id={htmlFor} onChange={props.onChange} type={inputType} value={props.value} {...props.input} />
+            <input
+                id={htmlFor}
+                onChange={props.onChange}
+                onFocus={props.onFocus}
+                placeholder={props.placeholder}
+                type={inputType}
+                value={props.value}
+            />
 
             {isInvalid(props) && props.errorMessage ? <span>{props.errorMessage}</span> : null}
         </div>

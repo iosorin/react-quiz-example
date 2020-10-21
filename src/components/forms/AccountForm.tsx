@@ -1,9 +1,18 @@
 import React, { FC } from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import Input from '@/components/UI/Input/Input';
 import { validate } from '@/form/formFramework';
+import ReduxFormInput from '@/components/UI/Input/ReduxFormInput';
+import { connect } from 'react-redux';
+import { RootState } from '@/types';
+import { getEmail } from '@/store/selectors';
 
-type CustomProps = {
+type FormType = {
+    firstName: string;
+    lastName: string;
+    email: string;
+};
+
+type CustomProps = FormType & {
     outlined?: boolean;
 };
 
@@ -13,10 +22,13 @@ const AccountForm: FC<Props> = (props) => {
     return (
         <form className={`form ${props.outlined ? 'outlined' : ''}`} onSubmit={props.handleSubmit}>
             <div>
-                <label>Display Name</label>
-                <div>
-                    <Field component={Input} name="displayName" placeholder="Last Name" type="text" />
-                </div>
+                <Field component={ReduxFormInput} label="First Name" name="firstName" />
+            </div>
+            <div>
+                <Field component={ReduxFormInput} label="Last Name" name="lastName" />
+            </div>
+            <div>
+                <Field component={ReduxFormInput} label="Email" name="email" />
             </div>
             <div>
                 <button disabled={props.submitting} type="submit">
@@ -27,21 +39,31 @@ const AccountForm: FC<Props> = (props) => {
     );
 };
 
-type FieldsType = {
-    displayName: string;
-};
-const validateForm = ({ displayName }: FieldsType) => {
-    const { errors } = validate(displayName, { required: true, minLength: 3 });
+const validateForm = ({ firstName, lastName, email }: FormType) => {
+    const errors = {
+        firstName: validate(firstName, { required: true, minLength: 3 }).errorMessage,
+        lastName: validate(lastName, { required: true, minLength: 3 }).errorMessage,
+        email: validate(email, { required: true, email: true }).errorMessage,
+    };
 
-    console.log('errors', errors);
+    Object.keys(errors).forEach((key) => {
+        if (!errors[key as keyof FormType]) {
+            delete errors[key as keyof FormType];
+        }
+    });
 
     return errors;
 };
 
-/* redux-form custom props example */
-const AccountReduxForm = reduxForm<{}, CustomProps>({
+const AccountReduxForm = reduxForm<{}, any>({
     form: 'AccountForm',
     validate: validateForm,
 })(AccountForm);
 
-export default AccountReduxForm;
+const connector = connect((state: RootState) => ({
+    initialValues: {
+        email: getEmail(state),
+    },
+}));
+
+export default connector(AccountReduxForm);
