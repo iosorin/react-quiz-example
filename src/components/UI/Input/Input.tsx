@@ -2,8 +2,8 @@ import React, { FC, HTMLProps } from 'react';
 import classes from './Input.module.scss';
 
 type OwnProps = {
-    valid: boolean;
-    touched: boolean;
+    valid?: boolean;
+    touched?: boolean;
     errorMessage?: string;
     shouldValidate?: boolean;
 };

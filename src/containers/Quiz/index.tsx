@@ -29,14 +29,14 @@ const Quiz: FC<Props> = (props) => {
         return (
             <div className={classes.QuizInner}>
                 {props.isFinished ? (
-                    <FinishedQuiz onRetry={props.retryQuiz} quiz={props.quiz} results={props.results} />
+                    <FinishedQuiz onRetry={props.retryQuiz} quiz={props.quiz.questions} results={props.results} />
                 ) : (
                     <ActiveQuiz
                         answerNumber={props.activeQuestion + 1}
-                        answers={props.quiz[props.activeQuestion].answers}
+                        answers={props.quiz.questions[props.activeQuestion].answers}
                         onAnswerClick={props.quizAnswerClick}
-                        question={props.quiz[props.activeQuestion].question}
-                        quizLength={props.quiz.length}
+                        question={props.quiz.questions[props.activeQuestion].question}
+                        quizLength={props.quiz.questions.length}
                         state={props.answerState}
                     />
                 )}
@@ -48,7 +48,11 @@ const Quiz: FC<Props> = (props) => {
         <div className={classes.Quiz}>
             <div className={classes.QuizOuter}>
                 <h1>Quiz</h1>
-                {props.loading || !props.quiz || !props.quiz[props.activeQuestion] ? <Loader /> : renderQuiz()}
+                {props.loading || !props.quiz || !props.quiz.questions[props.activeQuestion] ? (
+                    <Loader />
+                ) : (
+                    renderQuiz()
+                )}
             </div>
         </div>
     );

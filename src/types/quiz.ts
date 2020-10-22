@@ -15,21 +15,21 @@ export type QuizQuestionType = {
     answers: QuizQuestionAnswerType[];
 };
 
-export type QuizType = QuizQuestionType[];
-
-export type QuizListItemType = {
-    id: string;
+export type QuizType = {
     name: string;
+    questions: QuizQuestionType[];
 };
+
+export type QuizListItemType = QuizType & { id: string };
 
 export type IDWithStatusType = { [key: number]: keyof typeof Status };
 
 export type QuizInitialStateType = {
-    quiz: QuizQuestionType[];
+    quiz: QuizType;
     activeQuestion: number;
     results: IDWithStatusType;
     answerState: IDWithStatusType;
-    quizes: QuizListItemType[];
+    quizes: any;
     loading: boolean;
     isFinished: boolean;
     error?: unknown;

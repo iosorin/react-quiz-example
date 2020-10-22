@@ -39,11 +39,9 @@ const FinishedQuiz: FC<Props> = (props) => {
 
                     return (
                         <li key={index}>
-                            <strong>
-                                {index + 1} &nbsp;
-                                {item.question}
-                                <i className={cls.join(' ')} />
-                            </strong>
+                            <strong>{index + 1}. &nbsp;</strong>
+                            {item.question}
+                            <i className={cls.join(' ')} />
                         </li>
                     );
                 })}
@@ -51,7 +49,7 @@ const FinishedQuiz: FC<Props> = (props) => {
 
             <p>
                 <b>
-                    Correct {successCount}/{props.quiz.length}
+                    Correct: {successCount}/{props.quiz.length}
                 </b>
             </p>
 

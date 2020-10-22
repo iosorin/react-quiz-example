@@ -3,19 +3,19 @@ import Loader from '../Loader/Loader';
 import classes from './Button.module.scss';
 
 type Props = {
-    type?: string;
+    type?: 'success' | 'error' | 'primary';
     disabled?: boolean;
     loading?: boolean;
     submit?: boolean;
     onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
-const Button: FC<Props> = ({ children, type: type = 'primary', disabled, loading, onClick }) => {
-    const cls = [classes.Button, classes[type]];
+const Button: FC<Props> = (props) => {
+    const cls = [classes.Button, classes[props.type || '']];
 
     return (
-        <button className={cls.join(' ')} disabled={disabled} onClick={onClick}>
-            {loading ? <Loader size="20" /> : children}
+        <button className={cls.join(' ')} disabled={props.disabled} onClick={props.onClick}>
+            {props.loading ? <Loader size="20" /> : props.children}
         </button>
     );
 };

@@ -17,14 +17,13 @@ $gradinet-pink: linear-gradient(to right, #ffc3a0 0%, #ffafbd 100%);
 $gradinet-grey-1: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
 $gradinet-grey-2: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 
+$box-shadow: 10px 10px 10px rgba(black, 0.1);
+$backdrop-overlay: rgba(black, 0.6);
+
 $layout-gradient: $gradinet-grey-2;
-$layout-gradient--auth: $gradinet-violet;
+$layout-gradient--auth: $gradinet-pink;
 $quiz-gradient: $layout-gradient;
 
-// Sizes
 $drawer-width: 280px;
 $container-width: 600px;
-
 $drawer-transition-duration: 0.3s;
-$box-shadow: 10px 10px 10px rgba(black, 0.1);
-$backdrop-background: rgba(black, 0.6);
