@@ -1,4 +1,4 @@
-import { QuizType, FullUserInfoType } from '@/types';
+import { QuizType, UserType } from '@/types';
 import axios from 'axios';
 
 const instance = axios.create({
@@ -6,12 +6,12 @@ const instance = axios.create({
 });
 
 /* quiz */
-type FetchQuizResponseType = QuizType;
-type NewQuizResponseType = { name: string };
-type FetchQuizesResponseType = { [key: string]: QuizType };
+export type FetchQuizResponseType = QuizType;
+export type NewQuizResponseType = { name: string };
+export type FetchQuizesResponseType = { [key: string]: QuizType };
 
 /* auth */
-type AuthResponseType = {
+export type AuthResponseType = {
     idToken: string;
     email: string;
     refreshToken: string;
@@ -20,9 +20,9 @@ type AuthResponseType = {
     registered?: boolean;
 };
 
-type AuthUserFetchResponseType = {
+export type AuthUserFetchResponseType = {
     kind: string;
-    users: Array<FullUserInfoType>;
+    users: Array<UserType>;
 };
 
 const API = {
@@ -62,7 +62,7 @@ const API = {
             if (!settings.idToken) return;
 
             const url = this.url('update');
-            const res = await axios.post<FullUserInfoType>(url, { ...settings, returnSecureToken: true });
+            const res = await axios.post<UserType>(url, { ...settings, returnSecureToken: true });
 
             return res.data;
         },
@@ -72,7 +72,7 @@ const API = {
 
             return res.data.users[0];
         },
-        updateUser(idToken: string | null, user: FullUserInfoType) {
+        updateUser(idToken: string | null, user: UserType) {
             return this.update({ idToken, ...user });
         },
         updateUserEmail(idToken: string | null, email: string) {

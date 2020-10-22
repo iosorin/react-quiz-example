@@ -22,6 +22,7 @@ function getAdditionalModulePaths(options = {}) {
         // in the next major release of create-react-app.
 
         const nodePath = process.env.NODE_PATH || '';
+
         return nodePath.split(path.delimiter).filter(Boolean);
     }
 

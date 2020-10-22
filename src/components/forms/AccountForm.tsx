@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { RootState, UserInfoType } from '@/types';
+import { RootState, UserType } from '@/types';
 import { validate } from '@/utils/form';
 import { getCurrentUser } from '@/selectors';
 import Button from '@/components/UI/Button/Button';
@@ -11,19 +11,21 @@ type OwnProps = {
     outlined?: boolean;
 };
 
-type Props = InjectedFormProps<UserInfoType, OwnProps> & OwnProps;
+type Props = InjectedFormProps<UserType, OwnProps> & OwnProps;
 
 const AccountForm: FC<Props> = (props) => {
     return (
         <form className={`form ${props.outlined ? 'outlined' : ''}`} onSubmit={props.handleSubmit}>
             <Field component={ReduxFormInput} label="Name" name="displayName" />
             <Field component={ReduxFormInput} label="Email" name="email" />
-            <Button disabled={props.submitting}>Save</Button>
+            <Button disabled={props.submitting} type="primary">
+                Save
+            </Button>
         </form>
     );
 };
 
-const validateForm = ({ displayName, email }: UserInfoType) => {
+const validateForm = ({ displayName, email }: UserType) => {
     const errors = {
         email: validate(email, { required: true, email: true }).errorMessage,
         displayName: validate(displayName, { required: true, minLength: 3 }).errorMessage,
@@ -38,7 +40,7 @@ const validateForm = ({ displayName, email }: UserInfoType) => {
     return errors;
 };
 
-const AccountReduxForm = reduxForm<UserInfoType, OwnProps>({
+const AccountReduxForm = reduxForm<UserType, OwnProps>({
     form: 'AccountForm',
     validate: validateForm,
 })(AccountForm);

@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 
 import { QUIZ } from '@/store/contants';
 import { QuizQuestionType } from '@/types';
+import { InferActionsType } from '@/utils/typing';
 
 /* DispatchType Usage Example - DispatchType */
 type DispatchType = Dispatch<CreateActionsTypes>;
@@ -17,32 +18,16 @@ export const finishCreateQuiz = (name: string) => {
         try {
             await API.quiz.create(quiz, name);
 
-            dispatch(resetQuizCreation());
+            dispatch(actions.resetQuizCreation());
         } catch (error) {
             console.log(error);
         }
     };
 };
 
-/* DispatchType Usage Example - target */
-type CreateQuizQuestionActionType = {
-    type: typeof QUIZ.question.create;
-    item: QuizQuestionType;
-};
-export const createQuizQuestion = (item: QuizQuestionType): CreateQuizQuestionActionType => {
-    return {
-        type: QUIZ.question.create,
-        item,
-    };
+export const actions = {
+    createQuizQuestion: (question: QuizQuestionType) => ({ type: QUIZ.question.create, question }),
+    resetQuizCreation: () => ({ type: QUIZ.creation.reset }),
 };
 
-/* DispatchType Usage Example - target */
-type ResetQuizCreationActionType = { type: typeof QUIZ.creation.reset };
-export const resetQuizCreation = (): ResetQuizCreationActionType => {
-    return {
-        type: QUIZ.creation.reset,
-    };
-};
-
-/* DispatchType Usage Example - available types */
-export type CreateActionsTypes = CreateQuizQuestionActionType | ResetQuizCreationActionType;
+export type CreateActionsTypes = InferActionsType<typeof actions>;

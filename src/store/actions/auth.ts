@@ -1,28 +1,27 @@
 import API from '@/api';
 
-import { AuthInitialStateType, UserInfoType } from '@/types/auth';
 import { InferActionsType, BaseThunkType } from '@/utils/typing';
 
 import { Dispatch } from 'redux';
-import { AUTH } from '../contants';
+import { AUTH } from '@/store/contants';
+import { fetchUser } from './user';
 
 export const auth = (email: string, password: string, isLogin: boolean): BaseThunkType<AuthActionsTypes> => async (
     dispatch
 ) => {
     try {
         const data = await API.account.auth(email, password, isLogin);
-        const { idToken: token, expiresIn } = data;
 
-        const user = await API.account.fetchUser(token);
+        const token = data.idToken;
+        const expiresIn = parseInt(data.expiresIn);
+        const expirationDate = new Date(Date.now() + expiresIn * 1000);
 
-        if (user) {
-            const expirationDate = new Date(Date.now() + parseInt(expiresIn) * 1000);
+        localStorage.setItem('auth', JSON.stringify({ token, expirationDate }));
 
-            localStorage.setItem('auth', JSON.stringify({ token, expirationDate }));
+        dispatch(actions.authSuccess(token));
+        dispatch(waitExpiration(expiresIn));
 
-            dispatch(actions.authSuccess({ user, token }));
-            dispatch(autoLogout(parseInt(expiresIn)));
-        }
+        fetchUser(token);
     } catch (error) {
         console.log(error);
     }
@@ -35,15 +34,13 @@ export const autoLogin = (): BaseThunkType<AuthActionsTypes> => async (dispatch)
     const { token, expirationDate } = payload;
 
     if (token) {
-        if (expirationDate <= new Date()) {
+        if (new Date(expirationDate) <= new Date()) {
             dispatch(actions.logout());
         } else {
-            const user = await API.account.fetchUser(token);
+            dispatch(actions.authSuccess(token));
+            dispatch(waitExpiration((new Date(expirationDate).getTime() - Date.now()) / 1000));
 
-            if (user) {
-                dispatch(actions.authSuccess({ user, token }));
-                dispatch(autoLogout((new Date(expirationDate).getTime() - Date.now()) / 1000));
-            }
+            fetchUser(token);
         }
     } else {
         dispatch(actions.logout());
@@ -51,27 +48,12 @@ export const autoLogin = (): BaseThunkType<AuthActionsTypes> => async (dispatch)
 };
 
 /* DispatchType Usage Example - plain */
-export const autoLogout = (time: number) => {
-    return (dispatch: Dispatch<AuthActionsTypes>) => {
+export const waitExpiration = (time: number) => {
+    return async (dispatch: Dispatch<AuthActionsTypes>) => {
         setTimeout(() => {
             dispatch(actions.logout());
         }, time * 1000);
     };
-};
-
-export const updateUserData = ({ email, displayName }: UserInfoType): BaseThunkType<AuthActionsTypes> => async (
-    dispatch,
-    getState
-) => {
-    try {
-        const { token } = getState().auth;
-
-        await API.account.updateUser(token, { email, displayName });
-
-        dispatch(actions.setCurrentUser({ email, displayName }));
-    } catch (error) {
-        console.log(error);
-    }
 };
 
 export const actions = {
@@ -79,12 +61,9 @@ export const actions = {
         /* todo: move side-effect */
         localStorage.removeItem('auth');
 
-        return {
-            type: 'AUTH.logout',
-        } as const;
+        return { type: 'AUTH.logout' } as const;
     },
-    authSuccess: (payload: AuthInitialStateType) => ({ type: AUTH.success, payload }),
-    setCurrentUser: (payload: UserInfoType) => ({ type: AUTH.user.set, payload }),
+    authSuccess: (token: string) => ({ type: AUTH.success, token }),
 };
 
 export type AuthActionsTypes = InferActionsType<typeof actions>;

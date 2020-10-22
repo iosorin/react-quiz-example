@@ -27,7 +27,8 @@ export const QUIZ = {
 export const AUTH = {
     logout: 'auth/logout', // defined as const in action creator
     success: 'auth/success' as const,
-    user: {
-        set: 'auth/user/set' as const,
-    },
+};
+
+export const USER = {
+    update: 'user/update' as const,
 };

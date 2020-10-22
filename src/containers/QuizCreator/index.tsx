@@ -1,7 +1,7 @@
 import React, { FC, FormEvent, MouseEvent, useState } from 'react';
 
 import { connect } from 'react-redux';
-import { createQuizQuestion, finishCreateQuiz } from '@/store/actions/create';
+import { actions, finishCreateQuiz } from '@/store/actions/create';
 import { createControl, validate, validateForm } from '@/utils/form';
 
 import { RouteComponentProps } from 'react-router-dom';
@@ -214,7 +214,7 @@ const QuizCreator: FC<Props> = (props) => {
 };
 
 const mapStateToProps = (state: RootState) => ({ quiz: state.create.quiz });
-const mapDispatchToProps = { createQuizQuestion, finishCreateQuiz };
+const mapDispatchToProps = { createQuizQuestion: actions.createQuizQuestion, finishCreateQuiz };
 
 /* Connect Custom Typing Usage example - manually defined (MapStatePropsType, MapDispatchPropsType, RouteComponentProps, RootState) above  */
 const connector = connect<MapStatePropsType, MapDispatchPropsType, RouteComponentProps, RootState>(
