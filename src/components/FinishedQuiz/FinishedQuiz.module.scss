@@ -1,8 +1,12 @@
 .FinishedQuiz {
     box-sizing: border-box;
 
-    li i {
-        margin-left: 10px;
+    li {
+        padding-right: 20%;
+
+        i {
+            margin-left: 10px;
+        }
     }
 }
 

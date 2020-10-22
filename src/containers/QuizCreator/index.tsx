@@ -6,11 +6,12 @@ import { createControl, validate, validateForm } from '@/utils/form';
 
 import { RouteComponentProps } from 'react-router-dom';
 import { RootState } from '@/types/root';
-import { QuizQuestionType } from '@/types';
+import { QuizQuestionType, QuizType } from '@/types';
 
 import Button from '@/components/UI/Button/Button';
 import Input from '@/components/UI/Input/Input';
 import Select from '@/components/UI/Select/Select';
+import Modal from '@/components/UI/Modal/Modal';
 
 import classes from './QuizCreator.module.scss';
 
@@ -40,11 +41,11 @@ function createFormContols() {
 }
 
 type MapStatePropsType = {
-    quiz: QuizQuestionType[];
+    quiz: QuizType;
 };
 
 type MapDispatchPropsType = {
-    finishCreateQuiz: () => void;
+    finishCreateQuiz: (name: string) => void;
     createQuizQuestion: (question: QuizQuestionType) => void;
 };
 
@@ -54,6 +55,8 @@ const QuizCreator: FC<Props> = (props) => {
     const [rightAnswerId, setRightAnswerId] = useState(1);
     const [isFormValid, setIsFormValid] = useState(false);
     const [formControls, setFormControls] = useState(createFormContols());
+    const [quizName, setQuizName] = useState('');
+    const [quizNameModal, setQuizNameModal] = useState(false);
 
     function resetState() {
         setRightAnswerId(1);
@@ -61,12 +64,11 @@ const QuizCreator: FC<Props> = (props) => {
         setFormControls(createFormContols());
     }
 
-    function handleNewQuiz(e: MouseEvent) {
-        e.preventDefault();
+    async function createNewQuiz() {
+        await props.finishCreateQuiz(quizName);
 
         resetState();
-
-        props.finishCreateQuiz();
+        setQuizNameModal(false);
     }
 
     function onChangeHandler(e: FormEvent<HTMLInputElement>, controlName: keyof typeof formControls) {
@@ -97,7 +99,7 @@ const QuizCreator: FC<Props> = (props) => {
 
         const questionItem: QuizQuestionType = {
             rightAnswerId,
-            id: props.quiz.length + 1,
+            id: props.quiz.questions.length + 1,
             question: question.value,
             answers: [
                 {
@@ -184,10 +186,28 @@ const QuizCreator: FC<Props> = (props) => {
                         Add question
                     </Button>
 
-                    <Button disabled={props.quiz.length === 0} onClick={handleNewQuiz} type="success">
+                    <Button
+                        disabled={props.quiz.questions.length === 0}
+                        onClick={() => setQuizNameModal(true)}
+                        type="success"
+                    >
                         Create new quiz
                     </Button>
                 </form>
+
+                <Modal
+                    isOpen={quizNameModal}
+                    name="Quiz Name"
+                    onClose={() => setQuizNameModal(false)}
+                    onSubmit={createNewQuiz}
+                >
+                    <Input
+                        onChange={(e) => setQuizName(e.currentTarget.value)}
+                        shouldValidate={false}
+                        style={{ width: '100%' }}
+                        value={quizName}
+                    />
+                </Modal>
             </div>
         </div>
     );

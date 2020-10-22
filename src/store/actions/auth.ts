@@ -1,12 +1,12 @@
 import API from '@/api';
 
 import { AuthInitialStateType, UserInfoType } from '@/types/auth';
-import { InferActionsType, ThunkType } from '@/utils/typing';
+import { InferActionsType, BaseThunkType } from '@/utils/typing';
 
 import { Dispatch } from 'redux';
 import { AUTH } from '../contants';
 
-export const auth = (email: string, password: string, isLogin: boolean): ThunkType<AuthActionsTypes> => async (
+export const auth = (email: string, password: string, isLogin: boolean): BaseThunkType<AuthActionsTypes> => async (
     dispatch
 ) => {
     try {
@@ -29,7 +29,7 @@ export const auth = (email: string, password: string, isLogin: boolean): ThunkTy
 };
 
 /* fix dispatch chain (saga - ?) -> replace 1st 'any' with another async call and last with type of it */
-export const autoLogin = (): ThunkType<AuthActionsTypes> => async (dispatch) => {
+export const autoLogin = (): BaseThunkType<AuthActionsTypes> => async (dispatch) => {
     const data = localStorage.getItem('auth');
     const payload = data ? JSON.parse(data) : {};
     const { token, expirationDate } = payload;
@@ -59,7 +59,7 @@ export const autoLogout = (time: number) => {
     };
 };
 
-export const updateUserData = ({ email, displayName }: UserInfoType): ThunkType<AuthActionsTypes> => async (
+export const updateUserData = ({ email, displayName }: UserInfoType): BaseThunkType<AuthActionsTypes> => async (
     dispatch,
     getState
 ) => {

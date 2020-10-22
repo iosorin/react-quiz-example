@@ -23,8 +23,6 @@ const authReducer = (state = initialState, action: AuthActionsTypes): AuthInitia
         }
 
         case 'AUTH.logout': {
-            console.trace('AUTH.logout');
-
             return {
                 ...state,
                 ...initialState,

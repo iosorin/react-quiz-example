@@ -10,7 +10,10 @@ const initialState: QuizInitialStateType = {
     answerState: {},
     isFinished: false,
     activeQuestion: 0,
-    quiz: [],
+    quiz: {
+        name: '',
+        questions: [],
+    },
 };
 
 const quizReducer = (state = initialState, action: QuizActionsTypes): QuizInitialStateType => {

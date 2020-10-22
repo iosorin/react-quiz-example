@@ -27,8 +27,8 @@ type AuthUserFetchResponseType = {
 
 const API = {
     quiz: {
-        async create(quiz: unknown) {
-            const res = await instance.post<NewQuizResponseType>('/quizes.json', quiz);
+        async create(quiz: object, name: string) {
+            const res = await instance.post<NewQuizResponseType>('/quizes.json', { ...quiz, name });
 
             return res.data;
         },

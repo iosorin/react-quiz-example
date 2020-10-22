@@ -20,11 +20,8 @@ export const fetchQuizes = (): ThunkType => {
             const list: QuizListItemType[] = [];
             const quizes = await API.quiz.all();
 
-            Object.keys(quizes).forEach((key, index) => {
-                list.push({
-                    id: key,
-                    name: '№ ' + index + 1,
-                });
+            Object.entries(quizes).forEach(([id, value]) => {
+                list.push({ id, ...value });
             });
 
             dispatch(fetchQuizesSuccess(list));
@@ -55,7 +52,7 @@ export const quizAnswerClick = (answerId: number): ThunkType => {
         const state = getState().quiz;
 
         const isQuizFinished = () => {
-            return state.activeQuestion + 1 === state.quiz.length;
+            return state.activeQuestion + 1 === state.quiz.questions.length;
         };
 
         /* double success click fix */
@@ -67,10 +64,10 @@ export const quizAnswerClick = (answerId: number): ThunkType => {
             }
         }
 
-        const question: QuizQuestionType = state.quiz[state.activeQuestion];
+        const question: QuizQuestionType = state.quiz.questions[state.activeQuestion];
         const results = state.results;
 
-        if (question.rightAnswerId === answerId) {
+        if (question.rightAnswerId == answerId) {
             if (!results[question.id]) {
                 results[question.id] = 'success';
             }

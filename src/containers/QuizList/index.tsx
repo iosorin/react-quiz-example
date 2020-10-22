@@ -19,6 +19,7 @@ const QuizList = (props: PropsFromRedux) => {
             return (
                 <li key={quiz.id}>
                     <NavLink to={'/quiz/' + quiz.id}>{quiz.name}</NavLink>
+                    <sub> ({quiz.questions.length})</sub>
                 </li>
             );
         });
@@ -26,7 +27,8 @@ const QuizList = (props: PropsFromRedux) => {
 
     return (
         <div className={classes.QuizList}>
-            <h1>Quiz List</h1>
+            <h1>Quiz List ({props.quizes.length})</h1>
+
             {props.loading ? <Loader /> : <ul>{renderQuizes()}</ul>}
         </div>
     );
