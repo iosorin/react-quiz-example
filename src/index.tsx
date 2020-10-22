@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from '@/serviceWorker';
 import store from '@/store';
 import App from '@/containers/App';
-import '@/styles';
+import '@/styles/index.scss';
 
 // const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 

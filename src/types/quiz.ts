@@ -3,6 +3,8 @@ export enum Status {
     error = 'error',
 }
 
+export type CreateInitialStateType = { quiz: QuizType };
+
 export type QuizQuestionAnswerType = {
     id: number;
     text: string;
@@ -29,7 +31,7 @@ export type QuizInitialStateType = {
     activeQuestion: number;
     results: IDWithStatusType;
     answerState: IDWithStatusType;
-    quizes: any;
+    quizes: QuizListItemType[];
     loading: boolean;
     isFinished: boolean;
     error?: unknown;

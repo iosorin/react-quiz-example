@@ -27,9 +27,7 @@ module.exports = {
         // Common
         // "brace-style": [1, "stroustrup"],
         'newline-before-return': "error",
-        'object-curly-newline': ['error', {
-            ImportDeclaration: { minProperties: 2048 }
-        }],
+
 
         'no-unused-vars': 'warn',
 
@@ -69,21 +67,28 @@ module.exports = {
         // Typescript
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/ban-ts-ignore": "warn"
     },
 
     overrides: [
         {
             files: ["*.tsx"],
             rules: {
+                // typescript: {
+                //     "react/prop-types": "error",
+                // }
             }
         }
     ],
 
     settings: {
         "import/resolver": {
-            typescript: {
-                "react/prop-types": "error",
-            }
+            alias: {
+                map: [
+                    ['@', './src'],
+                ],
+                extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+            },
         }
     },
 };

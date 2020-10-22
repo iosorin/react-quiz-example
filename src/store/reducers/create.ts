@@ -12,7 +12,7 @@ const initialState: { quiz: QuizType } = {
 const createReducer = (state = initialState, action: CreateActionsTypes): typeof initialState => {
     switch (action.type) {
         case QUIZ.question.create:
-            const questions = [...state.quiz.questions, action.item];
+            const questions = [...state.quiz.questions, action.question];
 
             return {
                 ...state,

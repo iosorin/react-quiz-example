@@ -156,6 +156,7 @@ export const retryQuiz = (): QuizRetryActionType => {
     };
 };
 
+/* todo: use InferActionsType<typeof actions> instead */
 export type QuizActionsTypes =
     | FetchQuizesStartActionType
     | FetchQuizSuccessActionType
