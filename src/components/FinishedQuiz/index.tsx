@@ -1,20 +1,24 @@
 import React, { FC } from 'react';
-import { IDWithStatusType, Status, QuizQuestionType } from '@/types';
+import { Status, QuizQuestionType } from '@/types';
 import { Link } from 'react-router-dom';
 import Button from '@/components/UI/Button/Button';
 import classes from './FinishedQuiz.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { getQuizResults } from '@/selectors';
+import { retryQuiz as retryQuizAction } from '@/store/actions/quiz';
 
 type Props = {
-    results: IDWithStatusType;
-    quiz: Array<QuizQuestionType>;
-    onRetry: () => void;
+    questions: Array<QuizQuestionType>;
 };
 
 const FinishedQuiz: FC<Props> = (props) => {
-    if (!props.results) return null;
+    const results = useSelector(getQuizResults);
 
-    const successCount = Object.keys(props.results).reduce((total, key) => {
-        const status: keyof typeof Status = props.results[parseInt(key)];
+    const dispatch = useDispatch();
+    const retryQuiz = () => dispatch(retryQuizAction());
+
+    const successCount = Object.keys(results).reduce((total, key) => {
+        const status: keyof typeof Status = results[parseInt(key)];
 
         if (status === Status.success) {
             total++;
@@ -23,16 +27,14 @@ const FinishedQuiz: FC<Props> = (props) => {
         return total;
     }, 0);
 
-    console.log('props.quiz', props.quiz, props);
-
     return (
         <div className={classes.FinishedQuiz}>
             <ul>
-                {props.quiz.map((item, index) => {
+                {props.questions.map((item, index) => {
                     const cls = [
                         'fa',
-                        props.results[item.id] === 'error' ? 'fa-times' : 'fa-check',
-                        classes[props.results[item.id]],
+                        results[item.id] === 'error' ? 'fa-times' : 'fa-check',
+                        classes[results[item.id]],
                     ];
 
                     // debugger;
@@ -49,19 +51,17 @@ const FinishedQuiz: FC<Props> = (props) => {
 
             <p>
                 <b>
-                    Correct: {successCount}/{props.quiz.length}
+                    Total: {successCount}/{props.questions.length}
                 </b>
             </p>
 
             <div>
-                <Button onClick={props.onRetry} type="primary">
+                <Button onClick={() => retryQuiz()} type="primary">
                     Retry
                 </Button>
 
                 <Link to="/">
-                    <Button onClick={props.onRetry} type="success">
-                        Go to list
-                    </Button>
+                    <Button type="success">Go to list</Button>
                 </Link>
             </div>
         </div>
