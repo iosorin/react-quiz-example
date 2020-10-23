@@ -29,7 +29,7 @@ describe('AUTH', () => {
 
         await thunk(dispatchMock, getStateMock, {});
 
-        expect(dispatchMock).toBeCalledTimes(2);
+        expect(dispatchMock).toBeCalledTimes(3);
 
         expect(dispatchMock).toHaveBeenNthCalledWith(1, authActions.authSuccess(result.idToken));
     });

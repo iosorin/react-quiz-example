@@ -21,7 +21,7 @@ export const auth = (email: string, password: string, isLogin: boolean): BaseThu
         dispatch(actions.authSuccess(token));
         dispatch(waitExpiration(expiresIn));
 
-        fetchUser(token);
+        dispatch(fetchUser(token));
     } catch (error) {
         console.log(error);
     }
@@ -40,7 +40,7 @@ export const autoLogin = (): BaseThunkType<AuthActionsTypes> => async (dispatch)
             dispatch(actions.authSuccess(token));
             dispatch(waitExpiration((new Date(expirationDate).getTime() - Date.now()) / 1000));
 
-            fetchUser(token);
+            dispatch(fetchUser(token));
         }
     } else {
         dispatch(actions.logout());
