@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 
-import { RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getCurrentQuestionNumber, getQuiz, getQuizIsFetching, getQuizIsFinished } from '@/selectors';
@@ -12,23 +12,30 @@ import Loader from '@/components/UI/Loader/Loader';
 
 import classes from './Quiz.module.scss';
 
-type Props = RouteComponentProps<{ id: string }>;
+type ParamsType = {
+    uuid: string;
+};
+/* Route params prop example props.match.params.uuid */
+// type Props = RouteComponentProps<ParamsType>;
 
-const Quiz: FC<Props> = (props) => {
+const Quiz: FC = () => {
     const { questions, name } = useSelector(getQuiz);
     const currentQuestionNumber = useSelector(getCurrentQuestionNumber);
     const isFetching = useSelector(getQuizIsFetching);
     const isFinished = useSelector(getQuizIsFinished);
     const currentQuestion = questions[currentQuestionNumber];
 
+    /* useParams usage example */
+    const { uuid } = useParams<ParamsType>();
+
     const dispatch = useDispatch();
-    const fetchQuiz = () => dispatch(fetchQuizById(props.match.params.id));
+    const fetchQuiz = () => dispatch(fetchQuizById(uuid));
 
     useEffect(() => {
         fetchQuiz();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.match.params.id]);
+    }, [uuid]);
 
     const renderQuiz = () => {
         return (

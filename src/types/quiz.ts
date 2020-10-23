@@ -3,8 +3,6 @@ export enum Status {
     error = 'error',
 }
 
-export type CreateInitialStateType = { quiz: QuizType };
-
 export type QuizQuestionAnswerType = {
     id: number;
     text: string;

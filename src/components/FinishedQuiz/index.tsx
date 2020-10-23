@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Status, QuizQuestionType } from '@/types';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Button from '@/components/UI/Button/Button';
 import classes from './FinishedQuiz.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,10 @@ const FinishedQuiz: FC<Props> = (props) => {
 
     const dispatch = useDispatch();
     const retryQuiz = () => dispatch(retryQuizAction());
+
+    /* useHistory usage example */
+    const history = useHistory();
+    const backToList = () => history.push('/');
 
     const successCount = Object.keys(results).reduce((total, key) => {
         const status: keyof typeof Status = results[parseInt(key)];
@@ -60,9 +64,9 @@ const FinishedQuiz: FC<Props> = (props) => {
                     Retry
                 </Button>
 
-                <Link to="/">
-                    <Button type="success">Go to list</Button>
-                </Link>
+                <Button onClick={() => backToList()} type="success">
+                    Back to list
+                </Button>
             </div>
         </div>
     );

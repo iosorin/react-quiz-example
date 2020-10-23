@@ -13,10 +13,10 @@ type DispatchType = Dispatch<CreateActionsTypes>;
 /* DispatchType Usage Example - call */
 export const finishCreateQuiz = (name: string) => {
     return async (dispatch: DispatchType, getState: () => RootState) => {
-        const { quiz } = getState().create;
+        const { newQuiz } = getState().create;
 
         try {
-            await API.quiz.create(quiz, name);
+            await API.quiz.create(newQuiz, name);
 
             dispatch(actions.resetQuizCreation());
         } catch (error) {

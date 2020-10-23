@@ -1,17 +1,27 @@
-import React, { FC, FormEvent, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { auth } from '@/store/actions/auth';
 import { createControl, validate, validateForm } from '@/utils/form';
 
 import Button from '@/components/UI/Button/Button';
 import Input from '@/components/UI/Input/Input';
+import { getAuthState } from '@/selectors';
 
 const Auth: FC = () => {
-    const dispatch = useDispatch();
+    const { pending } = useSelector(getAuthState);
+
+    const [loginPending, setLoginPending] = useState(false);
+    const [registerPending, setRegisterPending] = useState(false);
+
+    useEffect(() => {
+        if (!pending) {
+            setLoginPending(false);
+            setRegisterPending(false);
+        }
+    }, [pending]);
 
     const [isFormValid, setIsFormValid] = useState(false);
-
     const [formControls, setFormContols] = useState({
         email: createControl(
             {
@@ -28,6 +38,8 @@ const Auth: FC = () => {
             { required: true, minLength: 5 }
         ),
     });
+
+    const dispatch = useDispatch();
 
     function onChangeHandler(e: FormEvent<HTMLInputElement>, controlName: keyof typeof formControls) {
         const updatedFormControls = { ...formControls };
@@ -52,12 +64,14 @@ const Auth: FC = () => {
     function loginHandler() {
         const { email, password } = formControls;
 
+        setLoginPending(true);
         dispatch(auth(email.value, password.value, true));
     }
 
     function registerHandler() {
         const { email, password } = formControls;
 
+        setRegisterPending(true);
         dispatch(auth(email.value, password.value, false));
     }
 
@@ -88,11 +102,11 @@ const Auth: FC = () => {
             <form className="form" onSubmit={(e) => e.preventDefault()}>
                 {renderInput()}
 
-                <Button disabled={!isFormValid} onClick={loginHandler} type="success">
+                <Button disabled={!isFormValid} loading={loginPending} onClick={loginHandler} type="success">
                     Sign in
                 </Button>
 
-                <Button disabled={!isFormValid} onClick={registerHandler} type="primary">
+                <Button disabled={!isFormValid} loading={registerPending} onClick={registerHandler} type="primary">
                     Register
                 </Button>
             </form>

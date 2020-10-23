@@ -41,7 +41,7 @@ function createFormContols() {
 }
 
 type MapStatePropsType = {
-    quiz: QuizType;
+    newQuiz: QuizType;
 };
 
 type MapDispatchPropsType = {
@@ -99,7 +99,7 @@ const QuizCreator: FC<Props> = (props) => {
 
         const questionItem: QuizQuestionType = {
             rightAnswerId,
-            id: props.quiz.questions.length + 1,
+            id: props.newQuiz.questions.length + 1,
             question: question.value,
             answers: [
                 {
@@ -187,7 +187,7 @@ const QuizCreator: FC<Props> = (props) => {
                     </Button>
 
                     <Button
-                        disabled={props.quiz.questions.length === 0}
+                        disabled={props.newQuiz.questions.length === 0}
                         onClick={() => setQuizNameModal(true)}
                         type="success"
                     >
@@ -197,12 +197,13 @@ const QuizCreator: FC<Props> = (props) => {
 
                 <Modal
                     isOpen={quizNameModal}
-                    name="Quiz Name"
+                    name="Crete quiz name"
                     onClose={() => setQuizNameModal(false)}
                     onSubmit={createNewQuiz}
                 >
                     <Input
                         onChange={(e) => setQuizName(e.currentTarget.value)}
+                        placeholder="✨✨✨"
                         shouldValidate={false}
                         style={{ width: '100%' }}
                         value={quizName}
@@ -213,7 +214,7 @@ const QuizCreator: FC<Props> = (props) => {
     );
 };
 
-const mapStateToProps = (state: RootState) => ({ quiz: state.create.quiz });
+const mapStateToProps = (state: RootState) => ({ newQuiz: state.create.newQuiz });
 const mapDispatchToProps = { createQuizQuestion: actions.createQuizQuestion, finishCreateQuiz };
 
 /* Connect Custom Typing Usage example - manually defined (MapStatePropsType, MapDispatchPropsType, RouteComponentProps, RootState) above  */

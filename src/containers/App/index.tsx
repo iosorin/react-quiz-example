@@ -27,7 +27,7 @@ const App: FC<PropsFromRedux> = ({ isAuthenticated, autoLogin }) => {
     const routes = (
         <Switch>
             <Route component={QuizList} exact path="/" />
-            <Route component={Quiz} path="/quiz/:id" />
+            <Route component={Quiz} path="/quiz/:uuid" />
             <Route component={QuizCreator} path="/quiz-creator" />
             <GuardedRoute component={Account} path="/account" show={isAuthenticated} />
             <GuardedRoute component={Logout} path="/logout" show={isAuthenticated} />
