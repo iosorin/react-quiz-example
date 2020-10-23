@@ -1,36 +1,40 @@
 import React, { FC } from 'react';
 import classes from './ActiveQuiz.module.scss';
 
-import { IDWithStatusType, QuizQuestionAnswerType } from '@/types';
-
 import AnswersList from './AnswersList';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAnswerState, getQuizAnswers } from '@/selectors';
+import { quizAnswerClick } from '@/store/actions/quiz';
 
 type Props = {
-    answerNumber: number;
+    questionNumber: number;
     quizLength: number;
-    answers: Array<QuizQuestionAnswerType>;
-    state: IDWithStatusType;
     question: string;
-    onAnswerClick: (id: number) => void;
 };
 
 const ActiveQuiz: FC<Props> = (props) => {
+    const answers = useSelector(getQuizAnswers);
+    const state = useSelector(getAnswerState);
+
+    const dispatch = useDispatch();
+    const onAnswerClick = (answerId: number) => dispatch(quizAnswerClick(answerId));
+
     return (
         <div className={classes.ActiveQuiz}>
             <p className={classes.Question}>
                 <span>
                     <strong>
-                        {props.answerNumber}. &nbsp;
+                        {props.questionNumber}. &nbsp;
                         {props.question}
                     </strong>
                 </span>
 
                 <small>
-                    {props.answerNumber} / {props.quizLength}
+                    {props.questionNumber} / {props.quizLength}
                 </small>
             </p>
 
-            <AnswersList answers={props.answers} onAnswerClick={props.onAnswerClick} state={props.state} />
+            <AnswersList answers={answers} onAnswerClick={onAnswerClick} state={state} />
         </div>
     );
 };

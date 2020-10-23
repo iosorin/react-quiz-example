@@ -1,11 +1,10 @@
 import React, { FC, useEffect } from 'react';
 
 import { RouteComponentProps } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState } from '@/types';
-import { getQuiz } from '@/selectors';
-import { fetchQuizById, quizAnswerClick, retryQuiz } from '@/store/actions/quiz';
+import { getCurrentQuestionNumber, getQuiz, getQuizIsFetching, getQuizIsFinished } from '@/selectors';
+import { fetchQuizById } from '@/store/actions/quiz';
 
 import ActiveQuiz from '@/components/ActiveQuiz';
 import FinishedQuiz from '@/components/FinishedQuiz';
@@ -13,31 +12,34 @@ import Loader from '@/components/UI/Loader/Loader';
 
 import classes from './Quiz.module.scss';
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type Props = PropsFromRedux & RouteComponentProps<{ id: string }>;
+type Props = RouteComponentProps<{ id: string }>;
 
 const Quiz: FC<Props> = (props) => {
-    useEffect(() => {
-        props.fetchQuizById(props.match.params.id);
+    const { questions, name } = useSelector(getQuiz);
+    const currentQuestionNumber = useSelector(getCurrentQuestionNumber);
+    const isFetching = useSelector(getQuizIsFetching);
+    const isFinished = useSelector(getQuizIsFinished);
+    const currentQuestion = questions[currentQuestionNumber];
 
-        return () => {
-            props.retryQuiz();
-        };
-    }, []);
+    const dispatch = useDispatch();
+    const fetchQuiz = () => dispatch(fetchQuizById(props.match.params.id));
+
+    useEffect(() => {
+        fetchQuiz();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.match.params.id]);
 
     const renderQuiz = () => {
         return (
             <div className={classes.QuizInner}>
-                {props.isFinished ? (
-                    <FinishedQuiz onRetry={props.retryQuiz} quiz={props.quiz.questions} results={props.results} />
+                {isFinished ? (
+                    <FinishedQuiz questions={questions} />
                 ) : (
                     <ActiveQuiz
-                        answerNumber={props.activeQuestion + 1}
-                        answers={props.quiz.questions[props.activeQuestion].answers}
-                        onAnswerClick={props.quizAnswerClick}
-                        question={props.quiz.questions[props.activeQuestion].question}
-                        quizLength={props.quiz.questions.length}
-                        state={props.answerState}
+                        question={currentQuestion.question}
+                        questionNumber={currentQuestionNumber + 1}
+                        quizLength={questions.length}
                     />
                 )}
             </div>
@@ -47,21 +49,12 @@ const Quiz: FC<Props> = (props) => {
     return (
         <div className={classes.Quiz}>
             <div className={classes.QuizOuter}>
-                <h1>Quiz</h1>
-                {props.loading || !props.quiz || !props.quiz.questions[props.activeQuestion] ? (
-                    <Loader />
-                ) : (
-                    renderQuiz()
-                )}
+                <h1>{name}</h1>
+
+                {isFetching || !currentQuestion ? <Loader /> : renderQuiz()}
             </div>
         </div>
     );
 };
 
-/* Spread state props via selector Usage example - not sure it's the correct */
-const mapStateToProps = (state: RootState) => ({ ...getQuiz(state) });
-const mapDispatchToProps = { quizAnswerClick, fetchQuizById, retryQuiz };
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(Quiz);
+export default Quiz;

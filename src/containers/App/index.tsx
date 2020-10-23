@@ -39,11 +39,10 @@ const App: FC<PropsFromRedux> = ({ isAuthenticated, autoLogin }) => {
     return <Layout>{routes}</Layout>;
 };
 
-/* Simple Selector Usage example (computed value) */
 const mapStateToProps = (state: RootState) => ({ isAuthenticated: getAuthenticated(state) });
 const connector = connect(mapStateToProps, { autoLogin });
 
-/* ConnectedProps, connector Usage example (simple connect) */
+/* ConnectedProps usage example */
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default withRouter(connector(App));
