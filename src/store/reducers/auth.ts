@@ -4,6 +4,7 @@ import { AuthActionsTypes } from '@/store/actions/auth';
 
 const initialState: AuthInitialStateType = {
     token: '',
+    pending: false,
 };
 
 const authReducer = (state = initialState, action: AuthActionsTypes): AuthInitialStateType => {
@@ -14,6 +15,13 @@ const authReducer = (state = initialState, action: AuthActionsTypes): AuthInitia
             return {
                 ...state,
                 token,
+            };
+        }
+
+        case 'AUTH.pending': {
+            return {
+                ...state,
+                pending: action.pending,
             };
         }
 

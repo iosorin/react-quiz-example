@@ -9,6 +9,7 @@ import ReduxFormInput from '@/components/UI/Input/ReduxFormInput';
 
 type OwnProps = {
     outlined?: boolean;
+    pending?: boolean;
 };
 
 type Props = InjectedFormProps<UserType, OwnProps> & OwnProps;
@@ -18,7 +19,7 @@ const AccountForm: FC<Props> = (props) => {
         <form className={`form ${props.outlined ? 'outlined' : ''}`} onSubmit={props.handleSubmit}>
             <Field component={ReduxFormInput} label="Name" name="displayName" />
             <Field component={ReduxFormInput} label="Email" name="email" />
-            <Button disabled={props.submitting} type="primary">
+            <Button disabled={props.submitting} loading={!!pending} type="primary">
                 Save
             </Button>
         </form>

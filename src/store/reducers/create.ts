@@ -2,8 +2,8 @@ import { QuizType } from '@/types/quiz';
 import { QUIZ } from '@/store/contants';
 import { CreateActionsTypes } from '@/store/actions/create';
 
-const initialState: { quiz: QuizType } = {
-    quiz: {
+export const initialState: { newQuiz: QuizType } = {
+    newQuiz: {
         name: '',
         questions: [],
     },
@@ -12,12 +12,12 @@ const initialState: { quiz: QuizType } = {
 const createReducer = (state = initialState, action: CreateActionsTypes): typeof initialState => {
     switch (action.type) {
         case QUIZ.question.create:
-            const questions = [...state.quiz.questions, action.question];
+            const questions = [...state.newQuiz.questions, action.question];
 
             return {
                 ...state,
-                quiz: {
-                    ...state.quiz,
+                newQuiz: {
+                    ...state.newQuiz,
                     questions,
                 },
             };
@@ -25,7 +25,7 @@ const createReducer = (state = initialState, action: CreateActionsTypes): typeof
         case QUIZ.creation.reset:
             return {
                 ...state,
-                quiz: {
+                newQuiz: {
                     name: '',
                     questions: [],
                 },

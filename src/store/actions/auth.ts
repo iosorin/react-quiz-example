@@ -9,6 +9,8 @@ import { fetchUser } from './user';
 export const auth = (email: string, password: string, isLogin: boolean): BaseThunkType<AuthActionsTypes> => async (
     dispatch
 ) => {
+    dispatch(actions.setAuthPending(true));
+
     try {
         const data = await API.account.auth(email, password, isLogin);
 
@@ -19,16 +21,20 @@ export const auth = (email: string, password: string, isLogin: boolean): BaseThu
         localStorage.setItem('auth', JSON.stringify({ token, expirationDate }));
 
         dispatch(actions.authSuccess(token));
-        dispatch(waitExpiration(expiresIn));
+        dispatch(autoLogout(expiresIn));
 
-        dispatch(fetchUser(token));
+        await dispatch(fetchUser(token));
     } catch (error) {
         console.log(error);
+    } finally {
+        dispatch(actions.setAuthPending(false));
     }
 };
 
 /* fix dispatch chain (saga - ?) -> replace 1st 'any' with another async call and last with type of it */
 export const autoLogin = (): BaseThunkType<AuthActionsTypes> => async (dispatch) => {
+    dispatch(actions.setAuthPending(true));
+
     const data = localStorage.getItem('auth');
     const payload = data ? JSON.parse(data) : {};
     const { token, expirationDate } = payload;
@@ -38,21 +44,27 @@ export const autoLogin = (): BaseThunkType<AuthActionsTypes> => async (dispatch)
             dispatch(actions.logout());
         } else {
             dispatch(actions.authSuccess(token));
-            dispatch(waitExpiration((new Date(expirationDate).getTime() - Date.now()) / 1000));
+            dispatch(autoLogout((new Date(expirationDate).getTime() - Date.now()) / 1000));
 
-            dispatch(fetchUser(token));
+            await dispatch(fetchUser(token));
         }
     } else {
         dispatch(actions.logout());
     }
+
+    dispatch(actions.setAuthPending(false));
 };
 
 /* DispatchType Usage Example - plain */
-export const waitExpiration = (time: number) => {
+export const autoLogout = (time: number) => {
+    console.log('time * 1000');
+
     return async (dispatch: Dispatch<AuthActionsTypes>) => {
-        setTimeout(() => {
-            dispatch(actions.logout());
-        }, time * 1000);
+        return await new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(dispatch(actions.logout()));
+            }, time * 1000);
+        });
     };
 };
 
@@ -64,6 +76,7 @@ export const actions = {
         return { type: 'AUTH.logout' } as const;
     },
     authSuccess: (token: string) => ({ type: AUTH.success, token }),
+    setAuthPending: (pending: boolean) => ({ type: 'AUTH.pending', pending } as const),
 };
 
 export type AuthActionsTypes = InferActionsType<typeof actions>;

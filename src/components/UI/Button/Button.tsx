@@ -11,11 +11,12 @@ type Props = {
 };
 
 const Button: FC<Props> = (props) => {
-    const cls = [classes.Button, classes[props.type || '']];
+    const cls = [classes.Button, classes[props.type || ''], props.loading ? classes.loading : ''];
 
     return (
         <button className={cls.join(' ')} disabled={props.disabled} onClick={props.onClick}>
-            {props.loading ? <Loader size="20" /> : props.children}
+            {props.loading && <Loader centered size="20" />}
+            <div className={props.loading ? classes.invisible : ''}>{props.children}</div>
         </button>
     );
 };

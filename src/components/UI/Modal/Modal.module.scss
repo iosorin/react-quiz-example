@@ -20,12 +20,11 @@
 
     .inner {
         background: #fff;
-        padding: 12px 15px;
+        padding: 12px 18px 18px;
         border-radius: 20px;
         justify-self: center;
         align-self: center;
-        min-width: 450px;
-        min-height: 250px;
+        min-width: 400px;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -59,7 +58,6 @@
     }
 
     .buttons {
-        margin-top: 10px;
         text-align: center;
     }
 }

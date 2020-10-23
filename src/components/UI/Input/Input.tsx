@@ -24,7 +24,7 @@ const Input: FC<Props> = (props) => {
     }
 
     return (
-        <div className={cls.join(' ')}>
+        <div className={cls.join(' ')} style={{ ...props.style }}>
             <label htmlFor={htmlFor}>{props.label}</label>
 
             <input

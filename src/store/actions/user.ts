@@ -32,4 +32,8 @@ export const actions = {
     userUpdate: (user: UserType) => ({ type: USER.update, user }),
 };
 
+export const asyncActions = {
+    fetchUser,
+};
+
 export type UserActionsType = InferActionsType<typeof actions>;
