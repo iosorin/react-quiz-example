@@ -9,7 +9,7 @@
         "cache:clear": "rm -rf node_modules/.cache/eslint-loader && jest --clearCache",
         "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
         "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
-        "isready": "npm run format && npm run lint && npm run build"
+        "ready": "npm run format && npm run lint && npm run build"
     },
     "browserslist": {
         "production": [
