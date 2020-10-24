@@ -57,8 +57,6 @@ export const autoLogin = (): BaseThunkType<AuthActionsTypes> => async (dispatch)
 
 /* DispatchType Usage Example - plain */
 export const autoLogout = (time: number) => {
-    console.log('time * 1000');
-
     return async (dispatch: Dispatch<AuthActionsTypes>) => {
         return await new Promise((resolve) => {
             setTimeout(() => {
