@@ -18,22 +18,18 @@ export const sendUserUpdate = ({ email, displayName }: UserType): BaseThunkType<
     }
 };
 
-export const fetchUser = (token: string): BaseThunkType<UserActionsType> => async (dispatch) => {
-    try {
-        const user = await API.account.fetchUser(token);
+// export const userFetch = (token: string): BaseThunkType<UserActionsType> => async (dispatch) => {
+//     try {
+//         const user = await API.account.fetchUser(token);
 
-        dispatch(actions.userUpdate(user));
-    } catch (error) {
-        console.log(error);
-    }
-};
+//         dispatch(actions.userUpdate(user));
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
 
 export const actions = {
     userUpdate: (user: UserType) => ({ type: USER.update, user }),
-};
-
-export const asyncActions = {
-    fetchUser,
 };
 
 export type UserActionsType = InferActionsType<typeof actions>;
