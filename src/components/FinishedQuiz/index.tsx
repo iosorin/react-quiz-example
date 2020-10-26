@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '@/components/UI/Button/Button';
 import classes from './FinishedQuiz.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { getQuizResults } from '@/selectors';
+import { getQuizResults } from '@/store/selectors';
 import { retryQuiz as retryQuizAction } from '@/store/actions/quiz';
 
 type Props = {

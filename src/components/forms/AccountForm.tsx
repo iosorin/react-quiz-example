@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { RootState, UserType } from '@/types';
 import { validate } from '@/utils/form';
-import { getCurrentUser } from '@/selectors';
+import { getCurrentUser } from '@/store/selectors';
 import Button from '@/components/UI/Button/Button';
 import ReduxFormInput from '@/components/UI/Input/ReduxFormInput';
 

@@ -7,11 +7,11 @@ import rootReducer from './reducers';
 import rootSaga from '@/sagas';
 
 /* middleware */
-const sagamd = createSagaMiddleware();
-const middleware = [thunk, sagamd];
+const saga = createSagaMiddleware();
+const middleware = [thunk, saga];
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)));
 
-sagamd.run(rootSaga);
+saga.run(rootSaga);
 
 export default store;

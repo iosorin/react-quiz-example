@@ -3,7 +3,7 @@ import API from '@/api';
 import { RootState } from '@/types/root';
 import { ThunkAction } from 'redux-thunk';
 
-import { QUIZES, QUIZ } from '@/store/contants';
+import { QUIZES, QUIZ } from '@/store/constants';
 import { QuizListItemType, QuizQuestionType, QuizType, IDWithStatusType } from '@/types';
 
 /* ThunkType Usage Example */

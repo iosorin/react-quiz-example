@@ -1,5 +1,5 @@
 import { QuizType } from '@/types/quiz';
-import { QUIZ } from '@/store/contants';
+import { QUIZ } from '@/store/constants';
 import { CreateActionsTypes } from '@/store/actions/create';
 
 export const initialState: { newQuiz: QuizType } = {

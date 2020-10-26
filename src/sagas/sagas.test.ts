@@ -1,7 +1,7 @@
 import { UserType } from '@/types';
 import API from '@/api';
 import { actions } from '@/store/actions/user';
-import { AUTH } from '@/store/contants';
+import { AUTH } from '@/store/constants';
 import { runSaga } from 'redux-saga';
 import { takeEvery } from 'redux-saga/effects';
 import { FetchUserAction, fetchUserFromApi, makeUserApiRequest } from '.';

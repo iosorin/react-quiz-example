@@ -3,7 +3,7 @@ import classes from './ActiveQuiz.module.scss';
 
 import AnswersList from './AnswersList';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAnswerState, getQuizAnswers } from '@/selectors';
+import { getAnswerState, getQuizAnswers } from '@/store/selectors';
 import { quizAnswerClick } from '@/store/actions/quiz';
 
 type Props = {

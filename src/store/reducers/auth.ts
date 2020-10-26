@@ -1,4 +1,4 @@
-import { AUTH } from '@/store/contants';
+import { AUTH } from '@/store/constants';
 import { AuthInitialStateType } from '@/types/auth';
 import { AuthActionsTypes } from '@/store/actions/auth';
 
