@@ -4,7 +4,6 @@ import { InferActionsType, BaseThunkType } from '@/utils/typing';
 
 import { Dispatch } from 'redux';
 import { AUTH } from '@/store/contants';
-import { fetchUser } from './user';
 
 export const auth = (email: string, password: string, isLogin: boolean): BaseThunkType<AuthActionsTypes> => async (
     dispatch
@@ -22,8 +21,6 @@ export const auth = (email: string, password: string, isLogin: boolean): BaseThu
 
         dispatch(actions.authSuccess(token));
         dispatch(autoLogout(expiresIn));
-
-        await dispatch(fetchUser(token));
     } catch (error) {
         console.log(error);
     } finally {
@@ -45,8 +42,6 @@ export const autoLogin = (): BaseThunkType<AuthActionsTypes> => async (dispatch)
         } else {
             dispatch(actions.authSuccess(token));
             dispatch(autoLogout((new Date(expirationDate).getTime() - Date.now()) / 1000));
-
-            await dispatch(fetchUser(token));
         }
     } else {
         dispatch(actions.logout());

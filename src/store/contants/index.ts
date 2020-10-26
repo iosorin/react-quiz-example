@@ -30,5 +30,6 @@ export const AUTH = {
 };
 
 export const USER = {
+    fetch: 'user/fetch' as const,
     update: 'user/update' as const,
 };

@@ -48,10 +48,10 @@ const API = {
         BASE_URL: 'https://identitytoolkit.googleapis.com/v1/accounts:',
         API_KEY: '?key=AIzaSyDvCB39YSBlxgKvakS19CkGTPgv_Qb3_pw',
         url(s: string) {
-            return this.BASE_URL + s + this.API_KEY;
+            return API.account.BASE_URL + s + API.account.API_KEY;
         },
         async auth(email: string, password: string, isLogin: boolean) {
-            const url = this.BASE_URL + (isLogin ? 'signInWithPassword' : 'signUp') + this.API_KEY;
+            const url = API.account.BASE_URL + (isLogin ? 'signInWithPassword' : 'signUp') + API.account.API_KEY;
             const settings = { email, password, returnSecureToken: true };
 
             const res = await axios.post<AuthResponseType>(url, settings);
@@ -61,22 +61,22 @@ const API = {
         async update(settings: { idToken: string | null; email?: string; displayName?: string }) {
             if (!settings.idToken) return;
 
-            const url = this.url('update');
+            const url = API.account.url('update');
             const res = await axios.post<UserType>(url, { ...settings, returnSecureToken: true });
 
             return res.data;
         },
         async fetchUser(idToken: string) {
-            const url = this.url('lookup');
+            const url = API.account.url('lookup');
             const res = await axios.post<AuthUserFetchResponseType>(url, { idToken });
 
             return res.data.users[0];
         },
         updateUser(idToken: string | null, user: UserType) {
-            return this.update({ idToken, ...user });
+            return API.account.update({ idToken, ...user });
         },
         updateUserEmail(idToken: string | null, email: string) {
-            return this.update({ idToken, email });
+            return API.account.update({ idToken, email });
         },
     },
 };

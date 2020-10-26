@@ -1,5 +1,4 @@
 import { actions, auth } from '@/store/actions/auth';
-import { asyncActions } from '@/store/actions/user';
 import { AuthInitialStateType } from '@/types';
 import reducer from '@/store/reducers/auth';
 import API, { AuthResponseType } from '@/api';
@@ -57,14 +56,12 @@ describe('AUTH', () => {
             // Thunk syntax: (dispatch, getState, extraArguments) => ?
             await thunk(dispatchMock, getStateMock, {});
 
-            expect(dispatchMock).toBeCalledTimes(5);
+            expect(dispatchMock).toBeCalledTimes(4);
 
             expect(dispatchMock).toHaveBeenNthCalledWith(1, actions.setAuthPending(true));
             expect(dispatchMock).toHaveBeenNthCalledWith(2, actions.authSuccess(response.idToken));
             // expect(dispatchMock).toHaveBeenNthCalledWith(3, waitExpiration(+response.expiresIn));
-            // expect(dispatchMock).toHaveBeenNthCalledWith(4, asyncActions.fetchUser(response.idToken));
-            expect(dispatchMock).toHaveBeenNthCalledWith(5, actions.setAuthPending(false));
-            expect(asyncActions.fetchUser).toHaveBeenCalled();
+            expect(dispatchMock).toHaveBeenNthCalledWith(4, actions.setAuthPending(false));
         });
     });
 });
