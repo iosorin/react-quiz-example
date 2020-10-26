@@ -3,7 +3,7 @@ import API from '@/api';
 import { RootState } from '@/types/root';
 import { Dispatch } from 'redux';
 
-import { QUIZ } from '@/store/contants';
+import { QUIZ } from '@/store/constants';
 import { QuizQuestionType } from '@/types';
 import { InferActionsType } from '@/utils/typing';
 

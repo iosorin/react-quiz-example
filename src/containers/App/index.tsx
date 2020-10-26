@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 
 import { connect, ConnectedProps } from 'react-redux';
 import { autoLogin } from '@/store/actions/auth';
-import { getAuthenticated } from '@/selectors';
+import { getAuthenticated } from '@/store/selectors';
 import { RootState } from '@/types';
 
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';

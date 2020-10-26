@@ -1,6 +1,6 @@
 import { UserInitialStateType } from '@/types';
 import { UserActionsType } from '@/store/actions/user';
-import { USER } from '@/store/contants';
+import { USER } from '@/store/constants';
 
 const initialState = {
     user: {

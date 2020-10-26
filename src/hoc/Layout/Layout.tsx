@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getAuthenticated } from '@/selectors';
+import { getAuthenticated } from '@/store/selectors';
 import MenuToggle from '@/components/Navigation/MenuToggle/MenuToggle';
 import Drawer from '@/components/Navigation/Drawer/Drawer';
 import classes from './Layout.module.scss';

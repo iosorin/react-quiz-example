@@ -3,7 +3,7 @@ import API from '@/api';
 import { InferActionsType, BaseThunkType } from '@/utils/typing';
 
 import { Dispatch } from 'redux';
-import { AUTH } from '@/store/contants';
+import { AUTH } from '@/store/constants';
 
 export const auth = (email: string, password: string, isLogin: boolean): BaseThunkType<AuthActionsTypes> => async (
     dispatch

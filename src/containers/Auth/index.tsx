@@ -6,7 +6,7 @@ import { createControl, validate, validateForm } from '@/utils/form';
 
 import Button from '@/components/UI/Button/Button';
 import Input from '@/components/UI/Input/Input';
-import { getAuthState } from '@/selectors';
+import { getAuthState } from '@/store/selectors';
 
 const Auth: FC = () => {
     const { pending } = useSelector(getAuthState);

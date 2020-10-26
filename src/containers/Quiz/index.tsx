@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getCurrentQuestionNumber, getQuiz, getQuizIsFetching, getQuizIsFinished } from '@/selectors';
+import { getCurrentQuestionNumber, getQuiz, getQuizIsFetching, getQuizIsFinished } from '@/store/selectors';
 import { fetchQuizById } from '@/store/actions/quiz';
 
 import ActiveQuiz from '@/components/ActiveQuiz';

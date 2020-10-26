@@ -1,7 +1,7 @@
 import API from '@/api';
 import { UserType } from '@/types';
 import { BaseThunkType, InferActionsType } from '@/utils/typing';
-import { USER } from '@/store/contants';
+import { USER } from '@/store/constants';
 
 export const sendUserUpdate = ({ email, displayName }: UserType): BaseThunkType<UserActionsType> => async (
     dispatch,
