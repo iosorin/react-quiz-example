@@ -1,14 +1,25 @@
 import API from '@/api';
-import { AUTH, USER } from '@/store/contants';
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { actions } from '@/store/actions/user';
+import { AUTH } from '@/store/contants';
+import { Action } from 'redux';
+import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
+export interface FetchUserAction extends Action {
+    type: typeof AUTH.success;
+    token: string;
+}
+
+/* saga typesafe issue -  https://github.com/redux-saga/redux-saga/issues/884 */
 // Это воркер Saga. Он будет запускаться на действии типа AUTH.success
-function* fetchUser(action: any) {
+export function* makeUserApiRequest(action: { token: string }) {
+    // FetchUserAction
     try {
         const user = yield call(API.account.fetchUser, action.token);
 
-        yield put({ type: USER.update, user });
+        yield put(actions.userUpdate(user));
     } catch (error) {
+        yield put({ type: 'user.fetch.error' } as const);
+
         console.log(error);
     }
 }
@@ -18,8 +29,8 @@ function* fetchUser(action: any) {
     Запускаем "fetchUser" на каждое задиспатченное действие AUTH.success.
     Позволяет одновременно получать данные пользователя.
 */
-function* mySaga() {
-    yield takeEvery(AUTH.success, fetchUser);
+export function* fetchUserFromApi() {
+    yield takeEvery<FetchUserAction>(AUTH.success, makeUserApiRequest); // typesage ?
 }
 
 /* ------------------ или ------------------ */
@@ -31,8 +42,12 @@ function* mySaga() {
     находится в ожидании ответа, то этот ожидающий ответа запрос
     отменяется и срабатывает только последний.
 */
-function* rootSaga() {
-    yield takeLatest(AUTH.success, fetchUser);
+function* rootSagaAnotherExample() {
+    yield takeLatest<FetchUserAction>(AUTH.success, makeUserApiRequest);
 }
+
+const rootSaga = function* root() {
+    yield all([fetchUserFromApi()]);
+};
 
 export default rootSaga;
