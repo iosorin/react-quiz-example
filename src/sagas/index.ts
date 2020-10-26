@@ -17,7 +17,9 @@ export interface FetchUserAction extends Action {
 export function* makeUserApiRequest(action: { token: string }) {
     // FetchUserAction
     try {
-        const user = yield call(API.account.fetchUser, action.token);
+        /* pass API.account context */
+        // const user = yield apply(API.account, API.account.fetchUser, [action.token]);
+        const user = yield call([API.account, API.account.fetchUser], action.token);
 
         yield put(actions.userUpdate(user));
     } catch (error) {
