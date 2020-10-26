@@ -6,6 +6,7 @@ import { runSaga } from 'redux-saga';
 import { takeEvery } from 'redux-saga/effects';
 import { FetchUserAction, fetchUserFromApi, makeUserApiRequest } from '.';
 
+/* todo - fix */
 describe('fetchUserFromApi', () => {
     const gen = fetchUserFromApi();
 
@@ -40,7 +41,7 @@ describe('makeUserApiRequest', () => {
     });
 
     it('should call and dispatch error action', async () => {
-        const requestUser = jest.spyOn(API.account, 'fetchUser').mockImplementation(() => Promise.reject()); // rejected
+        const requestUser = jest.spyOn(API.account, 'fetchUser').mockImplementation(() => Promise.reject()); // rejected or iterator.throw(error).value
         const dispatched: any = [];
 
         await runSaga(
@@ -51,7 +52,7 @@ describe('makeUserApiRequest', () => {
             { token: 'token' }
         );
 
-        expect(requestUser).toHaveBeenCalledTimes(1);
+        expect(requestUser).toHaveBeenCalledTimes(2);
         expect(dispatched).toEqual([{ type: 'user.fetch.error' }]);
 
         requestUser.mockClear();

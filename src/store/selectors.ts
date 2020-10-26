@@ -13,3 +13,5 @@ export const getQuizIsFinished = (state: RootState) => state.quiz.isFinished;
 
 export const getCurrentUser = (state: RootState) => state.user.user;
 export const getAuthenticated = (state: RootState) => !!state.auth.token;
+
+export const getNotification = (state: RootState) => state.notifications;

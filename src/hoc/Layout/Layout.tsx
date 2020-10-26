@@ -4,6 +4,7 @@ import { getAuthenticated } from '@/store/selectors';
 import MenuToggle from '@/components/Navigation/MenuToggle/MenuToggle';
 import Drawer from '@/components/Navigation/Drawer/Drawer';
 import classes from './Layout.module.scss';
+import { Notifications } from '@/components/Notifications/Notifications';
 
 const Layout: FC = (props) => {
     const isAuthenticated = useSelector(getAuthenticated);
@@ -14,8 +15,8 @@ const Layout: FC = (props) => {
     return (
         <div className={`${classes.Layout} ${isAuthenticated ? classes.auth : ''}`}>
             <Drawer isAuthenticated={isAuthenticated} isOpen={menu} onToggle={toggleMenu} />
-
             <MenuToggle isOpen={menu} onToggle={toggleMenu} />
+            <Notifications />
 
             <main>{props.children}</main>
         </div>

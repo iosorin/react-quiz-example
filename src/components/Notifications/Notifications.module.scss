@@ -1,0 +1,45 @@
+.Notification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px 15px;
+    border-radius: 8px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    opacity: 0;
+    user-select: none;
+    visibility: hidden;
+    transition: 0.3s;
+    transform: translateY(-100px);
+}
+
+.show {
+    opacity: 1;
+    visibility: visible;
+    user-select: all;
+    transform: translateY(0);
+}
+
+.success,
+.danger {
+    color: white;
+}
+
+.default {
+    background: white;
+    border: 1px solid #000;
+}
+
+.info {
+    background: $info;
+}
+
+.success {
+    background: $success;
+}
+
+.danger {
+    background: $error;
+}

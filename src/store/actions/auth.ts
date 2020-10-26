@@ -22,7 +22,7 @@ export const auth = (email: string, password: string, isLogin: boolean): BaseThu
         dispatch(actions.authSuccess(token));
         dispatch(autoLogout(expiresIn));
     } catch (error) {
-        console.log(error);
+        dispatch(actions.authError(error));
     } finally {
         dispatch(actions.setAuthPending(false));
     }
@@ -69,6 +69,7 @@ export const actions = {
         return { type: 'AUTH.logout' } as const;
     },
     authSuccess: (token: string) => ({ type: AUTH.success, token }),
+    authError: (error: unknown) => ({ type: AUTH.error, error }),
     setAuthPending: (pending: boolean) => ({ type: 'AUTH.pending', pending } as const),
 };
 

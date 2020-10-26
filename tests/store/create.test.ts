@@ -42,7 +42,7 @@ describe('quiz creation', () => {
 
     it('should create new named quiz', async () => {
         const thunk = finishCreateQuiz(response.name);
-        const expectedActions = [actions.resetQuizCreation()];
+        const expectedActions = [actions.finishQuizCreation()];
 
         await store.dispatch(thunk);
         /*to watch state changes - https://github.com/reduxjs/redux-mock-store/issues/85#issuecomment-274343682 */

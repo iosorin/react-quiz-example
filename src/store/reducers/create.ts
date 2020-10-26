@@ -22,7 +22,7 @@ const createReducer = (state = initialState, action: CreateActionsTypes): typeof
                 },
             };
 
-        case QUIZ.creation.reset:
+        case QUIZ.creation.finish:
             return {
                 ...state,
                 newQuiz: {
