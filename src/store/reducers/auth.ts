@@ -5,6 +5,7 @@ import { AuthActionsTypes } from '@/store/actions/auth';
 const initialState: AuthInitialStateType = {
     token: '',
     pending: false,
+    error: null,
 };
 
 const authReducer = (state = initialState, action: AuthActionsTypes): AuthInitialStateType => {
@@ -15,6 +16,13 @@ const authReducer = (state = initialState, action: AuthActionsTypes): AuthInitia
             return {
                 ...state,
                 token,
+            };
+        }
+
+        case AUTH.error: {
+            return {
+                ...state,
+                error: action.error,
             };
         }
 

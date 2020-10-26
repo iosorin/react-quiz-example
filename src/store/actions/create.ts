@@ -18,7 +18,7 @@ export const finishCreateQuiz = (name: string) => {
         try {
             await API.quiz.create(newQuiz, name);
 
-            dispatch(actions.resetQuizCreation());
+            dispatch(actions.finishQuizCreation());
         } catch (error) {
             console.log(error);
         }
@@ -27,7 +27,7 @@ export const finishCreateQuiz = (name: string) => {
 
 export const actions = {
     createQuizQuestion: (question: QuizQuestionType) => ({ type: QUIZ.question.create, question }),
-    resetQuizCreation: () => ({ type: QUIZ.creation.reset }),
+    finishQuizCreation: () => ({ type: QUIZ.creation.finish }),
 };
 
 export type CreateActionsTypes = InferActionsType<typeof actions>;

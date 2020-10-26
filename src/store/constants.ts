@@ -14,7 +14,9 @@ export const QUIZ = {
         create: 'quiz/question/create' as const,
     },
     creation: {
+        finish: 'quiz/creation/finish' as const,
         reset: 'quiz/creation/reset' as const,
+        first: 'quiz/creation/first' as const,
     },
     state: {
         set: 'quiz/state/set' as const,
@@ -27,9 +29,15 @@ export const QUIZ = {
 export const AUTH = {
     logout: 'auth/logout', // defined as const in action creator
     success: 'auth/success' as const,
+    error: 'auth/error' as const,
 };
 
 export const USER = {
     fetch: 'user/fetch' as const,
     update: 'user/update' as const,
+};
+
+export const NOTIFICATION = {
+    show: 'notification/show',
+    hide: 'notification/hide',
 };

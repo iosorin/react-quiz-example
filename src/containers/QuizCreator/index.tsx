@@ -197,13 +197,13 @@ const QuizCreator: FC<Props> = (props) => {
 
                 <Modal
                     isOpen={quizNameModal}
-                    name="Crete quiz name"
+                    name="Create quiz name"
                     onClose={() => setQuizNameModal(false)}
                     onSubmit={createNewQuiz}
                 >
                     <Input
                         onChange={(e) => setQuizName(e.currentTarget.value)}
-                        placeholder="✨✨✨"
+                        placeholder="my awesome quiz"
                         shouldValidate={false}
                         style={{ width: '100%' }}
                         value={quizName}
